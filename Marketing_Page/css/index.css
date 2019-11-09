@@ -143,16 +143,6 @@ table {
   border-spacing: 0;
 }
 
-body {
-  font-size: 62.5%;
-  background: url(images/stripe.png) repeat;
-}
-
-p {
-  font-size: 1.3em;
-  margin-bottom: 15px;
-}
-
 #page-wrap {
   width: 660px;
   background: white;
@@ -172,7 +162,7 @@ p {
 #contact-area textarea {
   padding: 5px;
   width: 471px;
-  font-family: Helvetica, sans-serif;
+  font-family: Oswald, sans-serif;
   font-size: 1.4em;
   margin: 0px 0px 10px 0px;
   border: 2px solid #ccc;
@@ -199,4 +189,155 @@ label {
   width: 100px;
   padding-top: 5px;
   font-size: 1.4em;
+}
+
+/*
+  End of reset
+*/
+
+/*
+ Customer styling
+*/
+
+/*
+General stylings
+*/
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+html {
+  font-size: 62.5%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: "Poppins", "Helvetica", sans-serif;
+}
+
+h1 {
+  font-size: 3.8rem;
+}
+
+h2 {
+  font-size: 3.2rem;
+}
+
+h3 {
+  font-size: 2.8rem;
+}
+
+h4 {
+  font-size: 2rem;
+}
+
+p {
+  font-size: 1.6rem;
+  line-height: 1.4;
+}
+
+/*
+  Header/Nav
+*/
+
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding-left: 30px;
+  padding-right: 10px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: rgba(26, 192, 198, 0.14);
+  border-bottom: #062c2d 1px solid;
+  font-family: "Poppins", "Helvetica", sans-serif;
+}
+
+.logo-color {
+  color: #75d363;
+}
+
+.logo-color-end {
+  color: #df4a3b;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+.header-nav h1 a,
+.nav-links a {
+  text-decoration: none;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-item a {
+  padding: 10px 15px;
+  font-size: 2rem;
+  color: #062c2d;
+}
+
+.nav-item a:hover {
+  text-decoration: underline;
+  text-decoration-color: #df4a3b;
+}
+
+/*
+  Buttons
+*/
+
+button {
+  color: #ddf6f7;
+  border: 1px #dadada solid;
+  padding: 5px 10px;
+  border-radius: 4px;
+  outline: none;
+  font-size: 2rem;
+}
+
+button:hover {
+  box-shadow: 1px 1px 1px #eaeaea;
+  color: #ddf6f7;
+  background: #df4a3b;
+  transition-delay: 0.3s;
+}
+
+button a {
+  color: #ddf6f7;
+  text-decoration: none;
+}
+
+.signup-btn {
+  background-color: #128387;
+}
+
+.login-btn {
+  background-color: #1ac0c6;
+}
+
+.cta-btn {
+  background-color: #128387;
+}
+
+/*
+ CTA
+*/
+
+.cta {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 0;
+  background-color: rgba(26, 192, 198, 0.14);
 }
