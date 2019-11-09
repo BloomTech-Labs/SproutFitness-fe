@@ -162,7 +162,7 @@ table {
 #contact-area textarea {
   padding: 5px;
   width: 471px;
-  font-family: Oswald, sans-serif;
+  font-family: "Oswald", sans-serif;
   font-size: 1.4em;
   margin: 0px 0px 10px 0px;
   border: 2px solid #ccc;
@@ -218,6 +218,7 @@ h3,
 h4,
 h5 {
   font-family: "Poppins", "Helvetica", sans-serif;
+  color: #062c2d;
 }
 
 h1 {
@@ -239,6 +240,7 @@ h4 {
 p {
   font-size: 1.6rem;
   line-height: 1.4;
+  color: #062c2d;
 }
 
 /*
@@ -352,24 +354,52 @@ button a {
   padding: 40px 0;
 }
 
+.hero-images {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
 /*
 services
 */
 .services-wrapper {
   display: flex;
+  justify-content: center;
 }
 
 .services h3 {
   display: flex;
   justify-content: center;
   padding: 40px 0;
+  font-weight: bold;
+}
+
+.services h4 {
+  padding-bottom: 20px;
+  font-weight: bold;
 }
 
 .services-content {
   display: flex;
   flex-direction: column;
-  padding-right: 50px;
-  align-items: center;
+  padding-right: 25px;
   width: 30%;
-  align-self: center;
+}
+
+.services p {
+  font-family: "Oswald", sans-serif;
+}
+
+/*
+  Contact
+*/
+
+.contact {
+  padding: 40px 0;
+}
+
+.contact-header {
+  display: flex;
+  justify-content: center;
 }
