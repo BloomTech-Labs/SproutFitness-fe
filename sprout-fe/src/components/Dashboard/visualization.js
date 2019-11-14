@@ -5,11 +5,7 @@ const Visualization = () => {
 	const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
 	
 	return (
-		users.map((user) => {
-			return (
-				<p>{user.name}</p>
-			)
-		})
+		<h3>Visualizations</h3>
 	)
 }
 

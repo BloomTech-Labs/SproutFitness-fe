@@ -5,6 +5,12 @@ import {
 
 const initialState = {
 	users: [],
+	tasks: [
+		{taskName: "Fill out your bio", id: 0, completed: false}, 
+		{taskName: "Upload a picture", id: 1, completed: false},
+		{taskName: "explore our website", id: 2, completed: false},
+		{taskName: "give us some feedback", id: 3, completed: false}
+	],
 	registering: false,
 	loggingIn: false,
 	loggedIn: localStorage.token === undefined ?

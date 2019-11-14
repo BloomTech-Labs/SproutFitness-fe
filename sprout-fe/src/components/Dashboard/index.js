@@ -12,7 +12,7 @@ const Dashboard = (props) => {
 	if (loggingIn === true) {
 		return <h3>going through security...</h3>
 	} else if (error === true) {
-		return <h2>display {error}</h2>
+		return <h2>{error}</h2>
 	} else if (loggedIn === true) {
 		return (
 			<div className="dashboard-wrapper">
@@ -25,7 +25,7 @@ const Dashboard = (props) => {
 	}
 }
 
-{/*
+/*
 		const loggedIn = useSelector(state => state);
 
 	const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
@@ -54,6 +54,6 @@ class Dashboard extends React.Component {
 	}
 }
 
-*/}
+*/
 
 export default Dashboard;
