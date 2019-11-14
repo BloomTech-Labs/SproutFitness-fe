@@ -490,12 +490,6 @@ footer p {
   Medi Queries
 */
 
-@media (min-width: 1400px) {
-  .nav-links {
-    border: 1px red solid;
-  }
-}
-
 @media (min-width: 1200px) {
   .nav-links {
     margin-left: 0;
