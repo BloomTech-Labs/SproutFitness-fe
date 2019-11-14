@@ -59,3 +59,19 @@ color: #595959;
     box-shadow: 0 15px 60px 0 rgba(0,0,0, .5);
 
 }
+
+
+
+.bottom-box {
+    display: block;
+    width: 80%;
+    height: 280px;
+    box-shadow: 0 0 25px 10px rgba(0,0,0, .25);
+}
+
+.bottom-box:last-child {
+    display: block;
+    width: 80%;
+    height: 280px;
+    box-shadow: 0 0 25px 10px rgba(0,0,0, .25);
+}
