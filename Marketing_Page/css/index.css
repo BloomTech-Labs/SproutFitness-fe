@@ -334,7 +334,7 @@ button a {
 
 .hero-images img {
   border-radius: 4px;
-  padding-bottom: 40px;
+  padding-bottom: 20px;
 }
 
 /*
@@ -490,9 +490,36 @@ footer p {
   Medi Queries
 */
 
-@media (max-width: 1200px) {
+@media (min-width: 1400px) {
+  .nav-links {
+    border: 1px red solid;
+  }
+}
+
+@media (min-width: 1200px) {
   .nav-links {
     margin-left: 0;
+  }
+
+  .hero-header {
+    padding: 60px 0;
+  }
+
+  .hero-images {
+    justify-content: space-evenly;
+  }
+
+  .services h4 {
+    font-size: 2.4rem;
+  }
+
+  .services p {
+    font-size: 1.6rem;
+  }
+
+  .contact {
+    padding: 80px 0;
+    font-size: 1.2rem;
   }
 }
 
