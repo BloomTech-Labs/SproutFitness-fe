@@ -339,8 +339,6 @@ button a {
 .hero-images img {
   border-radius: 4px;
   padding-bottom: 20px;
-  width: 100%;
-  height: 100%;
 }
 
 /*
@@ -496,7 +494,7 @@ footer p {
   Medi Queries
 */
 
-/* @media (min-width: 1200px) {
+@media (max-width: 1199px) {
   .nav-links {
     margin-left: 0;
   }
@@ -507,6 +505,11 @@ footer p {
 
   .hero-images {
     justify-content: space-evenly;
+  }
+
+  .hero-images img {
+    width: 90%;
+    height: 100%;
   }
 
   .services h4 {
@@ -521,9 +524,9 @@ footer p {
     padding: 80px 0;
     font-size: 1.2rem;
   }
-} */
+}
 
-@media (min-width: 960px) {
+@media (max-width: 960px) {
   .nav-item a {
     padding: 10px 10px;
     font-size: 2rem;
@@ -594,13 +597,6 @@ footer p {
 @media (max-width: 550px) {
   button {
     font-size: 1.8rem;
-    padding: 5px 20px;
-  }
-}
-
-@media (max-width: 550px) {
-  button {
-    font-size: 1.8rem;
     padding: 5px 15px;
   }
 }
@@ -647,7 +643,7 @@ footer p {
   }
 }
 
-@media (max-width: 412px) {
+@media (max-width: 411px) {
   .cta h2 {
     padding-top: 40px;
     text-align: center;
@@ -660,22 +656,45 @@ footer p {
   #contact-area {
     width: 80%;
   }
+
+  #contact-area .submit-button {
+    margin-right: 30px;
+  }
 }
 
-/* @media (max-width: 320px) {
+@media (max-width: 360px) {
   .logo-main {
     width: 50%;
   }
 
   #contact-area {
-    width: 60%;
+    width: 85%;
   }
 
   #contact-area input,
   #contact-area textarea {
-    width: 220px;
+    width: 300px;
   }
   #contact-area .submit-button {
-    margin-right: 30px;
+    margin-right: 5px;
   }
-} */
+}
+
+@media (max-width: 320px) {
+  .logo-main {
+    width: 50%;
+  }
+
+  #contact-area {
+    width: 80%;
+  }
+
+  #contact-area input,
+  #contact-area textarea {
+    width: 260px;
+  }
+  #contact-area .submit-button {
+    margin-right: 0;
+    margin: 0 0 0 10px;
+  }
+}
