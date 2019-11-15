@@ -202,6 +202,11 @@ p {
   font-family: "Oswald", sans-serif;
 }
 
+.container {
+  width: 100%;
+  height: 100%;
+}
+
 /*
   Header/Nav
 */
@@ -210,7 +215,6 @@ p {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
   padding: 20px 10px 20px 30px;
   background-color: rgba(26, 192, 198, 0.14);
   border-bottom: #062c2d 1px solid;
@@ -335,6 +339,8 @@ button a {
 .hero-images img {
   border-radius: 4px;
   padding-bottom: 20px;
+  width: 100%;
+  height: 100%;
 }
 
 /*
@@ -490,7 +496,7 @@ footer p {
   Medi Queries
 */
 
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   .nav-links {
     margin-left: 0;
   }
@@ -515,9 +521,9 @@ footer p {
     padding: 80px 0;
     font-size: 1.2rem;
   }
-}
+} */
 
-@media (max-width: 960px) {
+@media (min-width: 960px) {
   .nav-item a {
     padding: 10px 10px;
     font-size: 2rem;
@@ -643,7 +649,6 @@ footer p {
 
 @media (max-width: 412px) {
   .cta h2 {
-    width: 60%;
     padding-top: 40px;
     text-align: center;
   }
@@ -657,7 +662,7 @@ footer p {
   }
 }
 
-@media (max-width: 320px) {
+/* @media (max-width: 320px) {
   .logo-main {
     width: 50%;
   }
@@ -673,4 +678,4 @@ footer p {
   #contact-area .submit-button {
     margin-right: 30px;
   }
-}
+} */
