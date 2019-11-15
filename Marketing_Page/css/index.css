@@ -245,7 +245,6 @@ p {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  margin-left: 35%;
 }
 
 .nav-item a {
@@ -548,45 +547,7 @@ footer p {
   Medi Queries
 */
 
-@media (max-width: 2480px) {
-  .hero-images img {
-    width: 48%;
-  }
-
-  .services h4 {
-    font-size: 2.4rem;
-  }
-
-  .services p {
-    font-size: 1.8rem;
-  }
-}
-
-@media (max-width: 1800px) {
-  .navbar {
-    margin-left: 10%;
-  }
-
-  .nav-links {
-    margin-left: 90%;
-  }
-}
-
-@media (min-width: 1500px) {
-  .nav-links {
-    margin-left: 70%;
-  }
-}
-
-@media (max-width: 1199px) {
-  .nav-links {
-    margin-left: 0;
-  }
-
-  .hero-header {
-    padding: 60px 0;
-  }
-
+@media (min-width: 961px) {
   .hero-images {
     -webkit-box-pack: space-evenly;
     -ms-flex-pack: space-evenly;
@@ -594,7 +555,7 @@ footer p {
   }
 
   .hero-images img {
-    width: 90%;
+    width: 40%;
     height: 100%;
   }
 
