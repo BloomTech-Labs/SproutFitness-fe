@@ -1,6 +1,7 @@
 import {
 	LOGIN_TRY, LOGIN_SUCCESS, LOGIN_FAIL,
-	REGISTERING, LOGOUT
+	REGISTERING, LOGOUT,
+	TODO_TOGGLE
 } from "../actions";
 
 const initialState = {
@@ -59,6 +60,12 @@ export default (state = initialState, action) => {
 				...state,
 				loggedIn: false,
 				error: null
+			}
+		}
+		case TODO_TOGGLE: {
+			return {
+				...state,
+				tasks: action.payload
 			}
 		}
 		default: {

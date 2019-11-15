@@ -5,7 +5,9 @@ const Visualization = () => {
 	const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
 	
 	return (
-		<h3>Visualizations</h3>
+		<div className={"visual"}>
+			<h3>Visualizations</h3>
+		</div>
 	)
 }
 
