@@ -1,12 +1,13 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { TODO_TOGGLE } from '../../actions'
+import { TODO_TOGGLE } from '../../actions';
+import { Button, ListGroup, ListGroupItem } from 'reactstrap';
 
 const List = () => {
 	const tasks = useSelector(state => state.tasks)	
 	const dispatch = useDispatch();
 	
-	const clickHandler = (event) => {		
+	const todoClickHandler = (event) => {		
 
 		const taskChecker = tasks.map(task => {
 			if(task.id.toString() === event.target.id) {				
@@ -23,18 +24,40 @@ const List = () => {
 		})
 	}
 
+	const buttonClickHandler = (e) => {
+		e.preventDefault()
+
+		const comTasks = tasks.map(task => {
+			if(task.completed === false) {
+				return task
+			} else {
+				return null
+			}
+		})
+
+		console.log(comTasks);
+		
+		// dispatch ({
+			
+		// })
+	}
+
 	return (
 		<div className={"todoList"}>
-			{tasks.map(task => {
-				return (
-					<p key={task.id} 
-						id={task.id} 
-						onClick={clickHandler} 
-						className={task.completed ? "completedTask" : null}>
-						{task.taskName}
-					</p>
-				)
-			})}
+			<ListGroup>
+				{tasks.map(task => {
+					return (
+						<ListGroupItem key={task.id} 
+							id={task.id} 
+							onClick={todoClickHandler} 
+							className={task.completed ? "completedTask" : null} 
+							tag="button">
+							{task.taskName}
+						</ListGroupItem>
+					)
+				})}
+			</ListGroup>
+			<Button onClick={buttonClickHandler} color="primary">Clear Tasks</Button>
 		</div>
 	)
 }
