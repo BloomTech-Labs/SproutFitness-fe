@@ -172,7 +172,7 @@ body,
 html {
   font-size: 62.5%;
   font-family: "Poppins", "Helvetica", sans-serif;
-  background-color: #fdfdfd;
+  background-color: var(--main-bg-color);
 }
 
 h1,
@@ -207,11 +207,6 @@ p {
   line-height: 1.4;
   color: #062c2d;
   font-family: "Oswald", sans-serif;
-}
-
-.container {
-  width: 100%;
-  height: 100%;
 }
 
 /*
@@ -551,7 +546,7 @@ footer p {
   text-decoration: none;
 }
 
-/*
+/* 
   Medi Queries
 */
 
@@ -765,4 +760,4 @@ footer p {
     margin-right: 0;
     margin: 0 0 0 10px;
   }
-}
+} */
