@@ -155,6 +155,12 @@ table {
 General stylings
 */
 
+:root {
+  --main-bg-color: #fdfdfd;
+  --main-txt-color: #062c2d;
+  --header-bg-color: rgba(26, 192, 198, 0.14);
+}
+
 * {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -166,7 +172,7 @@ body,
 html {
   font-size: 62.5%;
   font-family: "Poppins", "Helvetica", sans-serif;
-  background-color: #fff;
+  background-color: #fdfdfd;
 }
 
 h1,
@@ -225,6 +231,8 @@ p {
   padding: 20px 10px 20px 30px;
   background-color: rgba(26, 192, 198, 0.14);
   border-bottom: #062c2d 1px solid;
+  width: 100%;
+  height: 100%;
 }
 
 .logo-color {
