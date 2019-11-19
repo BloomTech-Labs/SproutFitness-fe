@@ -134,7 +134,12 @@
         <!-- end of contact-header -->
         <div class="contact-flex">
           <div id="contact-area">
-            <form method="post" action="contactengine.php">
+            <form
+              method="post"
+              name="contact"
+              netlify-honeypot="bot-field"
+              data-netlify="true"
+            >
               <label for="Name">Name:</label>
               <input type="text" name="Name" id="Name" />
 
