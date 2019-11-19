@@ -266,7 +266,7 @@ p {
   Buttons
 */
 
-button {
+button, .signup-btn, .login-btn {
   color: #ddf6f7;
   border-radius: 4px;
   outline: none;
