@@ -27,20 +27,16 @@ const List = () => {
 	const buttonClickHandler = (e) => {
 		e.preventDefault()
 
-		const comTasks = tasks.map(task => {
-			if(task.completed === false) {
-				return task
-			} else {
-				return null
-			}
-		})
-
-		console.log(comTasks);
+		const compTasks = tasks.filter(task => task.completed === false)
 		
-		// dispatch ({
-			
-		// })
+		dispatch ({
+			type: TODO_TOGGLE,
+			payload: compTasks
+		})
 	}
+
+	console.log(tasks);
+	
 
 	return (
 		<div className={"todoList"}>
@@ -57,7 +53,9 @@ const List = () => {
 					)
 				})}
 			</ListGroup>
-			<Button onClick={buttonClickHandler} color="primary">Clear Tasks</Button>
+			{tasks[0] ? 
+				<Button onClick={buttonClickHandler} color="primary">Clear Tasks</Button> :
+				null}
 		</div>
 	)
 }
