@@ -18,15 +18,6 @@ button.completedTask {
 }
 
 .dashboard-wrapper {
-  /* display: flex; */
-  /* width: 97.5%; */
-  /* align-self: center; */
   border: 2px solid white;
   padding: 15px;
 }
-
-/* .visual, .todoList{
-  border: 2px solid white;
-  margin: auto 10%;
-  padding: 2vw;
-} */
