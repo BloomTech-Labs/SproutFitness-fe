@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import './CoachProfile.css';
 
 
@@ -7,6 +7,7 @@ const CoachProfile = () => {
 
 
     return (
+        <div>
         <div className='container'>
             <div className='side-bar'>
                 <div className='bar-contents'>
@@ -28,7 +29,11 @@ const CoachProfile = () => {
                 <div className='content-box'>
                     <p>Profile Visibility</p>
                 </div>
+            
             </div>
+            
+        </div>
+        
         </div>
     )
 }
