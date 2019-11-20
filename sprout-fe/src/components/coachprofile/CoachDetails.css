@@ -1,0 +1,12 @@
+.specialty-button {
+    width: 500px;
+    height: 100px;
+    margin-bottom: 45px;
+    border: 2px solid black;
+    text-align: center;
+}
+
+.specialty-certifications {
+    display: flex;
+    justify-content: space-around;
+}
