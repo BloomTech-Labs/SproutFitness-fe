@@ -2,67 +2,28 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import { BrowserRouter as Router, withRouter } from 'react-router-dom';
-// import { createStore, combineReducers } from 'redux';
-// import { Provider, useSelector, useDispatch } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
+import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, compose } from 'redux';
+import { Provider } from 'react-redux';
+import rootReducer from './reducers'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-// function reducer(state, action) {
-//    switch (action.type) {
-//        case "INCREMENT_COUNT":
-//        return {
-//            ...state,
-//            count: state.count + 1
-//        }
-//        case "DECREMENT_COUNT":
-//        return {
-//            ...state,
-//            count: state.count - 1
-//        }
-//        default:
-//         return state;
-//    }
-// }
+const store = createStore(
+	rootReducer,
+	composeEnhancers(
+		applyMiddleware(thunk),
+	)
+);
 
-// const INITIAL_STATE = {
-//     count: 0
-// }
-
-// const store = createStore(reducer, 
-//     INITIAL_STATE)
-
-// function App() {
-//     return (
-//         <Provider store={store}>
-//             <Counter />
-//         </Provider>
-//     );
-// }
-
-// function incrementCount() {
-//   dispatch({
-//      type: "INCREMENT_COUNT" 
-//   })
-// }
-   
-// function decrementCount() {
-//     dispatch({
-//         type: "DECREMENT_COUNT" 
-//      })
-// }
-
-// function Counter() {
-//     useSelector(state => state.count)
-//     const dispatch = useDispatch()
-
-
-//     return (
-//         <>
-//             <h2>Counter</h2>
-//             <button>+</button>
-//             <button>-</button>
-//         </>
-//     )
-// }
+ReactDOM.render(
+<Provider store={store}>
+	<BrowserRouter>
+		<App />
+	</BrowserRouter>
+</Provider>,
+document.getElementById('root'));
 
 ReactDOM.render(<Router><App /></Router>, document.getElementById('root'));
