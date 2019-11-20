@@ -1,0 +1,112 @@
+.App {
+    text-align: center;
+  }
+  
+  .App-logo {
+    height: 40vmin;
+  }
+  
+  /* .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
+  } */
+  
+  .App-link {
+    color: #09d3ac;
+  }
+  
+  .container {
+    border: 1px solid #062C2D;
+    background-color: #ddf6f7;
+    width: 30%;
+    height: 450px;
+    margin-left: 35%;
+    margin-top: 10%;
+  }
+  
+  .input-field {
+    width: 60%;
+    margin-left: 20%;
+  }
+  
+  .password-field {
+    height: 25px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+  }
+  
+  .email-field {
+    height: 25px;
+    width: 100%;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+  }
+  
+  .first-name {
+    height: 25px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+  }
+  
+  .last-name {
+    height: 25px;
+    margin-top: 10px;
+    width: 100%;
+    font-size: 15px;
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+  }
+  
+  .btn {
+    background-color: #128387;
+    color: white;
+    font-size: 15px;
+    width: 102%;
+    height: 30px;
+    margin-top: 30px;
+    border: 1px solid #128387;
+    border-radius: 5px;
+  }
+  
+   .btn:hover {
+    background-color:#7bc7c9;
+    color: white;
+  }
+  
+  h1 {
+    font-size: 2.9rem;
+    font-weight: bold;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    border-bottom: 5px solid white;
+  }
+
+  h3 {
+    margin-top: 50px;
+  }
+
+  .login-link {
+    margin-top: 25px;
+  }
+  
+  .sf-title {
+    color: #75d363;
+  }
+  
+  .sf-title-end {
+    color: #df4a3b;
+  }
+  

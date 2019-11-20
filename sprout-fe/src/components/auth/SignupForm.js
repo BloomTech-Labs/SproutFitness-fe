@@ -20,30 +20,30 @@ class SignupForm extends Component {
         return (
             <div className="container">
                 <form onSubmit={this.handleSubmit}>
-                    <h2>Sign Up</h2>
+                    <h1>
+                        <span className="sf-title">Sprout</span>
+                        <span className="sf-title-end"> Fitness</span>
+                    </h1>
                     <div className="input-field">
-                        <label htmlFor="email">Email</label>
-                        <input type="email" id="email" onChange={this.handleChange} />
+                        <input className="email-field" type="email" id="email" placeholder="Email" onChange={this.handleChange} />
                     </div>
 
                     <div className="input-field">
-                        <label htmlFor="password">Password</label>
-                        <input type="password" id="password" onChange={this.handleChange} />
+                        <input className="password-field" type="password" id="password" placeholder="Password" onChange={this.handleChange} />
                     </div>
 
                     <div className="input-field">
-                        <label htmlFor="firstName">First Name</label>
-                        <input type="firstName" id="firstName" onChange={this.handleChange} />
+                        <input className="first-name" type="firstName" id="firstName" placeholder="First Name" onChange={this.handleChange} />
                     </div>
 
                     <div className="input-field">
-                        <label htmlFor="lastName">Last Name</label>
-                        <input type="lastName" id="lastName" onChange={this.handleChange} />
+                        <input className="last-name" type="lastName" id="lastName" placeholder="Last Name" onChange={this.handleChange} />
                     </div>
 
                     <div className="input-field">
                         <button className="btn">Sign Up</button>
                     </div>
+                    <h3 className="login-link">Already have an account? <a href="login">Login</a></h3>
                 </form>
             </div>
         );
