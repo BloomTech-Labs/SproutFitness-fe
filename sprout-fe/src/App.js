@@ -1,5 +1,5 @@
 import React from 'react';
-import './components/auth/Auth.css';
+import './App.css';
 import { Route, NavLink } from 'react-router-dom'
 import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';

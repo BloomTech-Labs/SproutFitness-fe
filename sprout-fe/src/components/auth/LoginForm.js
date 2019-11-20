@@ -16,9 +16,9 @@ class LoginForm extends Component {
     }
     render() {
         return (
-            <div className="container">
+            <div className="auth-container">
                 <form onSubmit={this.handleSubmit}>
-                    <h1>
+                    <h1 className="auth-h1">
                         <span className="sf-title">Sprout</span>
                         <span className="sf-title-end"> Fitness</span>
                     </h1>
@@ -31,9 +31,9 @@ class LoginForm extends Component {
                     </div>
 
                     <div className="input-field">
-                        <button className="btn">Login</button>
+                        <button className="auth-btn">Login</button>
                     </div>
-                    <h3>Don't have an account? <a href="register">Sign Up!</a></h3>
+                    <h3 className="signup-link">Don't have an account? <a href="register">Sign Up!</a></h3>
                 </form>
             </div>
         );
