@@ -7,7 +7,7 @@
 
 [build]
   base    = "./sprout-fe"
-  publish = "./sprout-fe/build"
+  publish = "./sprout-fe"
   command = "npm run build"
 
 [[redirects]]
