@@ -32,40 +32,4 @@ const Dashboard = (props) => {
 	}
 }
 
-/*
-
-			<UncontrolledAlert>
-					Welcome to the dashbaord! Take a look around. We have some onboarding steps you can follow on the right as well as an example of what your dashboard could look like in the future, once you have your business up and running.
-				</UncontrolledAlert>
-
-		const loggedIn = useSelector(state => state);
-
-	const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
-	{users.map((user) => {
-			return (
-				<p>{user.name}</p>
-			)
-		})}
-
-
-class Dashboard extends React.Component {
-	render(){
-		if (logging in === true) {
-			return <h3>going through security...</h3>
-		} else if (error === true) {
-			return <h2>display {error}</h2>
-		} else if (logged in === true) {
-			return (
-				<div className="dashboard-wrapper">
-
-				</div>
-			)
-		} else {
-			return <h2>You need to log in before you can see your dashboard</h2>
-		}
-	}
-}
-
-*/
-
 export default Dashboard;
