@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 const Visualization = () => {
 		
-	const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
+	// const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
 	
 	return (
 		<div className={"visual"}>
