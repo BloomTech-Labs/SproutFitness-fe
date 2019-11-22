@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import Visualization from './visualization.js.js'
+import Visualization from './visualization.js'
 import List from './list.js.js'
 import { Container, Row, Col } from 'reactstrap';
 
