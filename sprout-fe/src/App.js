@@ -3,7 +3,7 @@ import './App.css';
 import { Route, NavLink } from 'react-router-dom';
 import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
-import Dashboard from './components/dashboard';
+import Dashboard from './components/dashb';
 import CoachDetails from './components/coachprofile/CoachDetails';
 
 function App() {
