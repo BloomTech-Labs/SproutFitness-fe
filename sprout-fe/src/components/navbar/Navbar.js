@@ -1,13 +1,13 @@
 import React from 'react';
 
 const Navbar = () => {
-  return (
-    <nav className="navbar bg-primary">
-      <h1>
-       Sprout Fitness
-      </h1>
-    </nav>
-  );
-};
+  
+    return (
+      <div>
+        <h1>Sprout Fitness</h1>
+      </div>
+    )
 
-export default Navbar;
+}
+
+export default Navbar
