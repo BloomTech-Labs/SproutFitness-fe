@@ -16,6 +16,9 @@ const Navbar = () => {
             <li className="nav-item"><NavLink to="/billing" activeClassName="active">Billing</NavLink></li>
           </ul>
           </nav>
+          <div className="button-wrapper">
+            <button type="button" id="hover-effect" className="btn btn-primary btn-large logout-btn">Logout</button>
+          </div>
         </header>
         <div>
           

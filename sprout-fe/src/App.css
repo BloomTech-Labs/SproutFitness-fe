@@ -208,6 +208,11 @@ Nav/Header
   height: 100%;
 }
 
+.logo-main {
+  font-size: 3.9rem;
+  font-weight: bold;
+}
+
 .logo-color {
   color: var(--logo-txt-color);
 }
