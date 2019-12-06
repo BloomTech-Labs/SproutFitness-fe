@@ -199,6 +199,7 @@ button a {
 
 .App {
   text-align: center;
+  font-size: 1.2rem;
 }
 
 .App-logo {
@@ -303,6 +304,11 @@ button.completedTask {
 }
 
 .dashboard-wrapper {
-  border: 2px solid white;
+  border: 2px solid black;
   padding: 15px;
+  margin: 2.5% auto
+}
+
+.dataVis {
+  border: 2px solid rgba(0,0,0,0.1);
 }

@@ -41,6 +41,7 @@ const List = () => {
 	return (
 		<div className={"todoList"}>
 			<ListGroup>
+				<h3>Todo</h3>
 				{tasks.map(task => {
 					return (
 						<ListGroupItem key={task.id} 
