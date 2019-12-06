@@ -1,11 +1,12 @@
 import {
 	LOGIN_TRY, LOGIN_SUCCESS, LOGIN_FAIL,
 	REGISTERING, LOGOUT,
-	TODO_TOGGLE
+	TODO_TOGGLE,
+	DEMO_TOGGLE
 } from "../actions";
 
 const initialState = {
-	users: [],
+	clients: [],
 	tasks: [
 		{taskName: "Fill out your bio", id: 0, completed: false}, 
 		{taskName: "Upload a picture", id: 1, completed: false},
@@ -68,6 +69,12 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				tasks: action.payload
+			}
+		}
+		case DEMO_TOGGLE: {
+			return {
+				...state,
+				clients: action.payload
 			}
 		}
 		default: {
