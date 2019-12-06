@@ -10,3 +10,20 @@
     display: flex;
     justify-content: space-around;
 }
+
+
+
+.specialties-container {
+    text-align: left;
+
+}
+
+.language {
+    width: 180px;
+    height: 30px;
+}
+
+.bio {
+    width: 400px;
+    height: 250px;
+}
