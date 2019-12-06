@@ -31,6 +31,7 @@
 
 import React from 'react';
 import { Fragment } from 'react';
+import { Redirect } from 'react-router'; 
 import {
   Collapse,
   Navbar,
@@ -42,6 +43,9 @@ import {
 } from 'reactstrap';
 
 export default class NavBar extends React.Component {
+  state = {
+    navigate: false
+  }
 
   constructor(props) {
     super(props);
@@ -58,17 +62,22 @@ export default class NavBar extends React.Component {
   }
 
   render() {
+    const { navigate } = this.state
+    if (navigate) {
+      return <Redirect to ="/login" push={true} />
+    
+    }
     return <Fragment>
-      <Navbar color="light" light expand="md" className="header-nav">
+      <Navbar color="light" light expand="md" className="header-nav nav-bar">
         <NavbarBrand href="/" className="logo-main"><span className="logo-color">Sprout</span> <span className="logo-color-end">Fitness</span></NavbarBrand>
         <NavbarToggler onClick={this.toggle} />
         <Collapse isOpen={this.state.isOpen} navbar>
           <Nav className="ml-auto" navbar className="nav-links">
             <NavItem>
-              <NavLink href="/components/" className="nav-item">Contact</NavLink>
+              <NavLink href="/components/" className="nav-item nav-li">Contact</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/messenger" className="nav-item">Messenger</NavLink>
+              <NavLink href="/messenger" className="nav-item nav-li">Messenger</NavLink>
             </NavItem>
             <NavItem>
               <NavLink href="/calendar/" className="nav-item">Calendar</NavLink>
@@ -83,7 +92,7 @@ export default class NavBar extends React.Component {
               <NavLink href="/contact/" className="nav-item">Billing</NavLink>
             </NavItem>
           </Nav>
-            <button className="btn btn-primary btn-large logout-btn">Logout</button>
+            <button onClick={() => this.setState({ navigate: true })} className="btn btn-primary btn-large logout-btn">Logout</button>
         </Collapse>
       </Navbar>
     </Fragment>
