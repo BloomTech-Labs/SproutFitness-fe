@@ -240,6 +240,16 @@ Nav/Header
   text-decoration-color: var(--footer-bg-color);
 }
 
+button.logout-btn {
+  color: var(--footer-txt-color);
+  background-color: var(--footer-bg-color);
+  outline: none;
+  font-size: 2.2rem;
+  padding: 10px 15px;
+  line-height: 1.3;
+  border-color: var(--main-txt-color);
+}
+
 /*
  End of Nav/Header
 */

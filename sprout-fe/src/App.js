@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { Route, NavLink } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import Dashboard from './components/dashb';
