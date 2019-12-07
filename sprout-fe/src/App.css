@@ -339,6 +339,10 @@ button.completedTask {
 Footer
 */
 
+.footer-section {
+  flex-shrink: 0;
+}
+
 .footer-container {
   background-color: var(--footer-bg-color) !important;
   width: 100%;
@@ -351,6 +355,7 @@ Footer
   color: var(--footer-txt-color) !important;
   padding-top: 5px;
   padding-bottom: 15px;
+  width: 165px;
 }
 
 .footer-container {
