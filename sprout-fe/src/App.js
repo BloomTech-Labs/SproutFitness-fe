@@ -9,16 +9,16 @@ import Footer from './components/footer/footer';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-      </header>
-      <Route  path='/login' component={LoginForm} />
-      <Route  path='/register' component={SignupForm} />
-      <Route exact path='/' component={Dashboard} />
-      <Route exact path='/profile' component={CoachDetails} />
-      <footer>
+    <div className="App Site">
+      <div className="Site-content">
+        <header className="App-header">
+        </header>
+        <Route  path='/login' component={LoginForm} />
+        <Route  path='/register' component={SignupForm} />
+        <Route exact path='/' component={Dashboard} />
+        <Route exact path='/profile' component={CoachDetails} />
+      </div>
       <Footer />
-      </footer>
     </div>
   );
 }

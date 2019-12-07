@@ -130,6 +130,13 @@ table {
   --main-bg-color: #fdfdfd;
   --main-txt-color: #062c2d;
   --header-bg-color: rgba(26, 192, 198, 0.14);
+  --footer-bg-color: #df4a3b;
+  --footer-txt-color: #ddf6f7;
+  --logo-txt-color: #75d363;
+  --footer-txt-hover: #128387;
+  --button-bg-color-login: #1ac0c6;
+  --space: 1.5em 0;
+  --space: 2em 0;
 }
 
 * {
@@ -144,6 +151,7 @@ html {
   font-size: 62.5%;
   font-family: "Poppins", "Helvetica", sans-serif;
   background-color: var(--main-bg-color);
+  height: 100%;
 }
 
 h1,
@@ -178,6 +186,26 @@ p {
   line-height: 1.4;
   color: #062c2d;
   font-family: "Oswald", sans-serif;
+}
+
+.Site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.Site-content {
+  flex: 1 0 auto;
+  padding: var(--space) var(--space) 0;
+  width: 100%;
+}
+
+.site-content: after {
+  content: "\00a0";
+  display: block;
+  margin-top: var(--space);
+  height: 0;
+  visibility: hidden;
 }
 
 button a {
@@ -318,15 +346,15 @@ Footer
   padding-top: 152px;
 }
 
-footer p {
+.footer-section p {
   font-family: "Poppins", "Helvetica", sans-serif;
   color: var(--footer-txt-color) !important;
   padding-top: 5px;
   padding-bottom: 15px;
 }
 
-.footer-container p {
-  padding-left: 15px;
+.footer-container {
+  padding-left: 20px;
 }
 
 .footer-flex {
@@ -340,7 +368,6 @@ footer p {
   color: var(--footer-txt-color) !important;
   font-size: 1.8rem;
   font-weight: bold;
-  border: 1px solid red;
 }
 
 .footer-nav a:hover {
@@ -348,6 +375,18 @@ footer p {
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
   text-decoration: none;
+}
+
+.footer-item a {
+  padding: 10px 15px;
+  font-size: 2.2rem;
+  color: var(--main-txt-color);
+}
+
+.footer-item a:hover {
+  text-decoration: underline;
+  -webkit-text-decoration-color: var(--footer-bg-color);
+  text-decoration-color: var(--footer-bg-color);
 }
 
 /*
