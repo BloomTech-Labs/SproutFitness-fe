@@ -231,7 +231,7 @@ Nav/Header
 .nav-links .nav-item {
   padding: 10px 15px;
   font-size: 2rem;
-  color: var(--main-txt-color);
+  color: var(--main-txt-color) !important;
 }
 
 .nav-item a:hover {
