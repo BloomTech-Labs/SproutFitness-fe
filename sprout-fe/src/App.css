@@ -202,7 +202,7 @@ Nav/Header
   -ms-flex-align: center;
   align-items: center;
   padding: 20px 10px 20px 30px;
-  background-color: var(--header-bg-color);
+  background-color: var(--header-bg-color) !important;
   border-bottom: var(--main-txt-color) 1px solid;
   width: 100%;
   height: 100%;
