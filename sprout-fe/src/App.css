@@ -210,7 +210,7 @@ button a {
 }
 
 .auth-container {
-  border: 1px solid #062C2D;
+  border: 1px solid #062c2d;
   background-color: #ddf6f7;
   width: 30%;
   height: 450px;
@@ -269,8 +269,8 @@ button a {
   border-radius: 5px;
 }
 
- .auth-btn:hover {
-  background-color:#7bc7c9;
+.auth-btn:hover {
+  background-color: #7bc7c9;
   color: white;
 }
 
@@ -306,3 +306,50 @@ button.completedTask {
   border: 2px solid white;
   padding: 15px;
 }
+
+/* 
+Footer
+*/
+
+.footer-container {
+  background-color: var(--footer-bg-color) !important;
+  width: 100%;
+  height: 100%;
+  padding-top: 152px;
+}
+
+footer p {
+  font-family: "Poppins", "Helvetica", sans-serif;
+  color: var(--footer-txt-color) !important;
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+
+.footer-container p {
+  padding-left: 15px;
+}
+
+.footer-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.footer-container li a {
+  text-decoration: none;
+  color: var(--footer-txt-color) !important;
+  font-size: 1.8rem;
+  font-weight: bold;
+  border: 1px solid red;
+}
+
+.footer-nav a:hover {
+  color: var(--footer-txt-hover) !important;
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+  text-decoration: none;
+}
+
+/*
+End of Footer
+*/

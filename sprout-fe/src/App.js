@@ -5,6 +5,7 @@ import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import Dashboard from './components/dashb';
 import CoachDetails from './components/coachprofile/CoachDetails';
+import Footer from './components/footer/footer';
 
 function App() {
   return (
@@ -15,6 +16,9 @@ function App() {
       <Route  path='/register' component={SignupForm} />
       <Route exact path='/' component={Dashboard} />
       <Route exact path='/profile' component={CoachDetails} />
+      <footer>
+      <Footer />
+      </footer>
     </div>
   );
 }
