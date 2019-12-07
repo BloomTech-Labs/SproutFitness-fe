@@ -6,6 +6,7 @@ import { Button, Col, Form, FormGroup, Label, Input, FormText } from 'reactstrap
 
 const CoachDetails = () => {
     const [image, setImage] = useState('')
+    const [coachImage, setCoachImage] = useState('')
     const [loading, setLoading] = useState(false)
     const [specialty, setSpecialty] = useState([])
     const [coachSpecialty, setCoachSpecialty] = useState([])
@@ -16,31 +17,14 @@ const CoachDetails = () => {
     const [className, setClassName] = useState(false)
     const [language, setLanguage] = useState("") 
     const [coachLanguage, setCoachLanguage] = useState("") 
+    
 
-
+   
     
 
 
-  const pickNutrition = e => {
-      e.preventDefault();
-      setSpecialty('Nutrition')
-  }
-
-  const pickFamily = e => {
-    e.preventDefault();
-    setSpecialty('Family Health')
-
-}
-
-const pickFitness = e => {
-    e.preventDefault();
-    setSpecialty('Fitness')
-
-}
-
-
 useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/1')
+    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
     .then(res => {
         setSpecialty(res.data.specialties)
     })
@@ -50,7 +34,7 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/1')
+    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
     .then(res => {
         setCertifications(res.data.certifications)
     })
@@ -60,10 +44,10 @@ useEffect(() => {
 }, [])
 
 useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/1')
+    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
     .then(res => {
-        console.log(res.data)
-        setCoachBio(res.data.coach.bio)
+        console.log(res.data.coach.picture_url)
+        setBio(res.data.coach.bio)
         setLanguage(res.data.coach.language)
         
     })
@@ -71,7 +55,19 @@ useEffect(() => {
         console.log(err)
     })
 }, [])
-console.log('bio',bio)
+useEffect(() => {
+    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
+    .then(res => {
+        console.log(res.data)
+        setCoachImage(res.data.coach.picture_url)
+        
+    })
+    .catch(err => {
+        console.log(err)
+    })
+}, [])
+console.log('bio',coachBio)
+console.log(language)
 
 useEffect(() => {
 const spec = specialty.map(spcty => {
@@ -87,6 +83,8 @@ useEffect(() => {
 
 
 
+
+console.log('coachImg', coachImage)
     const uploadImage = async e => {
         const files = e.target.files
         const data = new FormData()
@@ -107,11 +105,7 @@ useEffect(() => {
     }
 
 
-  const submit = e => {
-      e.preventDefault();
-      axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
-        
-  } 
+  
 
 
 
@@ -119,22 +113,15 @@ useEffect(() => {
     setCoachLanguage(e.target.value)
   }
 
-  const changeLanguage = () => {
+  const saveChanges = () => { 
 
-        function sendLang() {
-            axios.post("", language)
-        } 
-        
-        
-        // axios.all([sendLang(), sendBio()])
-        //   .then(axios.spread(function (language, bio){
-
-        //   })) 
-              
+    const submit = e => {
+        axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
           
-      }
-      const sendBio = () => {
-        axios.put("http://localhost:5000/api/coaches/1", { "bio": bio } )
+    } 
+
+    const submitImage = e => {
+        axios.put("http://localhost:5000/api/coaches/2", { "picture_url": image } )
         .then(res => {
             console.log(res)
         })
@@ -142,9 +129,23 @@ useEffect(() => {
             console.log(err))
     }
 
+    const sendBio = () => {
+        if (coachBio.length > 0) {
+        axios.put("http://localhost:5000/api/coaches/2", { "bio": coachBio } )
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err =>
+            console.log(err))
+   } else {
+       return null
+   }
+
+}
+
     const sendLang = () => {
         if (coachLanguage.length > 0) {
-        axios.put("http://localhost:5000/api/coaches/1", { "language": coachLanguage } )
+        axios.put("http://localhost:5000/api/coaches/2", { "language": coachLanguage } )
         .then(res => {
             console.log(res)
         })
@@ -155,20 +156,23 @@ useEffect(() => {
         return null
     }
 }
+        
+        axios.all([sendLang(), sendBio(), submit(), submitImage()])
+          .then(axios.spread(function (language, bio){
 
-
-      const chooseBio = (e) => {
-          setBio(e.target.value)
+          })) 
+              
+          
       }
-
-console.log('lang',language)
-console.log('coachLang',coachLanguage)
-
+ 
+      const chooseBio = (e) => {   
+          setCoachBio(e.target.value)
+      }
+    
+      console.log('image', image)
 
     return (
         <div>
-            <h1>Upload Image</h1>
-            
             <div className='specialty-certifications'>
                 <div className="specialties-container">
                     <h4>Specialties</h4>
@@ -184,15 +188,16 @@ console.log('coachLang',coachLanguage)
                     })}
                 </div>
             </div>
+            <img src={coachImage} style={{width: '70px'}} />
 
-
-                <form onSubmit={sendBio}>
-                {/* {loading ? (
+            <h1>Upload Image</h1>
+                <form onSubmit={saveChanges}>
+                {loading ? (
                     <h3>Loading...</h3>
                 ): (
-                <img src={image} style={{width: '300px'}} />
+                <img src={image} style={{width: '70px'}} />
                 )}
-                <FormGroup onSubmit={submit} row>
+                <FormGroup onSubmit={saveChanges} row>
         <Label for="exampleFile" sm={2}>File</Label>
         <Col sm={10}>
           <Input type="file" name="file" id="exampleFile" onChange={uploadImage} />
@@ -201,11 +206,12 @@ console.log('coachLang',coachLanguage)
             It's a bit lighter and easily wraps to a new line.
           </FormText>
         </Col>
-      </FormGroup>*/}
+      </FormGroup>
             <div>
                 <h6>Language</h6>
-                {coachLanguage.length === 0 ? <p>{language}</p> : <p>{coachLanguage}</p>}
+               <p>{language}</p> 
                 <select className="language" onChange={langChange}>
+                    <option>Pick a language</option>
                     <option value="English">English</option>
                     <option value="Spanish">Spanish</option>
                     <option value="French">French</option>
@@ -214,11 +220,11 @@ console.log('coachLang',coachLanguage)
             </div> 
             <div>
                 <h6>Bio</h6>
-                {!coachBio ? null : <p>{coachBio}</p>}
+                <p>{bio}</p>
                 <textarea onChange={chooseBio} className="bio" type="text">
                 </textarea>
             </div>
-            <Button onClick={sendBio}>SAVE CHANGES</Button>
+            <Button type="submit">SAVE CHANGES</Button>
             </form>
         </div>
     )
