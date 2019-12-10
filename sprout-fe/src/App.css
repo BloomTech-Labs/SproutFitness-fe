@@ -394,6 +394,26 @@ Footer
   text-decoration-color: var(--footer-bg-color);
 }
 
+@media (max-width: 500px) {
+  .footer-section {
+    width: 100%;
+  }
+
+  .footer-flex {
+    flex-direction: column;
+  }
+
+  .footer-section p {
+    padding-top: 0;
+    padding-bottom: 20px;
+    width: 100%;
+  }
+
+  .footer-container {
+    padding-top: 20px;
+  }
+}
+
 /*
 End of Footer
 */
