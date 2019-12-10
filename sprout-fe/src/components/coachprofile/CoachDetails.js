@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
-import { Button, Col, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import {Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 
 
 const CoachDetails = () => {
@@ -172,60 +172,86 @@ console.log('coachImg', coachImage)
       console.log('image', image)
 
     return (
-        <div>
-            <div className='specialty-certifications'>
-                <div className="specialties-container">
-                    <h4>Specialties</h4>
-                    {!coachSpecialty ? <p>...Loading</p> : <p>{coachSpecialty}</p>}
+        <div className='container'>
+            <Row >     
+        <Col body inverse style={{padding: '0', margin: '0'}} id='cd' xs="6">
+            <Card className='cardImg'>
+            <CardImg  className='card-img' top width="100%" src="https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?cs=srgb&dl=man-about-to-lift-barbell-2261477.jpg&fm=jpg" alt="Card image cap" />
+            <CardBody className='card-text'>
+            <CardTitle>Certifications</CardTitle>
+            <CardSubtitle>Card subtitle</CardSubtitle>
+            <CardText>{certifications.length === 0 ?  <p>...Loading</p>  : certifications.map(cert => {
+                        return <h3>
+                            <h3>{cert.name}</h3>
+                        </h3>
+                        })}</CardText>
+                        <Button>Add Certification</Button>
+            </CardBody>
+        </Card>
+        </Col>
+         <Col body inverse style={{padding: '0', margin: '0'}} xs="6">
+            <Card classname='card-img'>
+            <CardImg className='card-img' top width="100%" src="https://images.pexels.com/photos/9267/earth-summer-garden-table.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Card image cap" />
+            <CardBody className='card-text'>
+            <CardTitle>Specialty</CardTitle>
+            <CardSubtitle>Card subtitle</CardSubtitle>
+            <CardText><h3>{coachSpecialty}</h3></CardText>
+            <Button>Add Specialty</Button>
+            </CardBody>
+        </Card>
+        </Col>
+      </Row>
 
-                </div>
-                <div>
-                    <h4>Certifications</h4>
-                {certifications.length === 0 ?  <p>...Loading</p>  : certifications.map(cert => {
-                    return <h1 className='specialty-button'>
-                        <p>{cert.name}</p>
-                    </h1>
-                    })}
-                </div>
-            </div>
-            <img src={coachImage} style={{width: '70px'}} />
-
-            <h1>Upload Image</h1>
-                <form onSubmit={saveChanges}>
+    <form onSubmit={saveChanges}>
+      <Row className='img-row'>
+        <Col body inverse style={{paddingTop: '30px'}} xs="6">
+        <h4>Your profile picture</h4>
+            <img src={coachImage} style={{width: '250px'}} />
+        </Col>
+        <Col body inverse style={{paddingTop: '30px'}} xs="6">
+        <h1 className='upload-image-text'>Upload Image</h1>
                 {loading ? (
                     <h3>Loading...</h3>
                 ): (
-                <img src={image} style={{width: '70px'}} />
+                <img src={image} style={{width: '10px'}} />
                 )}
-                <FormGroup onSubmit={saveChanges} row>
-        <Label for="exampleFile" sm={2}>File</Label>
-        <Col sm={10}>
-          <Input type="file" name="file" id="exampleFile" onChange={uploadImage} />
-          <FormText color="muted">
+                <FormGroup row>        
+          <Input type="file" name="file" id="exampleFile" color='white' onChange={uploadImage} />
+          <FormText color="white">
             This is some placeholder block-level help text for the above input.
             It's a bit lighter and easily wraps to a new line.
           </FormText>
-        </Col>
+        
       </FormGroup>
-            <div>
-                <h6>Language</h6>
-               <p>{language}</p> 
+        </Col>
+      </Row>
+      <Row className='bio-lang'>
+        <Col xs="6">
+          <div className='bio'>
+              <label>Current Bio</label>
+              <p className='bio-text-current'>{bio}</p>
+              <FormGroup>
+                <Label for="exampleText">Change Bio</Label>
+                <Input type="textarea" onChange={chooseBio} name="text" id="exampleText" className='bio-text-new' />
+              </FormGroup>   
+            </div>
+        </Col>
+        <Col xs="6"><h6>Current Language</h6>
+               <p className='lang-current'>{language}</p> 
                 <select className="language" onChange={langChange}>
-                    <option>Pick a language</option>
+                    <option>Change language</option>
                     <option value="English">English</option>
                     <option value="Spanish">Spanish</option>
                     <option value="French">French</option>
                     <option value="Arabic">Arabic</option>
                 </select>
+        </Col>
+      </Row>
+            <div> 
             </div> 
-            <div>
-                <h6>Bio</h6>
-                <p>{bio}</p>
-                <textarea onChange={chooseBio} className="bio" type="text">
-                </textarea>
-            </div>
-            <Button type="submit">SAVE CHANGES</Button>
+            <Button body inverse style={{marginTop: '20px', marginBottom: '20px'}} type='submit' className='changes-button' color="primary" size="lg" block>SAVE CHANGES</Button>
             </form>
+           
         </div>
     )
 

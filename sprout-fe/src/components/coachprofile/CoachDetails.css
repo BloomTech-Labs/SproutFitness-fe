@@ -1,4 +1,4 @@
-.specialty-button {
+/* .specialty-button {
     width: 500px;
     height: 100px;
     margin-bottom: 45px;
@@ -24,6 +24,97 @@
 }
 
 .bio {
-    width: 400px;
-    height: 250px;
+   display: flex;
+   justify-content: space-evenly
+}
+
+.bio-text {
+    padding-top: 50px;
+    width: 300px;
+    height: 300px;
+    text-align: left;
+}
+
+#exampleText {
+    margin: 0 auto;
+    width: 580px;
+    height: 300px;
+} */
+
+.container {
+   
+}
+
+.cd {
+    padding: 0;
+    margin: 0;
+}
+
+
+.card-text {
+    color: #062C2D;
+
+}
+
+.label {
+    margin: 0;
+    padding: 0;
+    width: 50px;
+}
+
+.card-img {
+    width:400px;
+    height: 400px;
+    margin: 0;
+    padding: 0;
+    background-color: 062C2D;
+}
+
+.img-row {
+    background-color: #128387;
+    height: 300px;
+}
+
+.img-row h3 {
+    color: red;
+}
+
+.img-row h4 {
+}
+
+.upload-image-text {
+    height: 100px;
+    color: white;
+}
+
+.bio-lang {
+    background-color: #062C2D;
+    color: white
+}
+
+.bio {
+    height: 450px;
+}
+
+.bio-text-current {
+    width: 500px;
+    height: 150px;
+    color: white;
+}
+
+.bio-text-new {
+    width: 500px;
+    height: 400px;
+}
+
+.lang-current {
+    color: white;
+}
+
+#exampleText {
+    height: 200px;
+}
+
+.changes-button {
+    width: 50%;
 }
