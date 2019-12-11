@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
-import {Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { IncomingMessage } from 'http';
+
+
 
 
 const CoachDetails = () => {
@@ -17,9 +20,13 @@ const CoachDetails = () => {
     const [className, setClassName] = useState(false)
     const [language, setLanguage] = useState("") 
     const [coachLanguage, setCoachLanguage] = useState("") 
-    
+    const [certName, setCertName] = useState('');
+    const [newCert, setnewCert] = useState([]);
+    const [id] = useState(2);
 
-   
+    const [modal, setModal] = useState(false);
+
+  const toggle = () => setModal(!modal);
     
 
 
@@ -113,22 +120,26 @@ console.log('coachImg', coachImage)
     setCoachLanguage(e.target.value)
   }
 
-  const saveChanges = () => { 
-
+  const saveChanges = (e) => { 
+    // e.preventDefault();
     const submit = e => {
         axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
           
     } 
 
-    const submitImage = e => {
+    const submitImage = () => {
+        if (image !== "") {
         axios.put("http://localhost:5000/api/coaches/2", { "picture_url": image } )
         .then(res => {
             console.log(res)
         })
         .catch(err =>
             console.log(err))
-    }
-
+     
+} else {
+    return null
+}
+  }
     const sendBio = () => {
         if (coachBio.length > 0) {
         axios.put("http://localhost:5000/api/coaches/2", { "bio": coachBio } )
@@ -159,20 +170,34 @@ console.log('coachImg', coachImage)
         
         axios.all([sendLang(), sendBio(), submit(), submitImage()])
           .then(axios.spread(function (language, bio){
-
           })) 
-              
-          
       }
  
       const chooseBio = (e) => {   
           setCoachBio(e.target.value)
       }
+
+      const newCertification = (e) => {
+        e.preventDefault();
+        axios.post("http://localhost:5000/api/coach_certifications")
+        .then(res => {
+          console.log(res)
+      })
+      .catch(err =>
+          console.log(err))
+  }
+
+    const changeCert = (e) => {
+        setCertName(e.target.value)
+        console.log(e.target.value)
+    }
+  
     
-      console.log('image', image)
+      console.log('c-name', certName)
 
     return (
         <div className='container'>
+ 
             <Row >     
         <Col body inverse style={{padding: '0', margin: '0'}} id='cd' xs="6">
             <Card className='cardImg'>
@@ -185,8 +210,24 @@ console.log('coachImg', coachImage)
                             <h3>{cert.name}</h3>
                         </h3>
                         })}</CardText>
-                        <Button>Add Certification</Button>
-            </CardBody>
+
+<div>
+      <Button color="primary" onClick={toggle}>Add Certification</Button>
+      <Modal isOpen={modal} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle}>Post certification</ModalHeader>
+        <ModalBody>
+        <FormGroup>
+        <Label for="exampleEmail">Name</Label>
+        <Input type="email" onChange={changeCert} name="email" id="exampleEmail" placeholder="with a placeholder" />
+      </FormGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+          <Button color="secondary" onClick={toggle}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+       </CardBody>
         </Card>
         </Col>
          <Col body inverse style={{padding: '0', margin: '0'}} xs="6">
@@ -196,8 +237,27 @@ console.log('coachImg', coachImage)
             <CardTitle>Specialty</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
             <CardText><h3>{coachSpecialty}</h3></CardText>
-            <Button>Add Specialty</Button>
-            </CardBody>
+
+
+            <div>
+      <Button color="primary" onClick={toggle}>Add Specialty</Button>
+      <Modal isOpen={modal} toggle={toggle} className={className}>
+        <ModalHeader toggle={toggle}>Post a specialization</ModalHeader>
+        <ModalBody>
+        <FormGroup>
+        <Label for="exampleEmail">Name</Label>
+        <Input type="email" onChange={changeCert} name="email" id="exampleEmail" placeholder="with a placeholder" />
+      </FormGroup>
+        </ModalBody>
+        <ModalFooter>
+          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
+          <Button color="secondary" onClick={toggle}>Cancel</Button>
+        </ModalFooter>
+      </Modal>
+    </div>
+         
+      
+                   </CardBody>
         </Card>
         </Col>
       </Row>
@@ -209,11 +269,11 @@ console.log('coachImg', coachImage)
             <img src={coachImage} style={{width: '250px'}} />
         </Col>
         <Col body inverse style={{paddingTop: '30px'}} xs="6">
-        <h1 className='upload-image-text'>Upload Image</h1>
+        <h1 className='upload-image-text'>Upload New Image</h1>
                 {loading ? (
                     <h3>Loading...</h3>
                 ): (
-                <img src={image} style={{width: '10px'}} />
+                <img src={image} style={{width: '50px'}} />
                 )}
                 <FormGroup row>        
           <Input type="file" name="file" id="exampleFile" color='white' onChange={uploadImage} />
