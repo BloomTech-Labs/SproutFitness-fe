@@ -23,66 +23,38 @@ const CoachDetails = () => {
     const [certName, setCertName] = useState('');
     const [newCert, setnewCert] = useState([]);
     const [id] = useState(2);
-
     const [modal, setModal] = useState(false);
-
+//reactstrap toggle for modal
   const toggle = () => setModal(!modal);
     
 
 
-useEffect(() => {
-    axios.get('https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/2')
-    .then(res => {
-        setSpecialty(res.data.specialties)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}, [])
-console.log('spec', specialty)
 
+//grabbing the users profile pic, bio, language, specialties, and certifications
 useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
+    axios.get('https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/545232323x5x5x')
     .then(res => {
-        setCertifications(res.data.certifications)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}, [])
-
-useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
-    .then(res => {
-        console.log(res.data.coach.picture_url)
+        setCoachImage(res.data.coach.picture_url)
         setBio(res.data.coach.bio)
         setLanguage(res.data.coach.language)
+        setSpecialty(res.data.specialties)
+        setCertifications(res.data.certifications)
         
     })
     .catch(err => {
         console.log(err)
     })
 }, [])
-useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
-    .then(res => {
-        console.log(res.data)
-        setCoachImage(res.data.coach.picture_url)
-        
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}, [])
-console.log('bio',coachBio)
-console.log(language)
 
+
+//mapping around all user specialties in order to render them 
 useEffect(() => {
 const spec = specialty.map(spcty => {
    setCoachSpecialty([spcty.name])
  })
 },[specialty])
 
+//mapping around all user certifications in order to render them 
 useEffect(() => {
     const cert = certifications.map(cert => {
         return cert
@@ -90,9 +62,7 @@ useEffect(() => {
 }, [certifications])
 
 
-
-
-console.log('coachImg', coachImage)
+//cloudinary upload
     const uploadImage = async e => {
         const files = e.target.files
         const data = new FormData()
@@ -115,22 +85,28 @@ console.log('coachImg', coachImage)
 
   
 
-
-
-  const langChange = e => {
-    setCoachLanguage(e.target.value)
-  }
-
+//This function is updating profile pic, language, and bio. It also sends an image to cloudinary if file is uploaded.
   const saveChanges = (e) => { 
-    // e.preventDefault();
+    e.preventDefault();
+
+    //this function is submiting the image url to the cloudinary server
     const submit = e => {
+      if(image !== ""){
         axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
-          
+        .then(res => {
+          console.log(res)
+          setCoachImage(res.data)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
     } 
 
+    //updating user's image string to serve but only if user uploads a new file
 const submitImage = () => {
         if (image !== "") {
-        axios.put("http://localhost:5000/api/coaches/2", { "picture_url": image } )
+        axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "picture_url": image } )
         .then(res => {
             console.log(res)
         })
@@ -141,11 +117,14 @@ const submitImage = () => {
     return null
 }
   }
+
+  //updates user's bio but only if user writes inside form
     const sendBio = () => {
         if (coachBio.length > 0) {
-        axios.put("http://localhost:5000/api/coaches/2", { "bio": coachBio } )
+        axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "bio": coachBio } )
         .then(res => {
             console.log(res)
+            setBio(res.data)
         })
         .catch(err =>
             console.log(err))
@@ -155,11 +134,13 @@ const submitImage = () => {
 
 }
 
+//updates users language but only if user changes it inside select form
     const sendLang = () => {
         if (coachLanguage.length > 0) {
-        axios.put("http://localhost:5000/api/coaches/2", { "language": coachLanguage } )
+        axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "language": coachLanguage } )
         .then(res => {
             console.log(res)
+            setLanguage(res.data)
         })
         .catch(err =>
             console.log(err))
@@ -168,34 +149,24 @@ const submitImage = () => {
         return null
     }
 }
-        
+    //this function is needed to execute the multiple server requests inside this saveChanges function
         axios.all([sendLang(), sendBio(), submit(), submitImage()])
-          .then(axios.spread(function (language, bio){
+          .then(axios.spread(function (){
           })) 
       }
  
+  //changes state of coachBio when user types inside form
       const chooseBio = (e) => {   
           setCoachBio(e.target.value)
       }
 
-      const newCertification = (e) => {
-        e.preventDefault();
-        axios.post("http://localhost:5000/api/coach_certifications")
-        .then(res => {
-          console.log(res)
-      })
-      .catch(err =>
-          console.log(err))
-  }
 
-    const changeCert = (e) => {
-        setCertName(e.target.value)
-        console.log(e.target.value)
+
+// changes the state of coachLanguage when a user clicks on option in select form  
+    const langChange = e => {
+      setCoachLanguage(e.target.value)
     }
-  
     
-      console.log('c-name', certName)
-
     return (
         <div className='container'>
  
@@ -219,7 +190,7 @@ const submitImage = () => {
         <ModalBody>
         <FormGroup>
         <Label for="exampleEmail">Name</Label>
-        <Input type="email" onChange={changeCert} name="email" id="exampleEmail" placeholder="with a placeholder" />
+        <Input type="email" onChange='' name="email" id="exampleEmail" placeholder="with a placeholder" />
       </FormGroup>
         </ModalBody>
         <ModalFooter>
@@ -247,7 +218,7 @@ const submitImage = () => {
         <ModalBody>
         <FormGroup>
         <Label for="exampleEmail">Name</Label>
-        <Input type="email" onChange={changeCert} name="email" id="exampleEmail" placeholder="with a placeholder" />
+        <Input type="email" onChange='' name="email" id="exampleEmail" placeholder="with a placeholder" />
       </FormGroup>
         </ModalBody>
         <ModalFooter>
@@ -267,7 +238,7 @@ const submitImage = () => {
       <Row className='img-row'>
         <Col body inverse style={{paddingTop: '30px'}} xs="6">
         <h4>Your profile picture</h4>
-            <img src={coachImage} style={{width: '250px'}} />
+            <img src={coachImage} style={{width: '185px'}} />
         </Col>
         <Col body inverse style={{paddingTop: '30px'}} xs="6">
         <h1 className='upload-image-text'>Upload New Image</h1>
