@@ -31,7 +31,7 @@ const CoachDetails = () => {
 
 
 useEffect(() => {
-    axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
+    axios.get('https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/2')
     .then(res => {
         setSpecialty(res.data.specialties)
     })
@@ -39,6 +39,7 @@ useEffect(() => {
         console.log(err)
     })
 }, [])
+console.log('spec', specialty)
 
 useEffect(() => {
     axios.get('http://localhost:5000/api/coach_helpers/coach/data/2')
@@ -127,7 +128,7 @@ console.log('coachImg', coachImage)
           
     } 
 
-    const submitImage = () => {
+const submitImage = () => {
         if (image !== "") {
         axios.put("http://localhost:5000/api/coaches/2", { "picture_url": image } )
         .then(res => {
