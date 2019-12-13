@@ -1,38 +1,46 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-
 class SignupForm extends Component {
-  constructor(props){
-      super(props)
-
+  constructor(){
+      super();
       this.state = {
         email: '',
         password: '',
-        firstName: '',
-        lastName: ''
-    }
+        firstname: '',
+        lastname: ''
+    };
   }
     
     handleChange = (e) => {
         e.preventDefault();
         this.setState({
             [e.target.id]: e.target.value
-        })
-    }
+        });
+    };
+    
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state)
+        const user = {
+            email: this.state.email,
+            password: this.state.password,
+            firstname: this.state.firstname,
+            lastname: this.state.lastname
+        }
         axios
-            .post('https://sprout-fitness-be-staging.herokuapp.com/api/register/coaches', this.state)
+            .post('https://sprout-fitness-be-staging.herokuapp.com/api/register/coaches',  user )
             .then(response => {
+                localStorage.setItem("token", response.data.token);
+                localStorage.setItem("id", response.data.id);
                 console.log(response)
+                console.log(response.data);
             })
             .catch(error => {
                 console.log(error)
             })
     }
     render() {
-        const { email, password, firstName, lastName } = this.state
+        const { email, password, firstname, lastname } = this.state
         return (
             <div className="auth-container">
                 <form onSubmit={this.handleSubmit}>
@@ -40,7 +48,6 @@ class SignupForm extends Component {
                         <span className="sf-title">Sprout</span>
                         <span className="sf-title-end"> Fitness</span>
                     </h1>
-
                     <div className="input-field">
                         <input className="email-field" 
                             type="email" 
@@ -50,7 +57,6 @@ class SignupForm extends Component {
                             placeholder="Email" 
                             onChange={this.handleChange} />
                     </div>
-
                     <div className="input-field">
                         <input className="password-field" 
                             type="password" 
@@ -60,27 +66,24 @@ class SignupForm extends Component {
                             placeholder="Password" 
                             onChange={this.handleChange} />
                     </div>
-
                     <div className="input-field">
                         <input className="first-name" 
-                            type="firstName" 
-                            name="firstName"
-                            id="firstName"
-                            value={firstName} 
+                            type="firstname" 
+                            name="firstname"
+                            id="firstname"
+                            value={firstname} 
                             placeholder="First Name" 
                             onChange={this.handleChange} />
                     </div>
-
                     <div className="input-field">
                         <input className="last-name" 
-                            type="lastName" 
-                            name="lastName"
-                            id="lastName"
-                            value={lastName}  
+                            type="lastname" 
+                            name="lastname"
+                            id="lastname"
+                            value={lastname}  
                             placeholder="Last Name" 
                             onChange={this.handleChange} />
                     </div>
-
                     <div className="input-field">
                         <button className="auth-btn">Sign Up</button>
                     </div>
@@ -90,5 +93,4 @@ class SignupForm extends Component {
         );
     }
 }
-
 export default SignupForm;
