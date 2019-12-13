@@ -118,3 +118,9 @@
 .changes-button {
     width: 50%;
 }
+
+.img-border {
+    border: 1px solid black;
+    height:  70px;
+    width: 70px;
+}

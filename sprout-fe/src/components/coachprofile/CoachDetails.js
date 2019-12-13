@@ -82,11 +82,14 @@ useEffect(() => {
     }
 
 
-  
+    const clearState = () => {
+      
+  }
 
 //This function is updating profile pic, language, and bio. It also sends an image to cloudinary if file is uploaded.
   const saveChanges = (e) => { 
     e.preventDefault();
+    e.target.reset();
 
     //this function is submiting the image url to the cloudinary server
     const submit = e => {
@@ -119,14 +122,14 @@ const submitImage = () => {
   }
 
   //updates user's bio but only if user writes inside form
-    const sendBio = () => {
+    const sendBio = (e) => {
         if (coachBio.length > 0) {
         axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "bio": coachBio } )
         .then(res => {
             console.log(res.status)
             if (res.status === 200) {
             setBio(coachBio)
-            
+            clearState()
             }
         })
         .catch(err =>
@@ -173,6 +176,9 @@ const submitImage = () => {
       setCoachLanguage(e.target.value)
     }
     console.log('cb', coachBio)
+
+
+
 
     
     return (
@@ -249,6 +255,7 @@ const submitImage = () => {
             <img src={coachImage} style={{width: '185px'}} />
         </Col>
         <Col body inverse style={{paddingTop: '30px'}} xs="6">
+        
         <h1 className='upload-image-text'>Upload New Image</h1>
                 {loading ? (
                     <h3>Loading...</h3>
