@@ -25,9 +25,8 @@ const CoachDetails = () => {
     const [id] = useState(2);
     const [modal, setModal] = useState(false);
 //reactstrap toggle for modal
-  const toggle = () => setModal(!modal);
+    const toggle = () => setModal(!modal);
     
-
 
 
 //grabbing the users profile pic, bio, language, specialties, and certifications
@@ -95,20 +94,21 @@ useEffect(() => {
         axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
         .then(res => {
           console.log(res)
-          setCoachImage(res.data)
         })
         .catch(err => {
           console.log(err)
         })
     }
     } 
-
     //updating user's image string to serve but only if user uploads a new file
 const submitImage = () => {
         if (image !== "") {
         axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "picture_url": image } )
         .then(res => {
             console.log(res)
+            if(res.status === 200) {
+              setCoachImage(image)
+            }
         })
         .catch(err =>
             console.log(err))
@@ -123,8 +123,11 @@ const submitImage = () => {
         if (coachBio.length > 0) {
         axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "bio": coachBio } )
         .then(res => {
-            console.log(res)
-            setBio(res.data)
+            console.log(res.status)
+            if (res.status === 200) {
+            setBio(coachBio)
+            
+            }
         })
         .catch(err =>
             console.log(err))
@@ -140,7 +143,9 @@ const submitImage = () => {
         axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "language": coachLanguage } )
         .then(res => {
             console.log(res)
-            setLanguage(res.data)
+            if (res.status === 200) {
+            setLanguage(coachLanguage)
+            } 
         })
         .catch(err =>
             console.log(err))
@@ -160,12 +165,15 @@ const submitImage = () => {
           setCoachBio(e.target.value)
       }
 
+      console.log(coachImage)
 
 
 // changes the state of coachLanguage when a user clicks on option in select form  
     const langChange = e => {
       setCoachLanguage(e.target.value)
     }
+    console.log('cb', coachBio)
+
     
     return (
         <div className='container'>
@@ -208,7 +216,7 @@ const submitImage = () => {
             <CardBody className='card-text'>
             <CardTitle>Specialty</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText><h3>{coachSpecialty}</h3></CardText>
+            <CardText><h3>{specialty.length === 0 ?  <p>...Loading</p>  : coachSpecialty}</h3></CardText>
 
 
             <div>
