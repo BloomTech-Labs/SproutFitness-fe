@@ -27,7 +27,6 @@ class LoginForm extends Component {
             .catch(error => {
                 console.log(error)
             })
-
     }
     render() {
         const { email, password} = this.state
