@@ -395,12 +395,17 @@ Footer
 }
 
 @media (max-width: 500px) {
+  .footer-container {
+    padding-left: 0;
+  }
+
   .footer-section {
     width: 100%;
   }
 
   .footer-flex {
     flex-direction: column;
+    margin: 0;
   }
 
   .footer-section p {
