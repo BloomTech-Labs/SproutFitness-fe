@@ -9,24 +9,12 @@ const Footer = (props) => {
     <footer className="footer-section">
       <div class="footer-container">
         <ul class="footer-flex">
-        <NavItem>
-                <NavLink href="/components/" className="nav-item nav-li">Contact</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/messenger" className="nav-item nav-li">Messenger</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/calendar/" className="nav-item">Calendar</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/blogger/" className="nav-item">Blogger</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/analytics/" className="nav-item">Analytics</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/billing/" className="nav-item">Billing</NavLink>
-              </NavItem>
+          <NavItem>
+            <NavLink href="/" className="nav-item nav-li">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink>
+          </NavItem>
         </ul>
         <div class="footer-copyright">
           <p>&copy; 2019 Sprout Fitness</p>
