@@ -30,7 +30,7 @@ class NavBar extends React.Component {
   }
 
   render() {
-    const { navigate, toggle, isOpen } = this.state
+    const { navigate, isOpen } = this.state
     if (navigate) {
       return <Redirect to ="/login" push={true} />
     }
@@ -39,7 +39,7 @@ class NavBar extends React.Component {
       <div>
         <Navbar color="light" light expand="md" className="nav-bar">
           <NavbarBrand href="/" className="logo-main"><span className="logo-color">Sprout</span> <span className="logo-color-end">Fitness</span></NavbarBrand>
-          <NavbarToggler onClick={toggle} />
+          <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto nav-links" navbar>
               <NavItem>
