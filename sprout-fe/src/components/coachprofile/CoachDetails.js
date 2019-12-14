@@ -134,7 +134,6 @@ const submitImage = () => {
             console.log(res.status)
             if (res.status === 200) {
             setBio(coachBio)
-            clearState()
             }
         })
         .catch(err =>
