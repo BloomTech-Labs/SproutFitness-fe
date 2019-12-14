@@ -3,11 +3,14 @@ import axios from 'axios';
 import './CoachDetails.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { IncomingMessage } from 'http';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions/index.js';
 
 
 
 
-const CoachDetails = () => {
+const CoachDetails = (props) => {
+  
     const [image, setImage] = useState('')
     const [coachImage, setCoachImage] = useState('')
     const [loading, setLoading] = useState(false)
@@ -28,10 +31,14 @@ const CoachDetails = () => {
     const toggle = () => setModal(!modal);
     
 
-
+    const userID = useSelector(state => state.userID)
+    const dispatch = useDispatch();
+    console.log(userID)
+  
+console.log(props)
 //grabbing the users profile pic, bio, language, specialties, and certifications
 useEffect(() => {
-    axios.get('https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/545232323x5x5x')
+    axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
     .then(res => {
         setCoachImage(res.data.coach.picture_url)
         setBio(res.data.coach.bio)
@@ -82,9 +89,7 @@ useEffect(() => {
     }
 
 
-    const clearState = () => {
-      
-  }
+  
 
 //This function is updating profile pic, language, and bio. It also sends an image to cloudinary if file is uploaded.
   const saveChanges = (e) => { 
@@ -106,7 +111,7 @@ useEffect(() => {
     //updating user's image string to serve but only if user uploads a new file
 const submitImage = () => {
         if (image !== "") {
-        axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "picture_url": image } )
+        axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image } )
         .then(res => {
             console.log(res)
             if(res.status === 200) {
@@ -124,7 +129,7 @@ const submitImage = () => {
   //updates user's bio but only if user writes inside form
     const sendBio = (e) => {
         if (coachBio.length > 0) {
-        axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "bio": coachBio } )
+        axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "bio": coachBio } )
         .then(res => {
             console.log(res.status)
             if (res.status === 200) {
@@ -143,7 +148,7 @@ const submitImage = () => {
 //updates users language but only if user changes it inside select form
     const sendLang = () => {
         if (coachLanguage.length > 0) {
-        axios.put("https://sprout-fitness-be-staging.herokuapp.com/api/coaches/545232323x5x5x", { "language": coachLanguage } )
+        axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "language": coachLanguage } )
         .then(res => {
             console.log(res)
             if (res.status === 200) {

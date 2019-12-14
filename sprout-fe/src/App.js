@@ -5,6 +5,8 @@ import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import Dashboard from './components/Dashboard';
 import CoachDetails from './components/coachprofile/CoachDetails';
+import { useHistory } from 'react-router-dom';
+
 
 function App() {
   return (
