@@ -51,9 +51,15 @@
 }
 
 
-.card-text {
+.card-body {
     color: #062C2D;
+    height: 200px;
 
+}
+
+.card-text {
+    width: 100%;
+    border-bottom: solid gray 1px;
 }
 
 .label {
@@ -68,6 +74,10 @@
     margin: 0;
     padding: 0;
     background-color: 062C2D;
+}
+
+.modal-input {
+    width: 80%;
 }
 
 .img-row {

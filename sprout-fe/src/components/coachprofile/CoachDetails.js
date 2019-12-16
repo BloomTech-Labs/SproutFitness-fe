@@ -23,23 +23,29 @@ const CoachDetails = (props) => {
     const [className, setClassName] = useState(false)
     const [language, setLanguage] = useState("") 
     const [coachLanguage, setCoachLanguage] = useState("") 
+    const [specName, setSpecName] = useState('');
     const [certName, setCertName] = useState('');
     const [newCert, setnewCert] = useState([]);
     const [id] = useState(2);
+    const [modals, setModals] = useState(false);
     const [modal, setModal] = useState(false);
 //reactstrap toggle for modal
-    const toggle = () => setModal(!modal);
     
+    const toggles = () => setModals(!modals);
+    const toggle = () => setModal(!modal);
+
 
     const userID = useSelector(state => state.userID)
     const dispatch = useDispatch();
-    console.log(userID)
+    console.log('id', userID)
   
 console.log(props)
 //grabbing the users profile pic, bio, language, specialties, and certifications
 useEffect(() => {
     axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
     .then(res => {
+      console.log('res', res)
+
         setCoachImage(res.data.coach.picture_url)
         setBio(res.data.coach.bio)
         setLanguage(res.data.coach.language)
@@ -181,10 +187,31 @@ const submitImage = () => {
     }
     console.log('cb', coachBio)
 
+    const certHandler = e => {
+      setnewCert(e.target.value)
+    }
 
-
-
+    const newCertification = (e) => {
+            e.preventDefault();
+          axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, {"name": newCert, "coach_id": `${userID}`})
+            .then(res => {
+              console.log(res)
+          })
+          .catch(err =>
+              console.log(err))
+      }
     
+      const specHandler = e => {
+        setSpecName(e.target.value)
+      }
+     
+    const cert = certifications.length === 0 ?  <p>...Loading</p>  : certifications.map(cert => {
+      return  <p className='card-text'>{cert.name}</p>
+      })
+      console.log('cert', cert)
+
+console.log('newcert', newCert)
+    console.log('c', certifications)
     return (
         <div className='container'>
  
@@ -192,27 +219,23 @@ const submitImage = () => {
         <Col body inverse style={{padding: '0', margin: '0'}} id='cd' xs="6">
             <Card className='cardImg'>
             <CardImg  className='card-img' top width="100%" src="https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?cs=srgb&dl=man-about-to-lift-barbell-2261477.jpg&fm=jpg" alt="Card image cap" />
-            <CardBody className='card-text'>
+            <CardBody className='card-body'>
             <CardTitle>Certifications</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText>{certifications.length === 0 ?  <p>...Loading</p>  : certifications.map(cert => {
-                        return <h3>
-                            <h3>{cert.name}</h3>
-                        </h3>
-                        })}</CardText>
+            <CardText>{cert}</CardText>
 
 <div>
       <Button color="primary" onClick={toggle}>Add Certification</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <Modal isOpen={modal} toggle={toggle} >
         <ModalHeader toggle={toggle}>Post certification</ModalHeader>
         <ModalBody>
-        <FormGroup>
-        <Label for="exampleEmail">Name</Label>
-        <Input type="email" onChange='' name="email" id="exampleEmail" placeholder="with a placeholder" />
-      </FormGroup>
-        </ModalBody>
+         <label>Name of Certification</label>
+         <Form onSubmit={newCertification}>
+            <input className='modal-input' onChange={certHandler} />
+            <Button type='submit' color="primary" >POST</Button>
+      </Form> 
+      </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
@@ -223,24 +246,24 @@ const submitImage = () => {
          <Col body inverse style={{padding: '0', margin: '0'}} xs="6">
             <Card classname='card-img'>
             <CardImg className='card-img' top width="100%" src="https://images.pexels.com/photos/9267/earth-summer-garden-table.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Card image cap" />
-            <CardBody className='card-text'>
+            <CardBody className='card-body'>
             <CardTitle>Specialty</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText><h3>{specialty.length === 0 ?  <p>...Loading</p>  : coachSpecialty}</h3></CardText>
+            <CardText><p className='card-text'>{specialty.length === 0 ?  <p>...Loading</p>  : <p className='card-text'>coachSpecialty</p>}</p></CardText>
 
 
             <div>
-      <Button color="primary" onClick={toggle}>Add Specialty</Button>
-      <Modal isOpen={modal} toggle={toggle} className={className}>
+      <Button color="primary" onClick={toggles}>Add Specialty</Button>
+      <Modal isOpen={modals} toggle={toggles} className={className}>
         <ModalHeader toggle={toggle}>Post a specialization</ModalHeader>
         <ModalBody>
-        <FormGroup>
-        <Label for="exampleEmail">Name</Label>
-        <Input type="email" onChange='' name="email" id="exampleEmail" placeholder="with a placeholder" />
-      </FormGroup>
+        <label>Specialty Name</label>
+        <Form>
+            <input className='modal-input' onChange={specHandler} type="text" name="name" id="exampleEmail" placeholder="" />
+            <Button type='submit' color="primary" >POST</Button>
+      </Form> 
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle}>Do Something</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
