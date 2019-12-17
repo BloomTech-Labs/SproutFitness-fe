@@ -1,16 +1,20 @@
 import {
 	LOGIN_TRY, LOGIN_SUCCESS, LOGIN_FAIL,
 	REGISTERING, LOGOUT,
-	TODO_TOGGLE
- } from "../actions";
- const initialState = {
-	users: [],
+	TODO_TOGGLE,
+	DEMO_TOGGLE
+} from "../actions";
+
+const initialState = {
+	clients: [],
 	tasks: [
 	   {taskName: "Fill out your bio", id: 0, completed: false}, 
 	   {taskName: "Upload a picture", id: 1, completed: false},
 	   {taskName: "explore our website", id: 2, completed: false},
 	   {taskName: "give us some feedback", id: 3, completed: false}
 	],
+	coachID: null,
+	userID: null,
 	registering: false,
 	loggingIn: false,
 	loggedIn: localStorage.token === undefined ?
