@@ -555,6 +555,15 @@ footer p {
   Medi Queries
 */
 
+@media (max-width: 992px) {
+  button,
+  .signup-btn,
+  .login-btn {
+    font-size: 2rem;
+    padding: 5px 20px;
+  }
+}
+
 @media (min-width: 961px) {
   .hero-images {
     -webkit-box-pack: space-evenly;
@@ -648,15 +657,6 @@ footer p {
   .services p {
     text-align: center;
     padding-right: 0px;
-  }
-}
-
-@media (max-width: 650px) {
-  button,
-  .signup-btn,
-  .login-btn {
-    font-size: 2rem;
-    padding: 5px 20px;
   }
 }
 
