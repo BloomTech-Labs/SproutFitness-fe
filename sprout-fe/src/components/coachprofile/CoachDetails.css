@@ -53,14 +53,11 @@
 
 .card-body {
     color: #062C2D;
-    height: 200px;
+    height: 240px;
 
 }
 
-.card-text {
-    width: 100%;
-    border-bottom: solid gray 1px;
-}
+
 
 .label {
     margin: 0;

@@ -26,9 +26,14 @@ const CoachDetails = (props) => {
     const [specName, setSpecName] = useState('');
     const [certName, setCertName] = useState('');
     const [newCert, setnewCert] = useState([]);
-    const [id] = useState(2);
+    const [id, setId] = useState('');
     const [modals, setModals] = useState(false);
     const [modal, setModal] = useState(false);
+    const [specId, setSpecId] = useState([]);
+    const [specialtyId, setSpecialtyId] = useState([]);
+    const [specialties, setSpecialties] = useState('');
+    const [name, setName] = useState('');
+
 //reactstrap toggle for modal
     
     const toggles = () => setModals(!modals);
@@ -37,34 +42,60 @@ const CoachDetails = (props) => {
 
     const userID = useSelector(state => state.userID)
     const dispatch = useDispatch();
-    console.log('id', userID)
   
-console.log(props)
 //grabbing the users profile pic, bio, language, specialties, and certifications
 useEffect(() => {
     axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
     .then(res => {
-      console.log('res', res)
 
         setCoachImage(res.data.coach.picture_url)
         setBio(res.data.coach.bio)
         setLanguage(res.data.coach.language)
         setSpecialty(res.data.specialties)
         setCertifications(res.data.certifications)
-        
     })
     .catch(err => {
         console.log(err)
     })
 }, [])
 
+useEffect(() => {
+  axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
+  .then(res => {
+    console.log('res', res.data)
+    res.data.map(item => {
+      setSpecId(item.id)
+    })
+
+  })
+  .catch(err => {
+      console.log(err)
+  })
+}, [])
+
+useEffect(() => {
+  axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties/${specId}`)
+  .then(res => {
+    console.log('res', res.data)
+    setSpecialtyId({...specialtyId, sp: [...res.data]})
+
+  })
+  .catch(err => {
+      console.log(err)
+  })
+}, [specId])
+
+console.log('specId', specialtyId.sp)
+console.log('ss', specialty)
+
+
 
 //mapping around all user specialties in order to render them 
 useEffect(() => {
-const spec = specialty.map(spcty => {
+if (specialty) { const spec = specialty.map(spcty => {
    setCoachSpecialty([spcty.name])
- })
-},[specialty])
+}) } 
+},[specialty, specialties])
 
 //mapping around all user certifications in order to render them 
 useEffect(() => {
@@ -196,21 +227,60 @@ const submitImage = () => {
           axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, {"name": newCert, "coach_id": `${userID}`})
             .then(res => {
               console.log(res)
+              if (res.status === 201) {
+                setCertName(newCert)
+              }
           })
           .catch(err =>
               console.log(err))
       }
+
+      const newSpecialty = (e) => {
+        e.preventDefault();
+      axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, {"coach_id": `${userID}`, "specialty_id": id})
+        .then(res => {
+          console.log(res)
+          if (res.status === 201) {
+            setSpecialty(specName)
+          }
+      })
+      .catch(err =>
+          console.log(err))
+  }
     
       const specHandler = e => {
         setSpecName(e.target.value)
       }
      
-    const cert = certifications.length === 0 ?  <p>...Loading</p>  : certifications.map(cert => {
-      return  <p className='card-text'>{cert.name}</p>
+  const cert = !certifications ?  <p>...Loading</p>  : certifications.map(cert => {
+      return  <p>{cert.name}</p>
       })
       console.log('cert', cert)
 
-console.log('newcert', newCert)
+      const special = specialty.length === 0 ?  name  : <p>{coachSpecialty}</p>
+
+      const chooseSpec = e => {
+        setSpecialties(e.target.value)
+        console.log('event', e.target.value)
+
+      }
+
+      const spcl = e => {
+        const event = e.target.value
+        const events = event.split(",")
+        setId(events[0])
+        setName(events[1])
+        console.log('event', events[1])
+        
+
+
+        // return setId(e.target.value), setName('yo')
+    }
+
+      console.log(specialties)
+
+console.log('spcl', id)
+console.log('spcl', name)
     console.log('c', certifications)
     return (
         <div className='container'>
@@ -223,6 +293,8 @@ console.log('newcert', newCert)
             <CardTitle>Certifications</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
             <CardText>{cert}</CardText>
+            <CardText>{certName}</CardText>
+
 
 <div>
       <Button color="primary" onClick={toggle}>Add Certification</Button>
@@ -249,7 +321,7 @@ console.log('newcert', newCert)
             <CardBody className='card-body'>
             <CardTitle>Specialty</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText><p className='card-text'>{specialty.length === 0 ?  <p>...Loading</p>  : <p className='card-text'>coachSpecialty</p>}</p></CardText>
+            <CardText>{specName ? name : special}</CardText>
 
 
             <div>
@@ -258,8 +330,10 @@ console.log('newcert', newCert)
         <ModalHeader toggle={toggle}>Post a specialization</ModalHeader>
         <ModalBody>
         <label>Specialty Name</label>
-        <Form>
-            <input className='modal-input' onChange={specHandler} type="text" name="name" id="exampleEmail" placeholder="" />
+        <Form onSubmit={newSpecialty}>
+             {specialtyId.sp ? specialtyId.sp.map(item => {
+               return <button type='button' value={[item.id, item.name]} onClick={spcl}>{item.name}</button>
+             }): null}
             <Button type='submit' color="primary" >POST</Button>
       </Form> 
         </ModalBody>
@@ -267,7 +341,7 @@ console.log('newcert', newCert)
           <Button color="secondary" onClick={toggle}>Cancel</Button>
         </ModalFooter>
       </Modal>
-    </div>
+  </div>
          
       
                    </CardBody>
@@ -279,7 +353,7 @@ console.log('newcert', newCert)
       <Row className='img-row'>
         <Col body inverse style={{paddingTop: '30px'}} xs="6">
         <h4>Your profile picture</h4>
-            <img src={coachImage} style={{width: '185px'}} />
+            <img src={coachImage} style={{width: '95px'}} />
         </Col>
         <Col body inverse style={{paddingTop: '30px'}} xs="6">
         
