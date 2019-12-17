@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions';
 import axios from 'axios';
 const LoginForm = () => {
-    const error = useSelector(state => state.error)
+    // const error = useSelector(state => state.error)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const dispatch = useDispatch();

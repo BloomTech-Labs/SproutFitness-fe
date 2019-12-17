@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Visualization = () => {
-		
-	// const [users, setUsers] = useState([{ name: "Hubert"}, { name: "Joe"}])
-	
+const Visualization = () => {	
 	return (
 		<div className={"visual"}>
 			<h3>Visualizations</h3>

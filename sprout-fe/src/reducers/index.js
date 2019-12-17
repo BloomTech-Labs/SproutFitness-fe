@@ -23,7 +23,6 @@ const initialState = {
 	updating: false,
 	deleting: false,
 	error: null,
-	userID: null
  };
  export default (state = initialState, action) => {
 	switch (action.type) {
