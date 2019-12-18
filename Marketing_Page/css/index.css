@@ -598,8 +598,8 @@ footer p {
 }
 
 @media (max-width: 910px) {
-  .header-nav {
-    padding-bottom: 0;
+  .navbar {
+    display: none;
   }
 
   .nav-links {
@@ -625,10 +625,6 @@ footer p {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    display: none;
-  }
-
   .header-nav {
     padding-bottom: 20px;
   }
