@@ -22,7 +22,7 @@ const initialState = {
 	retrievingUsers: false,
 	updating: false,
 	deleting: false,
-	error: null,
+	error: null
  };
  export default (state = initialState, action) => {
 	switch (action.type) {
@@ -71,7 +71,13 @@ const initialState = {
 			 ...state,
 			 tasks: action.payload
 		  }
-	   }
+		}
+		case DEMO_TOGGLE: {
+			return {
+				...state,
+				clients: action.payload
+			}
+		}
 	   default: {
 		  return state
 	   }

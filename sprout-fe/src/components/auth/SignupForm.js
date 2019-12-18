@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions';
+import { LOGIN_SUCCESS, LOGIN_FAIL, REGISTERING } from '../../actions';
 import axios from 'axios';
 const SignupForm = () => {
     const [email, setEmail] = useState('')
@@ -36,8 +36,8 @@ const SignupForm = () => {
             lastname
         }
         e.target.reset()
-        axios
-        .post('https://sprout-fitness-be-staging.herokuapp.com/api/register/coaches',  user )
+        dispatch({ type: REGISTERING })
+        axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/register/coaches',  user )
         .then(response => {
             localStorage.setItem("token", response.data.token);
             dispatch({ type: LOGIN_SUCCESS, payload: response.data.id})

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions';
+import { LOGIN_SUCCESS, LOGIN_FAIL, LOGIN_TRY } from '../../actions';
 import axios from 'axios';
 const LoginForm = () => {
     // const error = useSelector(state => state.error)
@@ -25,8 +25,8 @@ const LoginForm = () => {
             password
         }
         e.target.reset()
-        axios
-        .post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user)
+        dispatch({ type: LOGIN_TRY })
+        axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user)
         .then(response => {
             localStorage.setItem("token", response.data.token);
             dispatch({ type: LOGIN_SUCCESS, payload: response.data.id})

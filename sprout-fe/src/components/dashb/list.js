@@ -58,7 +58,7 @@ const List = () => {
 				]
 			},
 			{
-				userID: 2,
+				userID: 1,
 				firstname: "John",
 				lastname: "Doe",
 				fitnessLog: [

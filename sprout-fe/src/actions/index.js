@@ -1,8 +1,3 @@
-// import axios from 'axios';
-
-// export const FETCHING_USERS = 'FETCHING_USERS';
-// export const FETCH_SUCCESS = 'FETCH_SUCCESS';
-// export const FETCH_FAIL = 'FETCH_FAIL';
 export const LOGIN_TRY = 'LOGIN_TRY';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
