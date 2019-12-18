@@ -14,7 +14,8 @@ const initialState = {
 	   {taskName: "give us some feedback", id: 3, completed: false}
 	],
 	coachID: null,
-	userID: null,
+	userID: localStorage.Uid === undefined ?
+		null : localStorage.Uid,
 	registering: false,
 	loggingIn: false,
 	loggedIn: localStorage.token === undefined ?

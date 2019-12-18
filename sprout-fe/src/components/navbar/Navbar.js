@@ -21,6 +21,7 @@ const NavBarBox = () => {
   
   const logoutHandle = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("Uid")
     dispatch({ type: LOGOUT })
     history.push('/login') 
   }

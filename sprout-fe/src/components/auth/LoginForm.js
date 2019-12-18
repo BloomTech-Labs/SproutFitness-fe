@@ -29,6 +29,7 @@ const LoginForm = () => {
         axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user)
         .then(response => {
             localStorage.setItem("token", response.data.token);
+            localStorage.setItem("Uid", response.data.id);
             dispatch({ type: LOGIN_SUCCESS, payload: response.data.id})
             history.push('/')
         })
