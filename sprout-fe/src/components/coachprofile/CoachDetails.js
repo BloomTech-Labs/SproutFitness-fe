@@ -76,7 +76,6 @@ useEffect(() => {
 useEffect(() => {
   axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties/${specId}`)
   .then(res => {
-    console.log('res', res.data)
     setSpecialtyId({...specialtyId, sp: [...res.data]})
 
   })
@@ -84,9 +83,6 @@ useEffect(() => {
       console.log(err)
   })
 }, [specId])
-
-console.log('specId', specialtyId.sp)
-console.log('ss', specialty)
 
 
 
@@ -138,7 +134,6 @@ useEffect(() => {
       if(image !== ""){
         axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
         .then(res => {
-          console.log(res)
         })
         .catch(err => {
           console.log(err)
@@ -150,7 +145,6 @@ const submitImage = () => {
         if (image !== "") {
         axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image } )
         .then(res => {
-            console.log(res)
             if(res.status === 200) {
               setCoachImage(image)
             }
@@ -186,7 +180,6 @@ const submitImage = () => {
         if (coachLanguage.length > 0) {
         axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "language": coachLanguage } )
         .then(res => {
-            console.log(res)
             if (res.status === 200) {
             setLanguage(coachLanguage)
             } 
@@ -209,14 +202,12 @@ const submitImage = () => {
           setCoachBio(e.target.value)
       }
 
-      console.log(coachImage)
 
 
 // changes the state of coachLanguage when a user clicks on option in select form  
     const langChange = e => {
       setCoachLanguage(e.target.value)
     }
-    console.log('cb', coachBio)
 
     const certHandler = e => {
       setnewCert(e.target.value)
@@ -226,7 +217,6 @@ const submitImage = () => {
             e.preventDefault();
           axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, {"name": newCert, "coach_id": `${userID}`})
             .then(res => {
-              console.log(res)
               if (res.status === 201) {
                 setCertName(newCert)
               }
@@ -239,7 +229,6 @@ const submitImage = () => {
         e.preventDefault();
       axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, {"coach_id": `${userID}`, "specialty_id": id})
         .then(res => {
-          console.log(res)
           if (res.status === 201) {
             setSpecialty(specName)
           }
@@ -255,7 +244,6 @@ const submitImage = () => {
   const cert = !certifications ?  <p>...Loading</p>  : certifications.map(cert => {
       return  <p>{cert.name}</p>
       })
-      console.log('cert', cert)
 
       const special = specialty.length === 0 ?  name  : <p>{coachSpecialty}</p>
 
@@ -270,23 +258,17 @@ const submitImage = () => {
         const events = event.split(",")
         setId(events[0])
         setName(events[1])
-        console.log('event', events[1])
         
 
 
-        // return setId(e.target.value), setName('yo')
     }
 
-      console.log(specialties)
 
-console.log('spcl', id)
-console.log('spcl', name)
-    console.log('c', certifications)
     return (
         <div className='container'>
  
             <Row >     
-        <Col body inverse style={{padding: '0', margin: '0'}} id='cd' xs="6">
+        <Col style={{padding: '0', margin: '0'}} id='cd' xs="6">
             <Card className='cardImg'>
             <CardImg  className='card-img' top width="100%" src="https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?cs=srgb&dl=man-about-to-lift-barbell-2261477.jpg&fm=jpg" alt="Card image cap" />
             <CardBody className='card-body'>
@@ -314,7 +296,7 @@ console.log('spcl', name)
        </CardBody>
         </Card>
         </Col>
-         <Col body inverse style={{padding: '0', margin: '0'}} xs="6">
+         <Col style={{padding: '0', margin: '0'}} xs="6">
             <Card classname='card-img'>
             <CardImg className='card-img' top width="100%" src="https://images.pexels.com/photos/9267/earth-summer-garden-table.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Card image cap" />
             <CardBody className='card-body'>
@@ -350,11 +332,11 @@ console.log('spcl', name)
 
     <form onSubmit={saveChanges}>
       <Row className='img-row'>
-        <Col body inverse style={{paddingTop: '30px'}} xs="6">
+        <Col style={{paddingTop: '30px'}} xs="6">
         <h4>Your profile picture</h4>
             <img src={coachImage} style={{width: '95px'}} />
         </Col>
-        <Col body inverse style={{paddingTop: '30px'}} xs="6">
+        <Col style={{paddingTop: '30px'}} xs="6">
         
         <h1 className='upload-image-text'>Upload New Image</h1>
                 {loading ? (
@@ -396,7 +378,7 @@ console.log('spcl', name)
       </Row>
             <div> 
             </div> 
-            <Button body inverse style={{marginTop: '20px', marginBottom: '20px'}} type='submit' className='changes-button' color="primary" size="lg" block>SAVE CHANGES</Button>
+            <Button style={{marginTop: '20px', marginBottom: '20px'}} type='submit' className='changes-button' color="primary" size="lg" block>SAVE CHANGES</Button>
             </form>
            
         </div>
