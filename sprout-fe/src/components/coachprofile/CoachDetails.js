@@ -57,7 +57,7 @@ useEffect(() => {
     .catch(err => {
         console.log(err)
     })
-}, [])
+}, [certName])
 
 useEffect(() => {
   axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
@@ -293,7 +293,6 @@ console.log('spcl', name)
             <CardTitle>Certifications</CardTitle>
             <CardSubtitle>Card subtitle</CardSubtitle>
             <CardText>{cert}</CardText>
-            <CardText>{certName}</CardText>
 
 
 <div>
