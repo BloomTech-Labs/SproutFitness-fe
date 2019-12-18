@@ -308,7 +308,7 @@ const submitImage = () => {
             <div>
       <Button color="primary" onClick={toggles}>Add Specialty</Button>
       <Modal isOpen={modals} toggle={toggles} className={className}>
-        <ModalHeader toggle={toggle}>Post a specialization</ModalHeader>
+        <ModalHeader toggle={toggles}>Post a specialization</ModalHeader>
         <ModalBody>
         <label>Specialty Name</label>
         <Form onSubmit={newSpecialty}>
@@ -319,7 +319,7 @@ const submitImage = () => {
       </Form> 
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
+          <Button color="secondary" onClick={toggles}>Cancel</Button>
         </ModalFooter>
       </Modal>
   </div>
