@@ -1,5 +1,5 @@
-import React from 'react';
-import { Redirect } from 'react-router';
+import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   Collapse,
   Navbar,
@@ -10,51 +10,36 @@ import {
   NavLink
 } from 'reactstrap';
 
-class NavBar extends React.Component {
-  state = {
-    navigate: false
-  }
+const NavBarBox = () => {
+  const [isOpen, setIsOpen] = useState(false)
+  const history = useHistory();
 
-  constructor(props) {
-    super(props);
-
-    this.toggle = this.toggle.bind(this);
-    this.state = {
-      isOpen: false
-    };
+  const toggle = () => {
+    setIsOpen(!isOpen)
   }
-  toggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
+  
+  const logoutHandle = () => {
+    localStorage.removeItem("token")
+    history.push('/login')
   }
-
-  render() {
-    const { navigate, isOpen } = this.state
-    if (navigate) {
-      return <Redirect to ="/login" push={true} />
-    }
-    
-    return (
-      <div>
-        <Navbar color="light" light expand="md" className="nav-bar">
-          <NavbarBrand href="/" className="logo-main"><span className="logo-color">Sprout</span> <span className="logo-color-end">Fitness</span></NavbarBrand>
-          <NavbarToggler onClick={this.toggle} />
-          <Collapse isOpen={isOpen} navbar>
-            <Nav className="ml-auto nav-links" navbar>
-              <NavItem>
-                <NavLink href="/" className="nav-item nav-li">Home</NavLink>
-              </NavItem>
-              <NavItem>
-                <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink>
-              </NavItem>
-            </Nav>
-              <button onClick={() => this.setState({ navigate: true })} className="btn btn-primary btn-large logout-btn">Logout</button>
-          </Collapse>
-        </Navbar>
-      </div>
-    )
-  }
+  
+  return (
+    <Navbar color="light" light expand="md" className="nav-bar">
+      <NavbarBrand href="/" className="logo-main"><span className="logo-color">Sprout</span> <span className="logo-color-end">Fitness</span></NavbarBrand>
+      <NavbarToggler onClick={toggle} />
+      <Collapse isOpen={isOpen} navbar>
+        <Nav className="ml-auto nav-links" navbar>
+          <NavItem>
+            <NavLink href="/" className="nav-item nav-li">Home</NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink>
+          </NavItem>
+        </Nav>
+          <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Logout</button>
+      </Collapse>
+    </Navbar>
+  )
 }
 
-export default NavBar;
+export default NavBarBox;
