@@ -577,7 +577,7 @@ footer p {
   }
 
   .services h4 {
-    font-size: 2.4rem;
+    font-size: 2.5rem;
   }
 
   .services p {
@@ -648,11 +648,34 @@ footer p {
 
   .services h4 {
     padding: 25px 0 5px 0;
+    font-size: 2.6rem;
   }
 
   .services p {
     text-align: center;
     padding-right: 0px;
+    font-size: 2rem;
+  }
+
+  .services h3 {
+    padding: 10px 0;
+    font-size: 3rem;
+  }
+}
+
+@media (max-width: 585px) {
+  #contact-area .submit-button {
+    margin-right: 13%;
+  }
+
+  #contact-area {
+    width: 82%;
+  }
+
+  #contact-area input,
+  #contact-area textarea {
+    width: 300px;
+    text-align: center;
   }
 }
 
@@ -688,27 +711,20 @@ footer p {
     font-size: 1.6rem;
   }
 
-  #contact-area .submit-button {
-    margin-right: 8px;
+  .contact-flex {
+    display: flex;
+    flex-direction: column;
   }
 
-  #contact-area {
-    width: 62%;
+  .submit-button {
+    align-items: center;
   }
+}
 
-  #contact-area input,
-  #contact-area textarea {
-    width: 300px;
-    text-align: center;
-  }
-
+@media (max-width: 505px) {
   label {
-    float: none;
-
-    margin-right: 0px;
-    width: 100px;
-    padding-top: 5px;
-    font-size: 1.4em;
+    text-align: center;
+    margin: 0 auto;
   }
 }
 
@@ -723,17 +739,23 @@ footer p {
   }
 
   #contact-area {
-    width: 80%;
+    margin: 0 auto;
   }
 
-  #contact-area .submit-button {
-    margin-right: 30px;
+  label {
+    text-align: left;
+    padding-bottom: 5px;
   }
 }
 
 @media (max-width: 375px) {
   #contact-area .submit-button {
-    margin-right: 0;
+    margin-right: 18%;
+  }
+
+  .contact-flex {
+    margin: 0 auto;
+    width: 98%;
   }
 }
 
