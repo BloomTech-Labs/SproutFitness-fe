@@ -1,18 +1,19 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { LOGOUT } from '../../actions';
 import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
-  NavItem,
-  NavLink
+  NavItem
 } from 'reactstrap';
 
 const NavBarBox = () => {
   const [isOpen, setIsOpen] = useState(false)
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const toggle = () => {
     setIsOpen(!isOpen)
@@ -20,20 +21,27 @@ const NavBarBox = () => {
   
   const logoutHandle = () => {
     localStorage.removeItem("token")
-    history.push('/login')
+    dispatch({ type: LOGOUT })
+    history.push('/login') 
   }
   
   return (
     <Navbar color="light" light expand="md" className="nav-bar">
-      <NavbarBrand href="/" className="logo-main"><span className="logo-color">Sprout</span> <span className="logo-color-end">Fitness</span></NavbarBrand>
+      <Link to={`/`} className="logo-main">
+        <span className="logo-color">Sprout</span>
+        <span className="logo-color-end">Fitness</span>
+      </Link>
+      {/* <NavbarBrand href="/" className="logo-main"><span className="logo-color">Sprout</span> <span className="logo-color-end">Fitness</span></NavbarBrand> */}
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
         <Nav className="ml-auto nav-links" navbar>
           <NavItem>
-            <NavLink href="/" className="nav-item nav-li">Home</NavLink>
+            <Link to={`/`} className="nav-item nav-li">Home</Link>
+            {/* <NavLink href="/" className="nav-item nav-li">Home</NavLink> */}
           </NavItem>
           <NavItem>
-            <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink>
+            <Link to={`/profile`} className="nav-item nav-li">Account Profile</Link>
+            {/* <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink> */}
           </NavItem>
         </Nav>
           <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Logout</button>

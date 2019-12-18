@@ -89,8 +89,6 @@ const List = () => {
 		})
 
 	}
-
-	console.log(tasks);
 	
 	if(clients[0] === undefined) {
 		return (

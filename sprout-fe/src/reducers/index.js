@@ -62,7 +62,8 @@ const initialState = {
 		  return {
 			 ...state,
 			 loggedIn: false,
-			 error: null
+			 error: null,
+			 userID: null
 		  }
 	   }
 	   case TODO_TOGGLE: {

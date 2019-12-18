@@ -1,22 +1,22 @@
 import React from "react";
-import {
-  NavItem,
-  NavLink
-} from 'reactstrap';
+import { Link } from 'react-router-dom';
+import { NavItem } from 'reactstrap';
 
 const Footer = (props) => {
   return (
     <footer className="footer-section">
-      <div class="footer-container">
-        <ul class="footer-flex">
+      <div className="footer-container">
+        <ul className="footer-flex">
           <NavItem>
-            <NavLink href="/" className="nav-item nav-li">Home</NavLink>
+            <Link to={`/`} className="nav-item nav-li">Home</Link>
+            {/* <NavLink href="/" className="nav-item nav-li">Home</NavLink> */}
           </NavItem>
           <NavItem>
-            <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink>
+            <Link to={`/profile`} className="nav-item nav-li">Account Profile</Link>
+            {/* <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink> */}
           </NavItem>
         </ul>
-        <div class="footer-copyright">
+        <div className="footer-copyright">
           <p>&copy; 2019 Sprout Fitness</p>
         </div>
       </div>

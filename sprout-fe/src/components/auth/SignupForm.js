@@ -29,14 +29,13 @@ const SignupForm = () => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        setEmail(e.target.value)
-        setPassword(e.target.value)
         const user = {
             email,
             password,
             firstname,
             lastname
         }
+        e.target.reset()
         axios
         .post('https://sprout-fitness-be-staging.herokuapp.com/api/register/coaches',  user )
         .then(response => {
