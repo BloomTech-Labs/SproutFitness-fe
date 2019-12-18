@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
 import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
-import { IncomingMessage } from 'http';
-import { useDispatch, useSelector } from 'react-redux';
-import { LOGIN_SUCCESS, LOGIN_FAIL } from '../../actions/index.js';
+import { useSelector } from 'react-redux';
 
 
 
@@ -17,13 +15,11 @@ const CoachDetails = (props) => {
     const [specialty, setSpecialty] = useState([])
     const [coachSpecialty, setCoachSpecialty] = useState([])
     const [certifications, setCertifications] = useState([])
-    const [coachCertifications, setCoachCertifications] = useState([])
     const [coachBio, setCoachBio] = useState("")
     const [bio, setBio] = useState("")
-    const [className, setClassName] = useState(false)
     const [language, setLanguage] = useState("") 
     const [coachLanguage, setCoachLanguage] = useState("") 
-    const [specName, setSpecName] = useState('');
+    const [specName] = useState('');
     const [certName, setCertName] = useState('');
     const [newCert, setnewCert] = useState([]);
     const [id, setId] = useState('');
@@ -31,7 +27,7 @@ const CoachDetails = (props) => {
     const [modal, setModal] = useState(false);
     const [specId, setSpecId] = useState([]);
     const [specialtyId, setSpecialtyId] = useState([]);
-    const [specialties, setSpecialties] = useState('');
+    const [specialties] = useState('');
     const [name, setName] = useState('');
 
 //reactstrap toggle for modal
@@ -41,7 +37,6 @@ const CoachDetails = (props) => {
 
 
     const userID = useSelector(state => state.userID)
-    const dispatch = useDispatch();
   
 //grabbing the users profile pic, bio, language, specialties, and certifications
 useEffect(() => {
@@ -57,14 +52,14 @@ useEffect(() => {
     .catch(err => {
         console.log(err)
     })
-}, [certName])
+}, [certName, userID])
 
 useEffect(() => {
   axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
   .then(res => {
-    console.log('res', res.data)
-    res.data.map(item => {
-      setSpecId(item.id)
+    res.data.map((item, key) => { return setSpecId(item.id) 
+      
+
     })
 
   })
@@ -80,22 +75,21 @@ useEffect(() => {
 
   })
   .catch(err => {
-      console.log(err)
   })
-}, [specId])
+}, [specId, specialtyId])
 
 
 
 //mapping around all user specialties in order to render them 
 useEffect(() => {
-if (specialty) { const spec = specialty.map(spcty => {
-   setCoachSpecialty([spcty.name])
-}) } 
-},[specialty, specialties])
+  if (specialty) { specialty.map(spcty => 
+     setCoachSpecialty([spcty.name])
+  ) } 
+  },[specialty, specialties])
 
 //mapping around all user certifications in order to render them 
 useEffect(() => {
-    const cert = certifications.map(cert => {
+    certifications.map(cert => {
         return cert
     })
 }, [certifications])
@@ -162,7 +156,6 @@ const submitImage = () => {
         if (coachBio.length > 0) {
         axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "bio": coachBio } )
         .then(res => {
-            console.log(res.status)
             if (res.status === 200) {
             setBio(coachBio)
             }
@@ -237,21 +230,15 @@ const submitImage = () => {
           console.log(err))
   }
     
-      const specHandler = e => {
-        setSpecName(e.target.value)
-      }
+  
      
-  const cert = !certifications ?  <p>...Loading</p>  : certifications.map(cert => {
-      return  <p>{cert.name}</p>
+  const cert = !certifications ?  <div>...Loading</div>  : certifications.map((cert,key) => {
+    return <li key={cert.id}>{cert.name}</li> 
       })
 
-      const special = specialty.length === 0 ?  name  : <p>{coachSpecialty}</p>
+      const special = specialty.length === 0 ?  name  : coachSpecialty
 
-      const chooseSpec = e => {
-        setSpecialties(e.target.value)
-        console.log('event', e.target.value)
-
-      }
+     
 
       const spcl = e => {
         const event = e.target.value
@@ -297,7 +284,7 @@ const submitImage = () => {
         </Card>
         </Col>
          <Col style={{padding: '0', margin: '0'}} xs="6">
-            <Card classname='card-img'>
+            <Card>
             <CardImg className='card-img' top width="100%" src="https://images.pexels.com/photos/9267/earth-summer-garden-table.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Card image cap" />
             <CardBody className='card-body'>
             <CardTitle>Specialty</CardTitle>
@@ -307,13 +294,13 @@ const submitImage = () => {
 
             <div>
       <Button color="primary" onClick={toggles}>Add Specialty</Button>
-      <Modal isOpen={modals} toggle={toggles} className={className}>
+      <Modal isOpen={modals} toggle={toggles} >
         <ModalHeader toggle={toggles}>Post a specialization</ModalHeader>
         <ModalBody>
         <label>Specialty Name</label>
         <Form onSubmit={newSpecialty}>
              {specialtyId.sp ? specialtyId.sp.map(item => {
-               return <button type='button' value={[item.id, item.name]} onClick={spcl}>{item.name}</button>
+               return <button type='button' key={item.id} value={[item.id, item.name]} onClick={spcl}>{item.name}</button>
              }): null}
             <Button type='submit' color="primary" >POST</Button>
       </Form> 
@@ -334,7 +321,7 @@ const submitImage = () => {
       <Row className='img-row'>
         <Col style={{paddingTop: '30px'}} xs="6">
         <h4>Your profile picture</h4>
-            <img src={coachImage} style={{width: '95px'}} />
+            <img src={coachImage} style={{width: '95px'}} alt=''/>
         </Col>
         <Col style={{paddingTop: '30px'}} xs="6">
         
@@ -342,7 +329,7 @@ const submitImage = () => {
                 {loading ? (
                     <h3>Loading...</h3>
                 ): (
-                <img src={image} style={{width: '50px'}} />
+                <img src={image} style={{width: '50px'}} alt=''/>
                 )}
                 <FormGroup row>        
           <Input type="file" name="file" id="exampleFile" color='white' onChange={uploadImage} />
