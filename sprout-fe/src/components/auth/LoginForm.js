@@ -50,13 +50,15 @@ const LoginForm = () => {
                      type="email" 
                      placeholder="Email" 
                      id="email" 
+                     autoComplete="username"
                      onChange={handleEmail} />
                 </div>
                 <div className="input-field">
                     <input className="password-field" 
                      type="password" 
                      placeholder="Password" 
-                     id="password" 
+                     id="password"
+                     autoComplete="current-password"
                      onChange={handlePassword} />
                 </div>
                 <div className="input-field">

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useHistory, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { LOGOUT } from '../../actions';
 import {
   Collapse,
@@ -11,6 +11,8 @@ import {
 } from 'reactstrap';
 
 const NavBarBox = () => {
+
+  const loggedIn = useSelector(state => state.loggedIn)
   const [isOpen, setIsOpen] = useState(false)
   const history = useHistory();
   const dispatch = useDispatch();
@@ -45,7 +47,9 @@ const NavBarBox = () => {
             {/* <NavLink href="/profile" className="nav-item nav-li">Account Profile</NavLink> */}
           </NavItem>
         </Nav>
-          <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Logout</button>
+          {loggedIn ? 
+          <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Logout</button> : 
+          <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Signin</button>}
       </Collapse>
     </Navbar>
   )

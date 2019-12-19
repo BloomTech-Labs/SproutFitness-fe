@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 
 
-const CoachDetails = (props) => {
+const CoachDetails = () => {
   
     const [image, setImage] = useState('')
     const [coachImage, setCoachImage] = useState('')
@@ -238,16 +238,11 @@ const submitImage = () => {
 
       const special = specialty.length === 0 ?  name  : coachSpecialty
 
-     
-
       const spcl = e => {
         const event = e.target.value
         const events = event.split(",")
         setId(events[0])
         setName(events[1])
-        
-
-
     }
 
 
