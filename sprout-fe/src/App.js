@@ -15,10 +15,12 @@ function App() {
       <header className="App-header header-nav">
         <Navbar />
       </header>
+      <div className="Site-content">
       <Route exact path='/login' component={LoginForm} />
       <Route exact path='/register' component={SignupForm} />
       <Route exact path='/' component={Dashboard} />
       <Route exact path='/profile' component={CoachDetails} />
+      </div>
       <Footer />
     </div>
   );
