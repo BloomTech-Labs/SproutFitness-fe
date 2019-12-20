@@ -49,7 +49,7 @@ const NavBarBox = () => {
         </Nav>
           {loggedIn ? 
           <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Logout</button> : 
-          <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn">Signin</button>}
+          <button onClick={logoutHandle} className="btn btn-primary btn-large logout-btn sign_in-btn">Sign in</button>}
       </Collapse>
     </Navbar>
   )
