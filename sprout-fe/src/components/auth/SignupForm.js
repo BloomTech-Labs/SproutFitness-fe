@@ -53,27 +53,8 @@ const SignupForm = () => {
         <div className="auth-container">
             <form onSubmit={handleSubmit}>
                 <h1 className="auth-h1">
-                    <span className="sf-title">Sprout</span>
-                    <span className="sf-title-end"> Fitness</span>
+                   Sign Up
                 </h1>
-                <div className="input-field">
-                    <input className="email-field" 
-                        type="email" 
-                        name="email"
-                        id="email"
-                        value={email} 
-                        placeholder="Email" 
-                        onChange={handleEmail} />
-                </div>
-                <div className="input-field">
-                    <input className="password-field" 
-                        type="password" 
-                        name="password"
-                        id="password"
-                        value={password} 
-                        placeholder="Password" 
-                        onChange={handlePassword} />
-                </div>
                 <div className="input-field">
                     <input className="first-name" 
                         type="firstname" 
@@ -91,6 +72,24 @@ const SignupForm = () => {
                         value={lastname}  
                         placeholder="Last Name" 
                         onChange={handleLastname} />
+                </div>
+                <div className="input-field">
+                    <input className="email-field" 
+                        type="email" 
+                        name="email"
+                        id="email"
+                        value={email} 
+                        placeholder="Email" 
+                        onChange={handleEmail} />
+                </div>
+                <div className="input-field">
+                    <input className="password-field" 
+                        type="password" 
+                        name="password"
+                        id="password"
+                        value={password} 
+                        placeholder="Password" 
+                        onChange={handlePassword} />
                 </div>
                 <div className="input-field">
                     <button className="auth-btn">Sign Up</button>

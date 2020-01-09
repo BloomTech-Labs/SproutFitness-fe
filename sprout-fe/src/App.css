@@ -197,10 +197,6 @@ button a {
   padding-right: 15px;
 }
 
-.signup-btn {
-  background-color: #128387;
-}
-
 .login-btn {
   background-color: #1ac0c6;
 }
@@ -389,6 +385,18 @@ button.sign_in-btn {
 }
 /*
  End of Nav/Header
+*/
+
+/*
+ Signup
+*/
+
+.signup-btn {
+  background-color: #128387;
+}
+
+/*
+End of Signup
 */
 
 /* 
