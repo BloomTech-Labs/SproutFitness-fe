@@ -422,18 +422,19 @@ button.sign_in-btn {
 
 @media (max-width: 768px) {
   .auth-container {
-    width: 75%;
+    width: 90%;
   }
 }
 
 @media (max-width: 414px) {
-  .auth-container {
-    width: 85%;
-  }
-
   .auth-btn {
     width: 45%;
     font-size: 2.5rem;
+  }
+
+  .input-field {
+    width: 85%;
+    margin: 0 auto;
   }
 }
 
