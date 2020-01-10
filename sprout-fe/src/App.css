@@ -214,87 +214,6 @@ button a {
   color: #09d3ac;
 }
 
-.auth-container {
-  border: 1px solid #062c2d;
-  background-color: #ddf6f7;
-  width: 30%;
-  height: 450px;
-  margin-left: 35%;
-  margin-top: 10%;
-}
-
-.input-field {
-  width: 60%;
-  margin-left: 20%;
-}
-
-.password-field {
-  height: 25px;
-  margin-top: 10px;
-  width: 100%;
-  font-size: 15px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-}
-
-.email-field {
-  height: 25px;
-  width: 100%;
-  font-size: 15px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-}
-
-.first-name {
-  height: 25px;
-  margin-top: 10px;
-  width: 100%;
-  font-size: 15px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-}
-
-.last-name {
-  height: 25px;
-  margin-top: 10px;
-  width: 100%;
-  font-size: 15px;
-  border: 1px solid lightgrey;
-  border-radius: 5px;
-}
-
-.auth-btn {
-  background-color: #128387;
-  color: white;
-  font-size: 15px;
-  width: 102%;
-  height: 30px;
-  margin-top: 30px;
-  border: 1px solid #128387;
-  border-radius: 5px;
-}
-
-.auth-btn:hover {
-  background-color: #7bc7c9;
-  color: white;
-}
-
-.auth-h1 {
-  font-size: 2.9rem;
-  font-weight: bold;
-  padding-bottom: 20px;
-  padding-top: 20px;
-  border-bottom: 5px solid white;
-}
-
-.signup-link {
-  margin-top: 50px;
-}
-
-.login-link {
-  margin-top: 25px;
-}
-
 .sf-title {
   color: #75d363;
 }
@@ -391,8 +310,138 @@ button.sign_in-btn {
  Signup
 */
 
+.auth-container {
+  border: 1px solid #128387;
+  width: 45%;
+  height: 100%;
+  margin: 5% auto;
+  border-radius: 4px;
+}
+
+.auth-container h1 {
+  font-size: 4rem;
+  padding-top: 40px;
+}
+
+.input-field {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.signup-input {
+  background-color: #ddf6f7 !important;
+  border-radius: 4px;
+  border: #128387 1px solid !important;
+}
+.signup-input::placeholder {
+  color: #128387;
+  font-size: 1.6rem;
+  padding-left: 10px;
+}
+
+.password-field {
+  height: 40px;
+  margin-top: 15px;
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}
+
+.email-field {
+  height: 40px;
+  margin-top: 15px;
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}
+
+.first-name {
+  height: 40px;
+  margin-top: 10px;
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}
+
+.last-name {
+  height: 40px;
+  margin-top: 15px;
+  width: 100%;
+  font-size: 15px;
+  border: 1px solid lightgrey;
+  border-radius: 4px;
+}
+
+.auth-btn {
+  background-color: #128387;
+  color: white;
+  font-size: 2.8rem;
+  width: 30%;
+  height: 55px;
+  margin-top: 20px;
+  border-radius: 4px;
+  outline: none;
+  line-height: 1.3;
+  float: left;
+}
+
+.auth-btn:hover {
+  background-color: #7bc7c9;
+  color: white;
+}
+
+.auth-h1 {
+  font-size: 2.9rem;
+  font-weight: bold;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border-bottom: 5px solid white;
+}
+
 .signup-btn {
   background-color: #128387;
+}
+
+.signup-link {
+  margin-top: 50px;
+}
+
+.input-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-link {
+  margin-top: 25px;
+  color: var(--footer-bg-color);
+  padding-bottom: 40px;
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    width: 75%;
+  }
+}
+
+@media (max-width: 414px) {
+  .auth-container {
+    width: 85%;
+  }
+
+  .auth-btn {
+    width: 45%;
+    font-size: 2.5rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .auth-btn {
+    width: 50%;
+    font-size: 2.4rem;
+  }
 }
 
 /*
