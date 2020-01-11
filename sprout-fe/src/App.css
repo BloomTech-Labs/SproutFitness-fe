@@ -197,10 +197,6 @@ button a {
   padding-right: 15px;
 }
 
-.login-btn {
-  background-color: #1ac0c6;
-}
-
 .App {
   text-align: center;
   font-size: 1.2rem;
@@ -307,7 +303,7 @@ button.sign_in-btn {
 */
 
 /*
- Signup
+ Signup/login
 */
 
 .auth-container {
@@ -326,17 +322,6 @@ button.sign_in-btn {
 .input-field {
   width: 80%;
   margin: 0 auto;
-}
-
-.signup-input {
-  background-color: #ddf6f7 !important;
-  border-radius: 4px;
-  border: #128387 1px solid !important;
-}
-.signup-input::placeholder {
-  color: #128387;
-  font-size: 1.6rem;
-  padding-left: 10px;
 }
 
 .password-field {
@@ -373,6 +358,17 @@ button.sign_in-btn {
   font-size: 15px;
   border: 1px solid lightgrey;
   border-radius: 4px;
+}
+
+.signup-input {
+  background-color: #ddf6f7 !important;
+  border-radius: 4px;
+  border: #128387 1px solid !important;
+}
+.signup-input::placeholder {
+  color: #128387;
+  font-size: 1.6rem;
+  padding-left: 10px;
 }
 
 .auth-btn {
@@ -420,6 +416,10 @@ button.sign_in-btn {
   padding-bottom: 40px;
 }
 
+.login-btn {
+  background-color: #1ac0c6;
+}
+
 @media (max-width: 768px) {
   .auth-container {
     width: 90%;
@@ -446,7 +446,7 @@ button.sign_in-btn {
 }
 
 /*
-End of Signup
+End of Signup/login
 */
 
 /* 
