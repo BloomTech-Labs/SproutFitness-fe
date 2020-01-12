@@ -60,10 +60,13 @@ const LoginForm = () => {
                      autoComplete="current-password"
                      onChange={handlePassword} />
                 </div>
-                <div className="input-field">
-                    <button className="auth-btn login-btn">Login</button>
+                <div className="input-field input-bottom">
+                    <button className="auth-btn">Login</button>
                 </div>
-                <h3 className="signup-link">Don't have an account? <a href="register">Sign Up!</a></h3>
+                <div className="signup-link">
+                <h3 className="forgot-pw"><a href="#" className="login-forgot">Forgot password?</a></h3>
+                <h3 className="login-link">Don't have an account? <a href="register" className="login-forgot">Sign up!</a></h3>
+                </div>
             </form>
         </div>
     );

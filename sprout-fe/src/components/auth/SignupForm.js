@@ -93,9 +93,9 @@ const SignupForm = () => {
                 </div>
                 <div className="login-container">
                 <div className="input-field input-bottom">
-                    <button className="auth-btn">Sign Up</button>
+                    <button className="auth-btn signup-btn">Sign Up</button>
                 </div>
-                <h3 className="login-link">Already have an account? <a href="login">Login</a></h3>
+                <h3 className="login-link">Already have an account? <a href="login" className="login-forgot">Login</a></h3>
                 </div>
             </form>
         </div>
