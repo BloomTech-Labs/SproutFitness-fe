@@ -41,8 +41,130 @@
     height: 300px;
 } */
 
-.container {
-   
+.prof-edit-container {
+    width: 100%;
+    
+      
+}
+.prof-edit-main {
+    
+}
+.prof-edit-header {
+    width: 100%;
+}
+.prof-image-area {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: self-end;
+}
+
+.prof-image-area .row {
+    padding: 16px;
+}
+.field-row {
+    padding: 4px
+}
+.field {
+    width: 95%;
+}
+.bio-field-row {
+    justify-content: center;
+}
+.bio-field {
+    width: 65%;
+    min-width: 300px;
+    
+}
+.prof-edit-section-left {
+    width: 45%;
+}
+
+.prof-edit-section-right {
+    width: 55%;
+}
+.image--cirlce {
+    /* position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%; */
+}
+
+.upload-prof-img-input {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    padding: 4px 8px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 4px;
+    color: white;
+    background-color: #1D888C;
+    minWidth: 130px;
+    height: auto;
+    /* display: inline-block; */
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    cursor: pointer;
+    
+}
+
+.hover:hover {
+    color: #1ac0c6;
+    cursor: pointer; 
+}
+
+
+
+.image--circle img {
+    position: relative;
+    width: 186px;
+    height: 186px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.modal-icon-container {
+    border: 2px solid black;
+    border-radius: 16px;
+    padding: 6px;
+    width: 200px;
+    height: 200px;
+}
+.modal-icon {
+    margin-top: 15%;
+    font-size: 10rem;
+    color: inherit;
+    
+}
+.modal-icon-container label:hover {
+    cursor: pointer;
+}
+.modal-icon-container:hover {
+    color: #1ac0c6;
+    border-color: #1ac0c6 ;
+    cursor: pointer;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
 }
 
 .cd {
@@ -66,11 +188,13 @@
 }
 
 .card-img {
-    width:400px;
+    width: 100%;
+    height: auto;
+    /* width:400px;
     height: 400px;
     margin: 0;
     padding: 0;
-    background-color: 062C2D;
+    background-color: 062C2D; */
 }
 
 .modal-input {
