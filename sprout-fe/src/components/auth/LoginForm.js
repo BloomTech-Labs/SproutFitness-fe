@@ -3,6 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGIN_TRY } from '../../actions';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+
+
 const LoginForm = () => {
     // const error = useSelector(state => state.error)
     const [email, setEmail] = useState('')
@@ -26,7 +29,8 @@ const LoginForm = () => {
         }
         e.target.reset()
         dispatch({ type: LOGIN_TRY })
-        axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user)
+        // axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user) // staging
+         axios.post('http://localhost:5000/api/login/coaches', user) // local
         .then(response => {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("Uid", response.data.id);
@@ -64,6 +68,7 @@ const LoginForm = () => {
                 <div className="input-field">
                     <button className="auth-btn">Login</button>
                 </div>
+                <h3 className="signup-link"><Link to='/forgot-password'>Forgot password?</Link></h3>
                 <h3 className="signup-link">Don't have an account? <a href="register">Sign Up!</a></h3>
             </form>
         </div>
