@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { Button, Form, Input } from 'reactstrap'
 
 
 const ResetPassword = (props) => {
@@ -65,7 +65,7 @@ const ResetPassword = (props) => {
           password,
           resetPasswordToken: token,
         },
-      );
+      )
       console.log('RESPONSE DATA:', response.data)
       if (response.data.message === 'password updated') {
         setUpdated(true)
@@ -83,13 +83,11 @@ const ResetPassword = (props) => {
 
     if (error) {
       return (
-        <div>
-         <h1>Password Reset Screen</h1>
-            <h4>Problem resetting password. Please send another reset link.</h4>
-           <button className="auth-btn"><Link to='/'>Go Home</Link></button>
-            <button>
-              <Link to='/forgot-password'>Forgot Password?</Link>
-            </button>
+        <div className="password-reset-form">
+            <h2>The link has expired or incorrect. Please send another reset link.</h2>
+          <Button className="reset-password-btn  btn-incorrect-link" color="info">
+            <Link to='/forgot-password'><span>Forgot Password?</span></Link>
+           </Button>
         </div>
       )
     }
@@ -106,27 +104,28 @@ const ResetPassword = (props) => {
 
     return (
       <div>
-        <h1>Password Reset Screen</h1>
-        <form className="password-form" onSubmit={updatePassword}>
-          <input
+        <Form className="password-reset-form"  onSubmit={updatePassword}>
+        <h2>Pleaser enter new password</h2>
+          <Input
             id="password"
             label="password"
             onChange={handleChange}
             value={password}
             type="password"
           />
-          <button type='submit'>Update Password</button>
-        </form>
+          <Button className='reset-password-btn' color="info" type='submit'><span>Update Password</span></Button>
+        </Form>
 
         {updated && (
           <div>
             <p>Your password has been successfully reset, please try logging in again.</p>
-            <button className="login-button">
+            <Button color="info" className="login-button">
               <Link to='/login'>Login</Link>
-            </button>
+            </Button>
           </div>
         )}
-        <button className="auth-btn"><Link to='/'>Go Home</Link></button>
+        {/* <button className="auth-btn"></button>
+        <Button color="info"><Link to='/'>Go Home</Link></Button> */}
       </div>
     )
 }

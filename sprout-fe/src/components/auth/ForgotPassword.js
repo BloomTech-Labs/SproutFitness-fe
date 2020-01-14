@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import { Button, Form, Input } from 'reactstrap'
+import './auth.css'
 
 
 const ForgotPassword = () => {
@@ -49,9 +51,9 @@ const ForgotPassword = () => {
   
     return (
       <div>
-       <h1>Forgot Password Screen</h1>
-        <form className="profile-form" onSubmit={sendEmail}>
-          <input
+        <Form className="password-reset-form" onSubmit={sendEmail}>
+         <h2>Please enter your email and you will get an email to reset your password.</h2>
+          <Input
             id="email"
             label="email"
             name='email'
@@ -59,8 +61,11 @@ const ForgotPassword = () => {
             onChange={handleChange}
             placeholder="Email Address"
           />
-            <button type="submit" className="auth-btn">Send Password Reset Email</button>
-        </form>
+          
+            <Button color="info" type="submit" className="reset-password-btn">
+              <span>Send Password Reset Email</span>
+            </Button>
+        </Form>
         {showNullError && (
           <div>
             <p>The email address cannot be null.</p>
@@ -72,7 +77,8 @@ const ForgotPassword = () => {
               That email address isn&apos;t recognized. Please try again or
               register for a new account.
             </p>
-            <button><Link to='/register'>Register</Link></button>
+
+            <Button color="info"><Link to='/register'>Register</Link></Button>
           </div>
         )}
         {messageFromServer === 'recovery email sent' && (

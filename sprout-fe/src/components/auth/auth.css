@@ -1,0 +1,26 @@
+.password-reset-form {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.password-reset-form input {
+  margin: 30px 0 20px 0;
+  font-size: 1.5rem;
+}
+
+.password-reset-form h2 {
+  margin-top: 30px;
+}
+
+.reset-password-btn {
+  width: 100%;
+  font-size: 4rem;
+}
+
+.reset-password-btn span{
+  font-size: 1.5rem;
+}
+
+.btn-incorrect-link {
+  margin-top: 20px;
+}
