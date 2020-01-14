@@ -1,35 +1,25 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 
 
-class ForgotPassword extends Component {
-  constructor() {
-    super();
+const ForgotPassword = () => {
 
-    this.state = {
-      email: '',
-      showError: false,
-      messageFromServer: '',
-      showNullError: false,
-    };
+  const [email, setEmail] = useState('')
+  const [showError, setShowError] = useState(false)
+  const [messageFromServer, setMessageFromServer] = useState('')
+  const [showNullError, setShowNullError] = useState(false)
+
+  const handleChange = (event) => {
+    setEmail(event.target.value)
   }
 
-  handleChange = name => (event) => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-  sendEmail = async (e) => {
+  const sendEmail = async (e) => {
     e.preventDefault();
-    const { email } = this.state;
     if (email === '') {
-      this.setState({
-        showError: false,
-        messageFromServer: '',
-        showNullError: true,
-      });
+      setShowError(false)
+      setMessageFromServer('')
+      setShowNullError(true)
     } else {
       try {
         const response = await axios.post(
@@ -39,41 +29,34 @@ class ForgotPassword extends Component {
             email,
           },
         );
-        console.log(response.data);
+        console.log(response.data)
         if (response.data === 'recovery email sent') {
-          this.setState({
-            showError: false,
-            messageFromServer: 'recovery email sent',
-            showNullError: false,
-          });
+          setShowError(false)
+          setMessageFromServer('recovery email sent')
+          setShowNullError(false)
         }
       } catch (error) {
-        console.error(error.response.data);
+        console.error(error.response.data)
         if (error.response.data === 'email not in db') {
-          this.setState({
-            showError: true,
-            messageFromServer: '',
-            showNullError: false,
-          });
+          setShowError(true)
+          setMessageFromServer('')
+          setShowNullError(false)
         }
       }
     }
-  };
+  }
 
-  render() {
-    const {
- email, messageFromServer, showNullError, showError 
-} = this.state;
-
+  
     return (
       <div>
        <h1>Forgot Password Screen</h1>
-        <form className="profile-form" onSubmit={this.sendEmail}>
+        <form className="profile-form" onSubmit={sendEmail}>
           <input
             id="email"
             label="email"
+            name='email'
             value={email}
-            onChange={this.handleChange('email')}
+            onChange={handleChange}
             placeholder="Email Address"
           />
             <button type="submit" className="auth-btn">Send Password Reset Email</button>
@@ -100,7 +83,7 @@ class ForgotPassword extends Component {
         {/* <button className="auth-btn"><Link to='/'>Go Home</Link></button> */}
       </div>
     );
-  }
+  
 }
 
 export default ForgotPassword;
