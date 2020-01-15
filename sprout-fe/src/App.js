@@ -4,7 +4,7 @@ import { Route } from 'react-router-dom';
 import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import Dashboard from './components/dashb';
-import CoachDetails from './components/coachprofile/CoachDetails';
+import DisplayProfile from './components/coachprofile/displayProfile/DisplayProfile';
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/footer';
 
@@ -19,7 +19,7 @@ function App() {
       <Route exact path='/login' component={LoginForm} />
       <Route exact path='/register' component={SignupForm} />
       <Route exact path='/' component={Dashboard} />
-      <Route exact path='/profile' component={CoachDetails} />
+      <Route exact path='/profile' component={DisplayProfile} />
       </div>
       <Footer />
     </div>
