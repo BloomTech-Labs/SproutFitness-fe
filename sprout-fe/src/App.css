@@ -469,6 +469,71 @@ input.signup-input {
 End of Signup/login
 */
 
+/*
+ DisplayProile
+*/
+
+.displayProfile-top {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.avatar-img {
+  width: 13%;
+  height: 100%;
+  margin-left: 40px;
+}
+
+.profile-image {
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+}
+
+.displayCert {
+  display: flex;
+  justify-content: space-between;
+  width: 30%;
+  height: 100%;
+}
+
+.editprofile-btn {
+  background-color: var(--footer-txt-hover);
+  color: var(--main-bg-color);
+  font-size: 2.8rem;
+  width: 20%;
+  height: 55px;
+  margin-right: 20px;
+  border-radius: 4px;
+  outline: none;
+  float: right;
+  line-height: 1.9;
+  text-align: center;
+}
+
+.displayProfile-bottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.displayInfo {
+  width: 18%;
+  height: 100%;
+  margin: 20px 0 0 40px;
+}
+
+.displayInfo p {
+  font-size: 1.9rem;
+  text-align: left;
+  font-weight: 400;
+  font-family: poppins;
+}
+
+.displayBio {
+  width: 45%;
+}
+
 /* 
 Footer
 */
