@@ -7,6 +7,9 @@ import { useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpa, faCertificate } from '@fortawesome/free-solid-svg-icons'
 
+import SpecialityCard from './SpecialtyCard'
+import SpecialtySelectModal from './SpecialtySelectModal'
+
 import countries from './countries'
 import timezones from './timezones'
 
@@ -15,12 +18,12 @@ const CoachDetails = () => {
 
 	const [image, setImage] = useState('')
 	const [coachImage, setCoachImage] = useState('')
-	const [loading, setLoading] = useState(false)
+	
 	const [specialty, setSpecialty] = useState([])
 	const [coachSpecialty, setCoachSpecialty] = useState([])
 	const [certifications, setCertifications] = useState([])
 	const [coachBio, setCoachBio] = useState("")
-	const [bio, setBio] = useState("")
+	
 	const [language, setLanguage] = useState("")
 	const [coachLanguage, setCoachLanguage] = useState("")
 	const [specName] = useState('');
@@ -34,9 +37,21 @@ const CoachDetails = () => {
 	const [specialties] = useState('');
 	const [name, setName] = useState('');
 
-	const [coachData, setCoachData] = useState({})
+
+	// App States
+	const [loading, setLoading] = useState(false)
+	const [isImageLoading, setIsImageLoading] = useState(false)
+	const [hasCoachChanged, setHasCoachChanged] = useState(false)
+	const [hasSpecsChanged, setHasSpecsChanged] = useState(false)
+	const [hasCertsChanged, setHasCertsChanged] = useState(false)
+
+	
+	const [coachData, setCoachData] = useState({}) // For fields
 	const [coachSpecialties, setCoachSpecialties] = useState([])
+	const [coachSpecialtiesIdList, setCoachSpecialtiesIdList] = useState([])
+	const [appSpecialtiesList, setAppSpecialtiesList] = useState([])
 	const [coachCertifications, setCoachCertifications] = useState([])
+	const [selectedSpecialties, setSelectedSpecialties] = useState([])
 
 	//reactstrap toggle for modal
 
@@ -46,71 +61,63 @@ const CoachDetails = () => {
 
 	const userID = useSelector(state => state.userID)
 
+	const getData = async event => {
+		setLoading(true)
+		try {
+			const coach = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
+			const appSpecialtiesList = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`) // **** THERE IS A BUG WITH THIS END POINT - coach_specialty_detial id is not included in returned specialties object
+			return {
+				coach: coach.data.coach,
+				specialties: coach.data.specialties,
+				certifications: coach.data.certifications,
+				appSpecialtiesList: appSpecialtiesList.data
+			}
+			
+		}catch(error) {
+			console.log("Error getting user data", error)
+		}
+	}
+
+	const setData = async (data) => {
+		setCoachImage(data.coach.picture_url)
+		setCoachData(data.coach)
+		setCoachSpecialties(data.specialties) // these are the currently saved coach specialties
+		// setSelectedSpecialties(data.specialties) // this are the currently selected specialties while editing within app
+		setCoachCertifications(data.certifications)
+		setAppSpecialtiesList(data.appSpecialtiesList)
+
+		// Create an array of IDs of the Coach's saved specialties - for easier/faster searching in the app
+		if(data.specialties.length > 0) {
+			const specIdList = data.specialties.map(specialty => {
+				return specialty.id
+			})
+			setCoachSpecialtiesIdList(specIdList)
+		}
+		
+		setLoading(false)
+	}
+
+	const refreshData = async () => {
+		getData()
+			.then(data => {
+				setData(data)
+			})
+			.catch("Error refreshing data to state after saving new data.")
+	}
+	
+
 	//grabbing the users profile pic, bio, language, specialties, and certifications
 	useEffect(() => {
-		getData()
-		axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
-			.then(res => {
-				setLoading(true)
-				setCoachImage(res.data.coach.picture_url)
-				setBio(res.data.coach.bio)
-				setLanguage(res.data.coach.language)
-				setSpecialty(res.data.specialties)
-				setCertifications(res.data.certifications)
+		const data = getData()
+			.then(result=> {
+				console.log("getData result", result)
+				setData(result)
+			})
+			.catch(error => {
+				console.log("Error setting data to state", error)
+			})
 
-				setCoachData(res.data.coach)
-				setLoading(false)
-				console.log('res data', res.data)
-				console.log('user id', userID)
-			})
-			.catch(err => {
-				console.log(err)
-			})
 	}, [certName, userID])
-
-	useEffect(() => {
-		axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
-			.then(res => {
-				res.data.map((item, key) => {
-					return setSpecId(item.id)
-
-
-				})
-
-			})
-			.catch(err => {
-				console.log(err)
-			})
-	}, [])
-
-	useEffect(() => {
-		axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties/${specId}`)
-			.then(res => {
-				setSpecialtyId({ ...specialtyId, sp: [...res.data] })
-
-			})
-			.catch(err => {
-			})
-	}, [specId, specialtyId])
-
-
-
-	//mapping around all user specialties in order to render them 
-	useEffect(() => {
-		if (specialty) {
-			specialty.map(spcty =>
-				setCoachSpecialty([spcty.name])
-			)
-		}
-	}, [specialty, specialties])
-
-	//mapping around all user certifications in order to render them 
-	useEffect(() => {
-		certifications.map(cert => {
-			return cert
-		})
-	}, [certifications])
-
 
 	//cloudinary upload
 	const uploadImage = async e => {
@@ -118,7 +125,7 @@ const CoachDetails = () => {
 		const data = new FormData()
 		data.append('file', files[0])
 		data.append('upload_preset', 'square1')
-		setLoading(true)
+		setIsImageLoading(true)
 		const res = await fetch(
 			'https://api.cloudinary.com/v1_1/drgfyozzd/image/upload',
 			{
@@ -127,76 +134,64 @@ const CoachDetails = () => {
 			}
 		)
 		const file = await res.json()
-
-		setImage(file.secure_url)
-		setLoading(false)
-	}
-
-	const getData = async event => {
-		try {
-			const result = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
-			console.log("Get user data result test", result.data.coach)
-			setCoachData(result.data.coach)
-			setCoachSpecialties(result.data.specialties)
-			setCoachCertifications(result.data.certifications)
-			
-		}catch(error) {
-			console.log("Error getting user data", error)
-		}
+		setImage(file.secure_url)		
+		setIsImageLoading(false)
 	}
 
 
 	const handleChange = event => {
 		event.preventDefault()
-		setCoachData({ [event.target.name]: event.target.value })
-	}
-
-	const handleSpecialtySelect = event => {
-		event.preventDefault()
-		const values = event.target.value.split(',')
-		const spec = { id: values[0], name: values[1] }
-		// TODO - THIS IS NOT WORKING
-		setCoachSpecialties(spec)
-
-
-
-		console.log("spec test", spec)
+		const {name, value} = event.target
+		setCoachData((prevState) => {
+			return {...prevState, [name]: value}
+		})
+		setHasCoachChanged(true)
 	}
 
 	const handleSubmit = async event => {
 		event.preventDefault()
 		try {
-			const updatedCoach = await axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, coachData)
-			console.log("Coach Updated test", updatedCoach)
-			const updatedCerts = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, { "name": newCert, "coach_id": userID})
-			console.log("Updated certs", updatedCerts)
-			const updatedSpecs = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": id })
-			console.log('updated specs', updatedSpecs)
-			getData()
+			console.log('coach data test', coachData)
+			if(hasCoachChanged) {
+				const updatedCoach = await axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, coachData)
+				// setCoachData(updatedCoach.data)
+			}
+			if(hasSpecsChanged) {
+				coachSpecialties.forEach(async specialty => {
+					console.log('deleting csd', specialty.id)
+					
+					const result = await axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details/${specialty.id}`)
+					console.log('delete result', result)
+				})
+				
+
+				selectedSpecialties.forEach(async selected_spec => {
+					const post_result = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": selected_spec })
+				})
+				
+				// setCoachSpecialties(updatedSpecs.data)	
+			}
+			if(hasCertsChanged) {
+				const updatedCerts = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, { "name": newCert, "coach_id": userID})
+				// setCoachCertifications(updatedCerts.data)
+			}
 		}catch (error) {
 			console.log("Error updating user", error)
 		}
-		
-	}
-
-	//This function is updating profile pic, language, and bio. It also sends an image to cloudinary if file is uploaded.
-	const saveChanges = (e) => {
-		e.preventDefault();
-		e.target.reset();
 
 		//this function is submiting the image url to the cloudinary server
-		const submit = e => {
+		const uploadImageToCloudinary = e => {
 			if (image !== "") {
 				axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
 					.then(res => {
 					})
 					.catch(err => {
-						console.log(err)
+						console.log("Error uploading image to Cloudinary", err)
 					})
 			}
 		}
 		//updating user's image string to serve but only if user uploads a new file
-		const submitImage = () => {
+		const saveImageToAppServer = () => {
 			if (image !== "") {
 				axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image })
 					.then(res => {
@@ -205,58 +200,80 @@ const CoachDetails = () => {
 						}
 					})
 					.catch(err =>
-						console.log(err))
+						console.log("Error saving image URL to app server",err))
 
 			} else {
 				return null
 			}
 		}
 
-		//updates user's bio but only if user writes inside form
-		const sendBio = (e) => {
-			if (coachBio.length > 0) {
-				axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "bio": coachBio })
-					.then(res => {
-						if (res.status === 200) {
-							setBio(coachBio)
-						}
-					})
-					.catch(err =>
-						console.log(err))
-			} else {
-				return null
-			}
+		const saveNewSpecialties = () => {
 
 		}
 
-		//updates users language but only if user changes it inside select form
-		const sendLang = () => {
-			if (coachLanguage.length > 0) {
-				axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "language": coachLanguage })
-					.then(res => {
-						if (res.status === 200) {
-							setLanguage(coachLanguage)
-						}
-					})
-					.catch(err =>
-						console.log(err))
-			}
-			else {
-				return null
-			}
+		if(image !== "") {
+			// uploadImageToCloudinary()
+			saveImageToAppServer()
 		}
-		//this function is needed to execute the multiple server requests inside this saveChanges function
-		axios.all([sendLang(), sendBio(), submit(), submitImage()])
-			.then(axios.spread(function () {
-			}))
+
+		refreshData()
+		
 	}
 
-	//changes state of coachBio when user types inside form
-	const chooseBio = (e) => {
-		setCoachBio(e.target.value)
-	}
+	//This function is updating profile pic, language, and bio. It also sends an image to cloudinary if file is uploaded.
+	// const saveChanges = (e) => {
+	// 	e.preventDefault();
+	// 	e.target.reset();
 
+	// 	//this function is submiting the image url to the cloudinary server
+	// 	const submit = e => {
+	// 		if (image !== "") {
+	// 			axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
+	// 				.then(res => {
+	// 				})
+	// 				.catch(err => {
+	// 					console.log(err)
+	// 				})
+	// 		}
+	// 	}
+	// 	//updating user's image string to serve but only if user uploads a new file
+	// 	const submitImage = () => {
+	// 		if (image !== "") {
+	// 			axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image })
+	// 				.then(res => {
+	// 					if (res.status === 200) {
+	// 						setCoachImage(image)
+	// 					}
+	// 				})
+	// 				.catch(err =>
+	// 					console.log(err))
 
+	// 		} else {
+	// 			return null
+	// 		}
+	// 	}
+
+	// 	//updates users language but only if user changes it inside select form
+	// 	const sendLang = () => {
+	// 		if (coachLanguage.length > 0) {
+	// 			axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "language": coachLanguage })
+	// 				.then(res => {
+	// 					if (res.status === 200) {
+	// 						setLanguage(coachLanguage)
+	// 					}
+	// 				})
+	// 				.catch(err =>
+	// 					console.log(err))
+	// 		}
+	// 		else {
+	// 			return null
+	// 		}
+	// 	}
+	// 	//this function is needed to execute the multiple server requests inside this saveChanges function
+	// 	axios.all([sendLang(), submit(), submitImage()])
+	// 		.then(axios.spread(function () {
+	// 		}))
+	// }
 
 	// changes the state of coachLanguage when a user clicks on option in select form  
 	const langChange = e => {
@@ -291,19 +308,30 @@ const CoachDetails = () => {
 				console.log(err))
 	}
 
+	const handleSpecialtyClick = event => {
+		event.preventDefault()
+		console.log('do i see this?', event.target.id)
+		const selected = selectedSpecialties.indexOf(event.target.id)
+		if(selected !== -1) {
+			
+			// event.target.className = 'specialty-card card'
+			const newList = selectedSpecialties
+			newList.splice(selected)
+			setSelectedSpecialties(newList)
+		} else {
+			// event.target.className = 'specialty-card selected'
+			const newList = selectedSpecialties
+			newList.push(event.target.id)
+			setSelectedSpecialties(newList)
+		}
+		
+		
+	}
 
-
-	const cert = !certifications ? <div>...Loading</div> : certifications.map((cert, key) => {
-		return <li key={cert.id}>{cert.name}</li>
-	})
-
-	const special = specialty.length === 0 ? name : coachSpecialty
-
-	const spcl = e => {
-		const event = e.target.value
-		const events = event.split(",")
-		setId(events[0])
-		setName(events[1])
+	const handleSpecFinish = event => {
+		event.preventDefault()
+		setHasSpecsChanged(true)
+		toggles()
 	}
 
 	return (
@@ -316,7 +344,11 @@ const CoachDetails = () => {
 				<Col sm="4" lg="4" className="prof-edit-section-left">
 					<Row className="prof-image-area">
 						<div className='image--circle'>
-							<Media src={coachImage} alt='Profile Image' />
+							{
+								!isImageLoading ? <Media src={image || coachData.picture_url} alt='Profile Image' /> :
+								<p>Loading image...</p>
+							}
+							
 						</div>
 						<input type="file" name="file" id="file" color='white' className="inputfile" onChange={uploadImage} />
 						<label for="file">Change Picture</label>
@@ -369,19 +401,23 @@ const CoachDetails = () => {
 							
 							<div className="modal-icon-container hover" onClick={toggles}>
 								<Label for="specialty-icon">Select Specialties</Label>
-								<FontAwesomeIcon id="specialty-icon" className="modal-icon" icon={faSpa} />
+								<FontAwesomeIcon id="specialty-icon" className="modal-icon" icon={faSpa} />							
 								<Modal isOpen={modals} toggle={toggles} >
-								<ModalHeader toggle={toggles}>Post a specialization</ModalHeader>
-								<ModalBody>
-									<label>Specialty Name</label>
-									<Form onSubmit={handleSpecialtySelect}>
-									{specialtyId.sp ? specialtyId.sp.map(item => {
-										return <button type='button' key={item.id} value={[item.id, item.name]} onClick={handleSpecialtySelect}>{item.name}</button>
-									}) : null}
-									<Button type='submit' color="primary" >POST</Button>
-									</Form>
+								<ModalHeader toggle={toggles}>Select Your Specializations</ModalHeader>
+								<ModalBody className="flex-center">
+									{!appSpecialtiesList.length > 0 ? <p>No Specialties</p> : 
+										appSpecialtiesList.map(specialty => {
+											return <SpecialityCard 
+												handleSpecialtyClick={handleSpecialtyClick} 
+												specialty={specialty} 
+												onClick={handleSpecialtyClick}
+												/>
+										})
+									}
+									
 								</ModalBody>
 								<ModalFooter>
+									<Button type='submit' color="primary" onClick={handleSpecFinish}>Done</Button>
 									<Button color="secondary" onClick={toggles}>Cancel</Button>
 								</ModalFooter>
 								</Modal>
