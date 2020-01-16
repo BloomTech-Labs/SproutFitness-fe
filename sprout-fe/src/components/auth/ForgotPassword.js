@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { Button, Form, Input } from 'reactstrap'
-import './auth.css'
+import { Button, Form, Input, Alert } from 'reactstrap'
+import './Auth.css'
 
 
 const ForgotPassword = () => {
@@ -52,7 +52,7 @@ const ForgotPassword = () => {
     return (
       <div>
         <Form className="password-reset-form" onSubmit={sendEmail}>
-         <h2>Please enter your email and you will get an email to reset your password.</h2>
+         <h2>Please enter your email address and you will receive a link to reset your password.</h2>
           <Input
             id="email"
             label="email"
@@ -61,35 +61,34 @@ const ForgotPassword = () => {
             onChange={handleChange}
             placeholder="Email Address"
           />
-          
-            <Button color="info" type="submit" className="reset-password-btn">
-              <span>Send Password Reset Email</span>
-            </Button>
+          <Button color="info" type="submit" className="reset-password-btn">
+             <span>Send Password Reset Email</span>
+          </Button>
         </Form>
         {showNullError && (
           <div>
-            <p>The email address cannot be null.</p>
-          </div>
+           <Alert color="danger" className="alert">
+             Please enter email address.
+            </Alert>
+          </div> 
         )}
         {showError && (
           <div>
-            <p>
-              That email address isn&apos;t recognized. Please try again or
-              register for a new account.
-            </p>
-
-            <Button color="info"><Link to='/register'>Register</Link></Button>
+           <Alert color="danger" className="alert">
+             That email address isn't recognized. Please try again or register for a new account.
+           </Alert>
+            <Button color="info" className='register-alert-btn'><Link to='/register'>Register</Link></Button>
           </div>
         )}
         {messageFromServer === 'recovery email sent' && (
           <div>
-            <h3>Password Reset Email Successfully Sent!</h3>
+            <Alert color="success" className="alert">
+              Password Reset Email Successfully Sent!
+            </Alert>
           </div>
         )}
-        {/* <button className="auth-btn"><Link to='/'>Go Home</Link></button> */}
       </div>
-    );
-  
+    )
 }
 
-export default ForgotPassword;
+export default ForgotPassword

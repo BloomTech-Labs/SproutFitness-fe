@@ -9,7 +9,7 @@
 }
 
 .password-reset-form h2 {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .reset-password-btn {
@@ -24,3 +24,35 @@
 .btn-incorrect-link {
   margin-top: 20px;
 }
+
+.alert {
+  width: 30%;
+  margin: 20px auto;
+  font-size: 1.5rem;
+}
+
+.incorrect-link-alert {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.register-alert-btn {
+  width: 30%;
+  margin-bottom: 30px;
+}
+
+.register-alert-btn a {
+   font-size: 1.5rem;
+}
+
+
+.jumbotron {
+  height: 50vh;
+  background-color: white !important;
+}
+
+.jumbotron-container {
+  background-color: white;
+  height: 100vh;
+}
+
