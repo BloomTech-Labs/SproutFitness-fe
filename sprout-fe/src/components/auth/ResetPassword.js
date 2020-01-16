@@ -106,7 +106,7 @@ const ResetPassword = (props) => {
     return (
       <div>
         <Form className="password-reset-form"  onSubmit={updatePassword}>
-        <h2>Pleaser enter new password</h2>
+        <h2>Please enter new password</h2>
           <Input
             id="password"
             label="password"
