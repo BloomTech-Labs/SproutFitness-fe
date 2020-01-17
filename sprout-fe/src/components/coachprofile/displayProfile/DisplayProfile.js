@@ -6,7 +6,6 @@ import DisplayCertSpec from './DisplayCertSpec';
 import { Link } from 'react-router-dom';
 
 const DisplayProfile = () => {
-
   return (
     <div className="displayProfile-container">
       <div className="displayProfile-top">
