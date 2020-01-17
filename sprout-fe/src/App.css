@@ -498,6 +498,15 @@ End of Signup/login
   height: 100%;
 }
 
+.displayCert h2 {
+  font-weight: bold;
+  text-align: left;
+}
+
+.displayCert p {
+  text-align: left;
+}
+
 .editprofile-btn {
   background-color: var(--footer-txt-hover);
   color: var(--main-bg-color);
@@ -531,19 +540,19 @@ End of Signup/login
 }
 
 .displayBio {
-  width: 52%;
-  border: 1px red solid;
-  margin-right: 12%;
+  width: 53%;
+  margin-right: 11%;
   margin-top: 60px;
 }
 
 .displayBio h2 {
-  text-align: left;
+  font-weight: bold;
 }
 
 .displayBio h2,
 p {
   font-family: poppins;
+  text-align: left;
 }
 
 /* 
