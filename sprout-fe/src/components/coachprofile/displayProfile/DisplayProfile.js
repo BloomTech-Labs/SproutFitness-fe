@@ -28,7 +28,7 @@ const DisplayProfile = () => {
     })
     .catch(error => console.log(error))
   }, []);
-
+ 
   return (
     <div className="displayProfile-container">
       <div className="displayProfile-top">
