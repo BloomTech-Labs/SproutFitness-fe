@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import DisplayAvatar from './DisplayAvatar';
 import DisplayInfo from './DisplayInfo';
 import DisplayBio from './DisplayBio';
-import DisplayCertSpec from './DisplayCertSpec';
+import DisplayCert from './DisplayCert';
+import DisplaySpecialty from './DisplaySpecialty';
 
 
 
@@ -25,11 +26,20 @@ const DisplayProfile = () => {
       console.log(response);
     })
   }, []);
+
+  const [specialties, setSpecialties] = useState({});
+  useEffect(() => {
+    axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
+    .then((response) => {
+      setSpecialties(response.data)
+    })
+  }, []);
   return (
     <div className="displayProfile-container">
       <div className="displayProfile-top">
       {profile && profile.coach && profile.coach.picture_url ? <DisplayAvatar pictureUrl={profile.coach.picture_url} /> : <DisplayAvatar />}
-      {profile && profile.specialties ? <> <DisplayCertSpec specialties={profile.specialties}/></> : <><DisplayCertSpec /></>}
+      {profile && profile.certifications && profile.certifications.name ? <> <DisplayCert certifications={profile.certifications.name}/></> : <><DisplayCert /></>}
+      {specialties && specialties.specialties && specialties.specialties.name ? <> <DisplaySpecialty specialties={specialties.specialties.name}/></> : <><DisplaySpecialty /></>}
       <Link to='/coachprofile' className='editprofile-btn'>
       Edit Profile
       </Link>
