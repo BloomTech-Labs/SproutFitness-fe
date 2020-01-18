@@ -29,7 +29,7 @@ const DisplayProfile = () => {
     <div className="displayProfile-container">
       <div className="displayProfile-top">
       {profile && profile.coach && profile.coach.picture_url ? <DisplayAvatar pictureUrl={profile.coach.picture_url} /> : <DisplayAvatar />}
-      {profile && profile.coach ? <> <DisplayCertSpec specialties={profile.coach}/></> : <><DisplayCertSpec /></>}
+      {profile && profile.specialties ? <> <DisplayCertSpec specialties={profile.specialties}/></> : <><DisplayCertSpec /></>}
       <Link to='/coachprofile' className='editprofile-btn'>
       Edit Profile
       </Link>
