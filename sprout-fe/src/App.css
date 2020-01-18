@@ -491,27 +491,23 @@ End of Signup/login
   height: 100%;
 }
 
-.displayCert {
-  display: flex;
-  justify-content: space-between;
-  width: 30%;
-  height: 100%;
-}
-
-.displayCert h2 {
+.displayCert-text h2 {
   font-weight: bold;
   text-align: left;
+  margin: 0 0 0 20%;
 }
 
-.displayCert p {
+.displayCert-text p {
   text-align: left;
+  width: 300px;
+  margin: 0 0 0 20%;
 }
 
 .editprofile-btn {
   background-color: var(--footer-txt-hover);
   color: var(--main-bg-color);
   font-size: 2.8rem;
-  width: 12%;
+  width: 10%;
   height: 55px;
   margin-right: 20px;
   border-radius: 4px;
@@ -540,8 +536,8 @@ End of Signup/login
 }
 
 .displayBio {
-  width: 53%;
-  margin-right: 11%;
+  width: 56%;
+  margin: 0 auto;
   margin-top: 60px;
 }
 
