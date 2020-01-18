@@ -551,6 +551,157 @@ p {
   text-align: left;
 }
 
+@media (max-width: 1500px) {
+  .editprofile-btn {
+    font-size: 2.2rem;
+    width: 10%;
+    line-height: 2.5;
+  }
+}
+
+@media (max-width: 1024px) {
+  .editprofile-btn {
+    font-size: 1.8rem;
+    width: 10%;
+    line-height: 2.9;
+  }
+  .displayCert-text p {
+    text-align: left;
+    width: 180px;
+    margin: 0 0 0 20%;
+  }
+}
+
+@media (max-width: 768px) {
+  .editprofile-btn {
+    font-size: 1.4rem;
+    line-height: 3.9;
+  }
+  .displayCert-text p {
+    width: 130px;
+  }
+
+  .displayBio {
+    width: 50%;
+  }
+
+  .displayInfo p {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 414px) {
+  .displayProfile-top {
+    flex-direction: column;
+  }
+
+  .displayProfile-bottom {
+    flex-direction: column;
+  }
+
+  .avatar-img {
+    width: 50%;
+    height: 100%;
+    margin: 10px auto;
+  }
+
+  .displayCert {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .displayCert-text p {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2%;
+  }
+
+  .displayCert-text h2 {
+    margin: 0 auto;
+    margin-top: 2%;
+    text-align: center;
+  }
+
+  .editprofile-btn {
+    font-size: 2rem;
+    width: 30%;
+    line-height: 2.8;
+    margin: 5% auto;
+  }
+
+  .displayInfo {
+    width: 70%;
+    margin: 5% auto;
+    margin-bottom: 0;
+  }
+
+  .displayInfo p {
+    font-size: 2rem;
+  }
+
+  .displayBio {
+    width: 85%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
+}
+
+@media (max-width: 375px) {
+  .displayProfile-top {
+    flex-direction: column;
+  }
+
+  .displayProfile-bottom {
+    flex-direction: column;
+  }
+
+  .avatar-img {
+    width: 50%;
+    height: 100%;
+    margin: 10px auto;
+  }
+
+  .displayCert {
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .displayCert-text p {
+    width: 80%;
+    margin: 0 auto;
+    margin-top: 2%;
+  }
+
+  .displayCert-text h2 {
+    margin: 0 auto;
+    margin-top: 2%;
+    text-align: center;
+  }
+
+  .editprofile-btn {
+    font-size: 1.7rem;
+    width: 30%;
+    line-height: 3.2;
+    margin: 5% auto;
+  }
+
+  .displayInfo {
+    width: 70%;
+    margin: 5% auto;
+    margin-bottom: 0;
+  }
+
+  .displayInfo p {
+    font-size: 2rem;
+  }
+
+  .displayBio {
+    width: 85%;
+    margin-top: 2%;
+    margin-bottom: 5%;
+  }
+}
+
 /* 
 Footer
 */

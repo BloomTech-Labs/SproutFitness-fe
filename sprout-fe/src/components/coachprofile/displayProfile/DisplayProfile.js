@@ -21,25 +21,20 @@ const DisplayProfile = () => {
       authorize: token,
     };
 
-    axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${id}`, headers).then((response) => {
+    axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${id}`, headers)
+    .then((response) => {
       setProfile(response.data)
       console.log(response);
     })
+    .catch(error => console.log(error))
   }, []);
 
-  const [specialties, setSpecialties] = useState({});
-  useEffect(() => {
-    axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
-    .then((response) => {
-      setSpecialties(response.data)
-    })
-  }, []);
   return (
     <div className="displayProfile-container">
       <div className="displayProfile-top">
       {profile && profile.coach && profile.coach.picture_url ? <DisplayAvatar pictureUrl={profile.coach.picture_url} /> : <DisplayAvatar />}
       {profile && profile.certifications && profile.certifications.name ? <> <DisplayCert certifications={profile.certifications.name} /></> : <><DisplayCert /></>}
-      {specialties && specialties.specialties && specialties.specialties.name ? <> <DisplaySpecialty specialties={specialties.specialties.name}/></> : <><DisplaySpecialty /></>}
+      {profile && profile.specialties && profile.specialties.name ? <> <DisplaySpecialty specialties={profile.specialties.name}/></> : <><DisplaySpecialty /></>}
       <Link to='/coachprofile' className='editprofile-btn'>
       Edit Profile
       </Link>
