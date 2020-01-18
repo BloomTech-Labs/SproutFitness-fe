@@ -1,3 +1,26 @@
+/*	TODO
+
+	Bugs/Issues
+	--------
+	- Selected specialties are not being saved to the server
+
+
+	App
+	----
+	Certification Model - CRUD interface for Certifications
+	Display currently saved specialties
+	Display currrently saved Certifications
+
+	Styling
+
+*/
+
+
+
+
+
+
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
@@ -45,19 +68,23 @@ const CoachDetails = () => {
 	const [hasSpecsChanged, setHasSpecsChanged] = useState(false)
 	const [hasCertsChanged, setHasCertsChanged] = useState(false)
 
-	
-	const [coachData, setCoachData] = useState({}) // For fields
-	const [coachSpecialties, setCoachSpecialties] = useState([])
-	const [coachSpecialtiesIdList, setCoachSpecialtiesIdList] = useState([])
-	const [appSpecialtiesList, setAppSpecialtiesList] = useState([])
+	// Coach fields for editing
+	const [coachData, setCoachData] = useState({})
+
+	// Specialty Select Modal State
+	const [coachSpecialties, setCoachSpecialties] = useState([]) // array of objects of the coach special detail records
+	const [appSpecialtiesList, setAppSpecialtiesList] = useState([]) // array of objects of all the available specialties for the app
+	const [selectedSpecialties, setSelectedSpecialties] = useState([]) // array of specialty_ids, either selected in the model or currently saved
+
+	const toggleSpecialtyModal = () => setModals(!modals);
+
+	// Add / Edit / Remove Certification Modal	
 	const [coachCertifications, setCoachCertifications] = useState([])
-	const [selectedSpecialties, setSelectedSpecialties] = useState([])
+	
+	const toggleCertificationModal = () => setModal(!modal);
 
-	//reactstrap toggle for modal
-
-	const toggles = () => setModals(!modals);
-	const toggle = () => setModal(!modal);
-
+	
+	// ## INITIALIZATION - getting and setting data for state  ********************** /
 
 	const userID = useSelector(state => state.userID)
 
@@ -82,20 +109,15 @@ const CoachDetails = () => {
 		setCoachImage(data.coach.picture_url)
 		setCoachData(data.coach)
 		setCoachSpecialties(data.specialties) // these are the currently saved coach specialties
-		// setSelectedSpecialties(data.specialties) // this are the currently selected specialties while editing within app
 		setCoachCertifications(data.certifications)
 		setAppSpecialtiesList(data.appSpecialtiesList)
 
-		// Create an array of IDs of the Coach's saved specialties - for easier/faster searching in the app
-		let selectedList = []
-		let specIdList = []
+		// store an array of specialty_IDs of the Coach's saved specialties into state - for easier/faster searching in the app		
 		if(data.specialties.length > 0) {
-			data.specialties.forEach(specialty => {
-				specIdList.push(specialty.id)
-				selectedList.push(specialty.specialty_id)
+			const selected_spec_id_list = data.specialties.map(specialty => {
+				return specialty.specialty_id
 			})
-			setCoachSpecialtiesIdList(specIdList)
-			setSelectedSpecialties(selectedList)
+			setSelectedSpecialties(selected_spec_id_list)
 		}
 		
 		setLoading(false)
@@ -109,39 +131,8 @@ const CoachDetails = () => {
 			.catch("Error refreshing data to state after saving new data.")
 	}
 
-	const compareSelectedAndSaved = (selected, saved) => {
-		// saved is an array of objects with an id property, selected is an array with ids
-		// strip the ids from the objects in saved into an array
-		// sort saved and selected
-		// compare - return true if equal return false if not
-		const saved_id_list = []
-		saved.forEach(item => {
-			saved_id_list.push(item.specialty_id)
-		})
-		saved_id_list.sort()
-		selected.sort()
-		console.log(`selectedList:   ${selected}    ||||| saved:    ${saved_id_list}`)
-
-		function isEqual(selected_list, saved_list) {
-			if (selected_list === saved_list) return true
-			if (selected_list === null || saved_list === null) return false
-			if (selected_list.length !== saved_list.length) return false
-
-			for (var i = 0; i < selected_list.length; ++i) {
-				if (selected_list[i] !== saved_list[i]) return false;
-			  }
-			return true;
-
-		}
-		const result = isEqual(selected, saved_id_list)
-		console.log('is equal result', result)
-		return result
-	}
-	
-
-	//grabbing the users profile pic, bio, language, specialties, and certifications
 	useEffect(() => {
-		const data = getData()
+		getData()
 			.then(result=> {
 				console.log("getData result", result)
 				setData(result)
@@ -150,27 +141,9 @@ const CoachDetails = () => {
 				console.log("Error setting data to state", error)
 			})
 
-	}, [certName, userID])
+	}, [])
 
-	//cloudinary upload
-	const uploadImage = async e => {
-		const files = e.target.files
-		const data = new FormData()
-		data.append('file', files[0])
-		data.append('upload_preset', 'square1')
-		setIsImageLoading(true)
-		const res = await fetch(
-			'https://api.cloudinary.com/v1_1/drgfyozzd/image/upload',
-			{
-				method: 'POST',
-				body: data
-			}
-		)
-		const file = await res.json()
-		setImage(file.secure_url)		
-		setIsImageLoading(false)
-	}
-
+	// ## HANDLER FUNCTIONS *************************************************
 
 	const handleChange = event => {
 		event.preventDefault()
@@ -190,18 +163,12 @@ const CoachDetails = () => {
 			}
 			if(!compareSelectedAndSaved(selectedSpecialties, coachSpecialties)) {
 				if(coachSpecialties.length > 0) {
-					coachSpecialties.forEach(async specialty => {
-						console.log('deleting csd', specialty.id)
-						
+					coachSpecialties.forEach(async specialty => {	
 						const result = await axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details/${specialty.id}`)
-						console.log('delete result', result)
-
 						
 					})
 					selectedSpecialties.forEach(async selected_spec => {
-						console.log('posting spec', selected_spec)
 						const post_result = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": selected_spec })
-						console.log('post result', post_result)
 					})
 				}
 					
@@ -255,6 +222,76 @@ const CoachDetails = () => {
 		
 	}
 
+	const handleSpecialtyClick = event => {
+		event.preventDefault()
+		const selected = selectedSpecialties.indexOf(event.target.id)
+		if(selected !== -1) {
+			const newList = selectedSpecialties
+			newList.splice(selected)
+			setSelectedSpecialties(newList)
+		} else {
+			const newList = selectedSpecialties
+			newList.push(event.target.id)
+			setSelectedSpecialties(newList)
+		}
+		
+	}
+
+	const handleSpecFinish = event => {
+		event.preventDefault()	
+		toggleSpecialtyModal()
+	}
+
+	// ## CLOUDINARY FUNCTIONS ***********************
+
+	const uploadImage = async e => {
+		const files = e.target.files
+		const data = new FormData()
+		data.append('file', files[0])
+		data.append('upload_preset', 'square1')
+		setIsImageLoading(true)
+		const res = await fetch(
+			'https://api.cloudinary.com/v1_1/drgfyozzd/image/upload',
+			{
+				method: 'POST',
+				body: data
+			}
+		)
+		const file = await res.json()
+		setImage(file.secure_url)		
+		setIsImageLoading(false)
+	}
+
+	// ## HELPERS ***********************************
+
+	// Compare selected specialties vs the ones saved, returns true if equal, false if not
+	const compareSelectedAndSaved = (selected, saved) => {
+		// saved is an array of objects with an id property, selected is an array with ids
+		// strip the ids from the objects in saved into an array
+		// sort saved and selected
+		// compare - return true if equal return false if not
+		const saved_id_list = []
+		saved.forEach(item => {
+			saved_id_list.push(item.specialty_id)
+		})
+		saved_id_list.sort()
+		selected.sort()
+
+		function isEqual(selected_list, saved_list) {
+			if (selected_list === saved_list) return true
+			if (selected_list === null || saved_list === null) return false
+			if (selected_list.length !== saved_list.length) return false
+
+			for (var i = 0; i < selected_list.length; ++i) {
+				if (selected_list[i] !== saved_list[i]) return false;
+			  }
+			return true;
+
+		}
+		const result = isEqual(selected, saved_id_list)
+		return result
+	}
+	
 
 	// changes the state of coachLanguage when a user clicks on option in select form  
 	const langChange = e => {
@@ -289,29 +326,7 @@ const CoachDetails = () => {
 				console.log(err))
 	}
 
-	const handleSpecialtyClick = event => {
-		event.preventDefault()
-		console.log('hi', event.target)
-		const selected = selectedSpecialties.indexOf(event.target.id)
-		if(selected !== -1) {
-			const newList = selectedSpecialties
-			newList.splice(selected)
-			setSelectedSpecialties(newList)
-		} else {
-			const newList = selectedSpecialties
-			newList.push(event.target.id)
-			setSelectedSpecialties(newList)
-		}
-		
-		
-	}
-
-	const handleSpecFinish = event => {
-		event.preventDefault()	
-		toggles()
-		console.log(`selectedSpecialties check`, selectedSpecialties)
-		console.log('coachSpecialties', coachSpecialties)
-	}
+	
 
 	return (
 		loading ? <p>Loading...</p> :
@@ -373,11 +388,11 @@ const CoachDetails = () => {
 					<Row >
 						<Col sm="6" lg="6" className="flex-center">
 							
-							<div className="modal-icon-container hover" onClick={toggles}>
+							<div className="modal-icon-container hover" onClick={toggleSpecialtyModal}>
 								<Label for="specialty-icon">Select Specialties</Label>
 								<FontAwesomeIcon id="specialty-icon" className="modal-icon" icon={faSpa} />							
-								<Modal isOpen={modals} toggle={toggles} >
-								<ModalHeader toggle={toggles}>Select Your Specializations</ModalHeader>
+								<Modal isOpen={modals} toggleCertificationModal={toggleSpecialtyModal} >
+								<ModalHeader toggleCertificationModal={toggleSpecialtyModal}>Select Your Specializations</ModalHeader>
 								<ModalBody className="flex-center">
 									{!appSpecialtiesList.length > 0 ? <p>No Specialties</p> : 
 										appSpecialtiesList.map(specialty => {
@@ -396,7 +411,7 @@ const CoachDetails = () => {
 								</ModalBody>
 								<ModalFooter>
 									<Button type='submit' color="primary" onClick={handleSpecFinish}>Done</Button>
-									<Button color="secondary" onClick={toggles}>Cancel</Button>
+									<Button color="secondary" onClick={toggleSpecialtyModal}>Cancel</Button>
 								</ModalFooter>
 								</Modal>
 							</div>
@@ -409,11 +424,11 @@ const CoachDetails = () => {
 										return <p>{cert.name}</p>
 									})
 								}
-							<div className="modal-icon-container hover" onClick={toggle}>
+							<div className="modal-icon-container hover" onClick={toggleCertificationModal}>
 								<Label for="cert-icon">Add Certifications</Label>
 								<FontAwesomeIcon id="cert-icon" className="modal-icon"  icon={faCertificate} />
-								<Modal isOpen={modal} toggle={toggle} >
-								<ModalHeader toggle={toggle}>Post certification</ModalHeader>
+								<Modal isOpen={modal} toggleCertificationModal={toggleCertificationModal} >
+								<ModalHeader toggleCertificationModal={toggleCertificationModal}>Post certification</ModalHeader>
 								<ModalBody>
 									<label>Name of Certification</label>
 									<Form onSubmit={newCertification}>
@@ -422,7 +437,7 @@ const CoachDetails = () => {
 									</Form>
 								</ModalBody>
 								<ModalFooter>
-									<Button color="secondary" onClick={toggle}>Cancel</Button>
+									<Button color="secondary" onClick={toggleCertificationModal}>Cancel</Button>
 								</ModalFooter>
 								</Modal>
 							</div>
