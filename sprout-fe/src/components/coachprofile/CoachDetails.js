@@ -2,7 +2,7 @@
 
 	Bugs/Issues
 	--------
-	- Selected specialties are not being saved to the server
+	- When deselecting multiple specialties, not all of the CSDs are deleted from the server
 
 
 	App
@@ -24,7 +24,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
-import { Container, Modal, Media, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Modal, Media, ModalHeader, ModalBody, ModalFooter, Spinner, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -63,6 +63,7 @@ const CoachDetails = () => {
 
 	// App States
 	const [loading, setLoading] = useState(false)
+	const [saving, setSaving] = useState(false)
 	const [isImageLoading, setIsImageLoading] = useState(false)
 	const [hasCoachChanged, setHasCoachChanged] = useState(false)
 	const [hasSpecsChanged, setHasSpecsChanged] = useState(false)
@@ -88,58 +89,49 @@ const CoachDetails = () => {
 
 	const userID = useSelector(state => state.userID)
 
-	const getData = async event => {
-		setLoading(true)
+	const getData = async () => {
+		
 		try {
-			const coach = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
-			const appSpecialtiesList = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`) // **** THERE IS A BUG WITH THIS END POINT - coach_specialty_detial id is not included in returned specialties object
-			return {
-				coach: coach.data.coach,
-				specialties: coach.data.specialties,
-				certifications: coach.data.certifications,
-				appSpecialtiesList: appSpecialtiesList.data
+			setLoading(true)
+			const coachReq = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
+			const appSpecialtiesList = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`) 
+
+			setCoachImage(coachReq.data.coach.picture_url)
+			setCoachData(coachReq.data.coach)
+			setCoachSpecialties(coachReq.data.specialties) // these are the currently saved coach specialties
+			setCoachCertifications(coachReq.data.certifications)
+			setAppSpecialtiesList(appSpecialtiesList.data)
+
+			// store an array of specialty_IDs of the Coach's saved specialties into state - for easier/faster searching in the app		
+			if(coachReq.data.specialties.length > 0) {
+				const selected_spec_id_list = coachReq.data.specialties.map(specialty => {
+					return specialty.specialty_id
+				})
+				setSelectedSpecialties(selected_spec_id_list)
 			}
 			
 		}catch(error) {
 			console.log("Error getting user data", error)
+		}finally {
+			setLoading(false)
+			setSaving(false)
 		}
 	}
 
-	const setData = async (data) => {
-		setCoachImage(data.coach.picture_url)
-		setCoachData(data.coach)
-		setCoachSpecialties(data.specialties) // these are the currently saved coach specialties
-		setCoachCertifications(data.certifications)
-		setAppSpecialtiesList(data.appSpecialtiesList)
-
-		// store an array of specialty_IDs of the Coach's saved specialties into state - for easier/faster searching in the app		
-		if(data.specialties.length > 0) {
-			const selected_spec_id_list = data.specialties.map(specialty => {
-				return specialty.specialty_id
-			})
-			setSelectedSpecialties(selected_spec_id_list)
-		}
-		
-		setLoading(false)
-	}
 
 	const refreshData = async () => {
-		getData()
-			.then(data => {
-				setData(data)
-			})
-			.catch("Error refreshing data to state after saving new data.")
+		try {
+			setTimeout(() => {
+				getData()
+			}, 2000)
+			// await getData()
+		}catch(error) {
+			console.log('error refreshing data')
+		}
 	}
 
 	useEffect(() => {
 		getData()
-			.then(result=> {
-				console.log("getData result", result)
-				setData(result)
-			})
-			.catch(error => {
-				console.log("Error setting data to state", error)
-			})
 
 	}, [])
 
@@ -154,33 +146,36 @@ const CoachDetails = () => {
 		setHasCoachChanged(true)
 	}
 
+	// const setUserCSDRecords = async () => {
+	// 	try {
+			
+	// 		if(coachSpecialties.length > 0) {				
+	// 			coachSpecialties.forEach(async specialty => {	
+	// 				console.log('deleting csd...')
+	// 				const result = await axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details/${specialty.id}`)
+	// 			})
+	// 			console.log('deleted csds')
+				
+	// 		}
+	// 		if(selectedSpecialties.length > 0) {
+	// 			selectedSpecialties.forEach(async selected_spec => {
+	// 				console.log('posting csds', selected_spec)
+	// 				const post_result = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": selected_spec })
+	// 			})
+	// 			console.log('posted csds...')
+	// 		}
+	// 	}catch(error) {
+	// 		console.log("error setting CSD records")
+	// 	}finally {
+			
+	// 	}
+		
+	// }
+	
+
 	const handleSubmit = async event => {
 		event.preventDefault()
-		try {
-			if(hasCoachChanged) {
-				const updatedCoach = await axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, coachData)
-				// setCoachData(updatedCoach.data)
-			}
-			if(!compareSelectedAndSaved(selectedSpecialties, coachSpecialties)) {
-				if(coachSpecialties.length > 0) {
-					coachSpecialties.forEach(async specialty => {	
-						const result = await axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details/${specialty.id}`)
-						
-					})
-					selectedSpecialties.forEach(async selected_spec => {
-						const post_result = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": selected_spec })
-					})
-				}
-					
-			}
-			if(hasCertsChanged) {
-				const updatedCerts = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, { "name": newCert, "coach_id": userID})
-				// setCoachCertifications(updatedCerts.data)
-			}
-		}catch (error) {
-			console.log("Error updating user", error)
-		}
-
+		setSaving(true)
 		//this function is submiting the image url to the cloudinary server
 		const uploadImageToCloudinary = e => {
 			if (image !== "") {
@@ -208,10 +203,37 @@ const CoachDetails = () => {
 				return null
 			}
 		}
-
-		const saveNewSpecialties = () => {
-
+			
+		
+		if(!compareSelectedAndSaved(selectedSpecialties, coachSpecialties)) {
+			if(coachSpecialties.length > 0) {				
+				coachSpecialties.forEach(specialty => {	
+					axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details/${specialty.id}`)
+						.catch((error) => console.log('error deleting csd', error))
+				})
+				
+			}
+			if(selectedSpecialties.length > 0) {
+				selectedSpecialties.forEach(selected_spec => {
+					axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": selected_spec })
+						.catch((error) => console.log('error posting csd', error))
+				})
+			}
+				
 		}
+		if(hasCertsChanged) {
+			const updatedCerts = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, { "name": newCert, "coach_id": userID})
+			// setCoachCertifications(updatedCerts.data)
+		}
+
+		if(hasCoachChanged) {
+			axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, coachData)
+				.then((result) => {
+					setCoachData(result.data)
+				})
+				.catch(() => console.log('error updating coach'))
+			
+		}		
 
 		if(image !== "") {
 			// uploadImageToCloudinary()
@@ -329,7 +351,11 @@ const CoachDetails = () => {
 	
 
 	return (
-		loading ? <p>Loading...</p> :
+		loading || saving ? 
+		<Container className="loading">
+			<Spinner className="loading-spinner" color="info" style={{ width: '6rem', height: '6rem' }}/>
+			<h1>Loading...</h1>
+		</Container>  :
 		<Container className="prof-edit-container">
 			<Row className="prof-edit-header">
 				<Col >Header</Col>
@@ -394,7 +420,7 @@ const CoachDetails = () => {
 								<Modal isOpen={modals} toggleCertificationModal={toggleSpecialtyModal} >
 								<ModalHeader toggleCertificationModal={toggleSpecialtyModal}>Select Your Specializations</ModalHeader>
 								<ModalBody className="flex-center">
-									{!appSpecialtiesList.length > 0 ? <p>No Specialties</p> : 
+									{!appSpecialtiesList.length > 0 ? <p>Loading..</p> : 
 										appSpecialtiesList.map(specialty => {
 
 											const selected = selectedSpecialties.includes(specialty.id)
