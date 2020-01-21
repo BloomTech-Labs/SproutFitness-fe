@@ -5,7 +5,10 @@ const DisplaySpecialty = (props) => {
     <div className="displaySpecialty">
       <div className="displayCert-text">
       <h2>Specialty</h2>
-      <p>{props.name ? props.name : "#"}</p>
+        <p>Specialty of placeholder</p>
+        <p>Specialty of placeholder</p>
+        <p>Specialty of placeholder</p>
+        <p>Specialty of placeholder</p>
       </div>
     </div>
   );

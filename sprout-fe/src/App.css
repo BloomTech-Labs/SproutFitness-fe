@@ -551,6 +551,13 @@ p {
   text-align: left;
 }
 
+@media (min-width: 1600px) {
+  .displayProfile-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
 @media (max-width: 1500px) {
   .editprofile-btn {
     font-size: 2.2rem;
@@ -574,11 +581,18 @@ p {
 
 @media (max-width: 768px) {
   .editprofile-btn {
-    font-size: 1.4rem;
-    line-height: 3.9;
+    font-size: 1.2rem;
+    line-height: 4.9;
+  }
+
+  .displayCert-text h2 {
+    text-align: center;
+    margin: 0;
   }
   .displayCert-text p {
-    width: 130px;
+    width: 100%;
+    text-align: center;
+    margin: 0;
   }
 
   .displayBio {
@@ -587,6 +601,19 @@ p {
 
   .displayInfo p {
     font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .displayInfo {
+    width: 28%;
+  }
+  .displayInfo p {
+    font-size: 1.3rem;
+  }
+  .editprofile-btn {
+    font-size: 1rem;
+    line-height: 5.4;
   }
 }
 
@@ -699,6 +726,12 @@ p {
     width: 85%;
     margin-top: 2%;
     margin-bottom: 5%;
+  }
+}
+
+@media (max-width: 320px) {
+  .displayCert-text p {
+    text-align: center;
   }
 }
 
