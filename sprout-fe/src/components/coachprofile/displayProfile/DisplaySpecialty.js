@@ -1,14 +1,14 @@
 import React from 'react';
 
 const DisplaySpecialty = (props) => {
+  console.log('specialties', props.specialties)
   return (
     <div className="displaySpecialty">
       <div className="displayCert-text">
       <h2>Specialty</h2>
-        <p>Specialty of placeholder</p>
-        <p>Specialty of placeholder</p>
-        <p>Specialty of placeholder</p>
-        <p>Specialty of placeholder</p>
+      {(props.specialties) && props.specialties.map((special, index) => {
+        return <p key={index}>{special.name}</p>
+        })}
       </div>
     </div>
   );

@@ -556,13 +556,26 @@ p {
     width: 80%;
     margin: 0 auto;
   }
-}
-
-@media (max-width: 1500px) {
   .editprofile-btn {
     font-size: 2.2rem;
     width: 10%;
     line-height: 2.5;
+  }
+}
+
+/* @media (max-width: 1500px) {
+  .editprofile-btn {
+    font-size: 2.2rem;
+    width: 10%;
+    line-height: 2.5;
+  }
+} */
+
+@media (max-width: 1500px) {
+  .editprofile-btn {
+    font-size: 1.9rem;
+    width: 10%;
+    line-height: 3;
   }
 }
 
@@ -605,19 +618,6 @@ p {
 }
 
 @media (max-width: 600px) {
-  .displayInfo {
-    width: 28%;
-  }
-  .displayInfo p {
-    font-size: 1.3rem;
-  }
-  .editprofile-btn {
-    font-size: 1rem;
-    line-height: 5.4;
-  }
-}
-
-@media (max-width: 414px) {
   .displayProfile-top {
     flex-direction: column;
   }
@@ -641,12 +641,14 @@ p {
     width: 80%;
     margin: 0 auto;
     margin-top: 2%;
+    font-size: 2rem;
   }
 
   .displayCert-text h2 {
     margin: 0 auto;
     margin-top: 2%;
     text-align: center;
+    font-size: 2.4rem;
   }
 
   .editprofile-btn {
@@ -657,19 +659,30 @@ p {
   }
 
   .displayInfo {
-    width: 70%;
+    text-align: center;
+    width: 95%;
     margin: 5% auto;
-    margin-bottom: 0;
   }
 
   .displayInfo p {
     font-size: 2rem;
+    text-align: center;
   }
 
   .displayBio {
     width: 85%;
     margin-top: 2%;
     margin-bottom: 5%;
+  }
+
+  .displayBio h2 {
+    text-align: center;
+    font-size: 2.4rem;
+  }
+
+  .displayBio p {
+    text-align: center;
+    font-size: 2rem;
   }
 }
 
