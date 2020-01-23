@@ -1,14 +1,11 @@
-import React from 'react'
-import { Jumbotron, Container } from 'reactstrap'
+import React, { Fragment } from 'react'
 
 const NotFound = () => {
   return (
-      <Jumbotron fluid className="jumbotron">
-        <Container fluid className="jumbotron-container">
-          <h1 className="display-1">Page Not Found</h1>
-          <h4 className="display-4">Sorry, this page does not exist</h4>
-        </Container>
-      </Jumbotron>
+    <Fragment>
+       <h1 className="display-1">Page Not Found</h1>
+       <h4 className="display-4">Sorry, this page does not exist</h4>
+    </Fragment>
   )
 }
 
