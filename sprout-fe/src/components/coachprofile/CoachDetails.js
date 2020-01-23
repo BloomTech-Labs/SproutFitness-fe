@@ -1,37 +1,13 @@
-/*	TODO
-
-	Bugs/Issues
-	--------
-	- When deselecting multiple specialties, not all of the CSDs are deleted from the server
-
-
-	App
-	----
-	Certification Model - CRUD interface for Certifications
-	Display currently saved specialties
-	Display currrently saved Certifications
-
-	Styling
-
-*/
-
-
-
-
-
-
-
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
-import { Container, Modal, Media, ModalHeader, ModalBody, ModalFooter, Spinner, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Modal, Media, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, Spinner, Card, CardBody, CardTitle, Button, Col, Row, Form, FormGroup, Label, Input } from 'reactstrap';
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSpa, faCertificate } from '@fortawesome/free-solid-svg-icons'
 
 import SpecialityCard from './SpecialtyCard'
-import SpecialtySelectModal from './SpecialtySelectModal'
 
 import countries from './countries'
 import timezones from './timezones'
@@ -42,15 +18,7 @@ const CoachDetails = () => {
 	const [image, setImage] = useState('')
 	const [coachImage, setCoachImage] = useState('')
 
-	const [specialty, setSpecialty] = useState([])
-	const [coachSpecialty, setCoachSpecialty] = useState([])
-	const [certifications, setCertifications] = useState([])
-
-	const [coachLanguage, setCoachLanguage] = useState("")
-	const [specName] = useState('');
-	const [certName, setCertName] = useState('');
 	const [newCert, setnewCert] = useState([]);
-	const [id, setId] = useState('');
 	const [modals, setModals] = useState(false);
 	const [modal, setModal] = useState(false);
 
@@ -60,7 +28,6 @@ const CoachDetails = () => {
 	const [saving, setSaving] = useState(false)
 	const [isImageLoading, setIsImageLoading] = useState(false)
 	const [hasCoachChanged, setHasCoachChanged] = useState(false)
-	const [hasSpecsChanged, setHasSpecsChanged] = useState(false)
 	const [hasCertsChanged, setHasCertsChanged] = useState(false)
 
 	// Coach fields for editing
@@ -74,7 +41,8 @@ const CoachDetails = () => {
 	const toggleSpecialtyModal = () => setModals(!modals);
 
 	// Add / Edit / Remove Certification Modal	
-	const [coachCertifications, setCoachCertifications] = useState([])
+	const [coachCertifications, setCoachCertifications] = useState([])	// coaches saved certifications
+	const [newCoachCertifications, setNewCoachCertifications] = useState([])	// new certifications to be saved
 
 	const toggleCertificationModal = () => setModal(!modal);
 
@@ -93,7 +61,7 @@ const CoachDetails = () => {
 			setCoachImage(coachReq.data.coach.picture_url) // profile image
 			setCoachData(coachReq.data.coach) // name, email, city, country, etc
 			setCoachSpecialties(coachReq.data.specialties) // these are the currently saved coach specialties
-			setCoachCertifications(coachReq.data.certifications) // currently saved certifcations 
+			setCoachCertifications(coachReq.data.certifications) // currently saved certifcations
 			setAppSpecialtiesList(appSpecialtiesList.data)	// these are the available specialties the coach can pick from - the available specialties are to be defined by app developers and NOT USERS. This is for a future tagging system, as well as improved filtering/searching
 
 			// store an array of specialty_IDs of the Coach's saved specialties into state - for easier/faster searching in the app		
@@ -111,7 +79,6 @@ const CoachDetails = () => {
 			setSaving(false)
 		}
 	}
-
 
 	const refreshData = async () => {
 		try {
@@ -143,17 +110,7 @@ const CoachDetails = () => {
 	const handleSubmit = async event => {
 		event.preventDefault()
 		setSaving(true)
-		//this function is submiting the image url to the cloudinary server
-		const uploadImageToCloudinary = e => {
-			if (image !== "") {
-				axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
-					.then(res => {
-					})
-					.catch(err => {
-						console.log("Error uploading image to Cloudinary", err)
-					})
-			}
-		}
+
 		//updating user's image string to serve but only if user uploads a new file
 		const saveImageToAppServer = () => {
 			if (image !== "") {
@@ -170,8 +127,6 @@ const CoachDetails = () => {
 				return null
 			}
 		}
-
-
 		if (!compareSelectedAndSaved(selectedSpecialties, coachSpecialties)) {
 			if (coachSpecialties.length > 0) {
 				coachSpecialties.forEach(specialty => {
@@ -181,16 +136,26 @@ const CoachDetails = () => {
 
 			}
 			if (selectedSpecialties.length > 0) {
-				selectedSpecialties.forEach(selected_spec => {
-					axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, { "coach_id": userID, "specialty_id": selected_spec })
-						.catch((error) => console.log('error posting csd', error))
+				const new_csd_data = selectedSpecialties.map(spec => {
+					return { coach_id: userID, specialty_id: spec }
 				})
+				console.log('new csd data', new_csd_data)
+				axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, new_csd_data)
+					.catch(error => {
+						console.log("Error posting CSDs", error)
+					})
 			}
 
 		}
 		if (hasCertsChanged) {
-			const updatedCerts = await axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, { "name": newCert, "coach_id": userID })
-			// setCoachCertifications(updatedCerts.data)
+			console.log('updating certs')
+			axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, newCoachCertifications)
+				.then((result) => {
+					setNewCoachCertifications([])
+				})
+				.catch((error => {
+					console.log('Error posting new Certifications', error)
+				}))
 		}
 
 		if (hasCoachChanged) {
@@ -199,16 +164,12 @@ const CoachDetails = () => {
 					setCoachData(result.data)
 				})
 				.catch(() => console.log('error updating coach'))
-
 		}
 
 		if (image !== "") {
-			// uploadImageToCloudinary()
 			saveImageToAppServer()
 		}
-
 		refreshData()
-
 	}
 
 	const handleSpecialtyClick = event => {
@@ -288,14 +249,12 @@ const CoachDetails = () => {
 
 	const newCertification = (e) => {
 		e.preventDefault();
-		axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, { "name": newCert, "coach_id": `${userID}` })
-			.then(res => {
-				if (res.status === 201) {
-					setCertName(newCert)
-				}
-			})
-			.catch(err =>
-				console.log(err))
+		const newCertState = newCoachCertifications
+		const newCertObj = { name: newCert, coach_id: userID }
+		newCertState.push(newCertObj)
+		setNewCoachCertifications(newCertState)
+		setHasCertsChanged(true)
+		toggleCertificationModal()
 	}
 
 	return (
@@ -305,9 +264,6 @@ const CoachDetails = () => {
 				<h1>Loading...</h1>
 			</Container> :
 			<Container className="prof-edit-container">
-				<Row className="prof-edit-header">
-					<Col >Header</Col>
-				</Row>
 				<Row>
 					<Col sm="4" lg="4" className="prof-edit-section-left">
 						<Row className="prof-image-area">
@@ -365,53 +321,6 @@ const CoachDetails = () => {
 					</Col>
 					<Col sm="8" lg="8" className="prof-edit-section-right">
 						<Row >
-							<Container className="saved-data-container">
-								<Container className="saved-specs-container" >
-									<Row className="prof-edit-header">
-										<h3>Saved Specialties</h3>
-									</Row>
-									{
-										!coachSpecialties.length > 0 ? <p>None</p> :
-											coachSpecialties.map(coach_spec => {
-												return (
-													<Card className='saved-specs-card'>
-														<CardTitle className="flex-row-nowrap">
-															<h5>{coach_spec.name}</h5>
-														</CardTitle>
-														<CardBody>
-															<FontAwesomeIcon id="specialty-icon" className="modal-icon-sm" icon={faSpa} />
-														</CardBody>
-													</Card>
-												)
-											})
-									}
-								</Container>
-								<Container className="saved-certs-container">
-									<Row className="prof-edit-header">
-										<h3>Saved Certifications</h3>
-									</Row>
-									<Row>
-										{!coachCertifications.length > 0 ? <p>No Certs</p> :
-											coachCertifications.map(cert => {
-												return (
-													<Card className='saved-cert-card'>
-														<CardTitle className="flex-row-nowrap">
-															<h4>{cert.name}</h4>
-														</CardTitle>
-														<CardBody className="saved-cert-card-body">
-															<p><bold>Issued by:</bold></p>  <p>National Stuff Organization of Alot of Words to Fill of Space</p>
-															<bold><p>Expires:</p></bold>  <p>05/26/2022</p>
-														</CardBody>
-													</Card>
-												)
-
-											})
-										}
-									</Row>
-								</Container>
-							</Container>
-						</Row>
-						<Row >
 							<Col sm="6" lg="6" className="flex-center">
 
 								<div className="modal-icon-container hover" onClick={toggleSpecialtyModal}>
@@ -450,15 +359,79 @@ const CoachDetails = () => {
 											<label>Name of Certification</label>
 											<Form onSubmit={newCertification}>
 												<input className='modal-input' onChange={certHandler} />
-												<Button type='submit' color="primary" >POST</Button>
 											</Form>
 										</ModalBody>
 										<ModalFooter>
+											<Button type='submit' color="primary" onClick={newCertification} >Done</Button>
 											<Button color="secondary" onClick={toggleCertificationModal}>Cancel</Button>
 										</ModalFooter>
 									</Modal>
 								</div>
 							</Col>
+						</Row>
+						<Row >
+							<Container className="saved-data-container">
+								<Container className="saved-specs-container" >
+									<Row className="prof-edit-header">
+										<h3>Saved Specialties</h3>
+									</Row>
+									{
+										!coachSpecialties.length > 0 ? <p>None</p> :
+											coachSpecialties.map(coach_spec => {
+												return (
+													<Card className='saved-specs-card'>
+														<CardTitle className="flex-row-nowrap">
+															<h5>{coach_spec.name}</h5>
+														</CardTitle>
+														<CardBody>
+															<FontAwesomeIcon id="specialty-icon" className="modal-icon-sm" icon={faSpa} />
+														</CardBody>
+													</Card>
+												)
+											})
+									}
+								</Container>
+								<Container className="saved-certs-container">
+									{
+										!newCoachCertifications.length > 0 ? "" : <Row className="prof-edit-header">
+											<h3>New Certifications</h3>
+										</Row>
+									}
+									<ListGroup horizontal>
+										{!newCoachCertifications.length > 0 ? "" :
+											newCoachCertifications.map(cert => {
+												return (
+													<ListGroupItem >
+														<h4>{cert.name}</h4>
+													</ListGroupItem>
+												)
+
+											})
+										}
+									</ListGroup>
+									<Row className="prof-edit-header">
+										<h3>Saved Certifications</h3>
+									</Row>
+									<Row>
+										{!coachCertifications.length > 0 ? <p>No Certs</p> :
+											coachCertifications.map(cert => {
+												const date = new Date(cert.created_at).toLocaleString()
+												return (
+													<Card className='saved-cert-card'>
+														<CardTitle className="flex-row-nowrap">
+															<h4>{cert.name}</h4>
+														</CardTitle>
+														<CardBody className="saved-cert-card-body">
+															<span><bold>Added:</bold> <span>{date}</span></span>
+														</CardBody>
+													</Card>
+												)
+
+											})
+										}
+									</Row>
+								</Container>
+							</Container>
 						</Row>
 					</Col>
 				</Row>
