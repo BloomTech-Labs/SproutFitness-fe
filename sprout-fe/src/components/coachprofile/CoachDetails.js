@@ -1,3 +1,13 @@
+/*	EDIT COACH PROFILE	* 
+*												*
+*	Travis Litle					*
+*	tlittle@tradavo.com		*
+*												*
+*	Jamison Blackwell			*
+*												*
+*************************
+*/
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
@@ -37,7 +47,6 @@ const CoachDetails = () => {
 	const [coachSpecialties, setCoachSpecialties] = useState([]) // array of objects of the coach special detail records
 	const [appSpecialtiesList, setAppSpecialtiesList] = useState([]) // array of objects of all the available specialties for the app
 	const [selectedSpecialties, setSelectedSpecialties] = useState([]) // array of specialty_ids, either selected in the model or currently saved
-
 	const toggleSpecialtyModal = () => setModals(!modals);
 
 	// Add / Edit / Remove Certification Modal	
