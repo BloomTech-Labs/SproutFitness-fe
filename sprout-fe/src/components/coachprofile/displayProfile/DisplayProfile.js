@@ -35,7 +35,7 @@ const DisplayProfile = () => {
       {profile && profile.coach && profile.coach.picture_url ? <DisplayAvatar pictureUrl={profile.coach.picture_url} /> : <DisplayAvatar />}
       {profile && profile.certifications ? <> <DisplayCert certifications={profile.certifications} /></> : <><DisplayCert /></>}
       {profile && profile.specialties ? <> <DisplaySpecialty specialties={profile.specialties}/></> : <><DisplaySpecialty /></>}
-      <Link to='/coachprofile' className='editprofile-btn'>
+      <Link to='/edit-profile' className='editprofile-btn'>
       Edit Profile
       </Link>
       </div>

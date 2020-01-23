@@ -108,8 +108,8 @@ const List = () => {
 					})}
 				</ListGroup>
 				{tasks[0] ? 
-					<Button onClick={buttonClickHandler} color="primary">Clear Tasks</Button> :
-					<Button onClick={demoButtonClickHandler} color="primary">Get Demo Data</Button>}
+					<Button onClick={buttonClickHandler} color="primary clearTask-btn">Clear Tasks</Button> :
+					<Button onClick={demoButtonClickHandler} color="primary demo-btn">Get Demo Data</Button>}
 			</div>
 		)	
 	} else {

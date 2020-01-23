@@ -5,6 +5,7 @@ import LoginForm from './components/auth/LoginForm';
 import SignupForm from './components/auth/SignupForm';
 import Dashboard from './components/dashb';
 import DisplayProfile from './components/coachprofile/displayProfile/DisplayProfile';
+import CoachDetails from './components/coachprofile/CoachDetails';
 import Navbar from './components/navbar/Navbar';
 import Footer from './components/footer/footer';
 
@@ -20,6 +21,7 @@ function App() {
       <Route exact path='/register' component={SignupForm} />
       <Route exact path='/' component={Dashboard} />
       <Route exact path='/profile' component={DisplayProfile} />
+      <Route exact path='/edit-profile' component={CoachDetails} />
       </div>
       <Footer />
     </div>
@@ -27,3 +29,4 @@ function App() {
 }
 
 export default App;
+
