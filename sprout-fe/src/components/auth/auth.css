@@ -56,3 +56,32 @@
   height: 100vh;
 }
 
+@media screen and (max-width: 922px) {
+  .password-reset-form {
+    width: 50%;
+  }
+
+  .alert {
+    width: 50%;
+  }
+
+  .register-alert-btn {
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width: 767px) {
+  .password-reset-form {
+    width: 70%;
+  }
+
+  .alert {
+    width: 70%;
+  }
+
+  .register-alert-btn {
+    width: 70%;
+  }
+  
+}
+
