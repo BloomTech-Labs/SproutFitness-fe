@@ -288,7 +288,7 @@ button a {
   font-weight: bold;
   padding-bottom: 20px;
   padding-top: 20px;
-  border-bottom: 5px solid white;
+  /* border-bottom: 5px solid white; */
 }
 
 .signup-link {

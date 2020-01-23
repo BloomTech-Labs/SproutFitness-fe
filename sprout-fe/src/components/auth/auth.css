@@ -31,6 +31,12 @@
   font-size: 1.5rem;
 }
 
+.alert-login {
+  width: 80%;
+  margin: 20px auto;
+  font-size: 1.5rem;
+}
+
 .incorrect-link-alert {
   margin-top: 30px;
   width: 100%;

@@ -4,12 +4,14 @@ import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGIN_TRY } from '../../actions';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { Alert } from 'reactstrap'
 
 
 const LoginForm = () => {
     // const error = useSelector(state => state.error)
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loginError, setError] =useState(false)
     const dispatch = useDispatch();
     const history = useHistory();
     
@@ -39,12 +41,21 @@ const LoginForm = () => {
         })
         .catch(error => {
             dispatch({ type: LOGIN_FAIL, payload: error})
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+             }, 4000)
         })
             
     }
     return (
         <div className="auth-container">
             <form onSubmit={handleSubmit}>
+               {loginError && 
+                 <Alert color="danger" className="alert alert-login">
+                   Invalid credentials
+                </Alert>
+               }
                 <h1 className="auth-h1">
                     <span className="sf-title">Sprout</span>
                     <span className="sf-title-end"> Fitness</span>
