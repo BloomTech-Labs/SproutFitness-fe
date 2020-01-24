@@ -7,6 +7,7 @@ import DisplayInfo from './DisplayInfo';
 import DisplayBio from './DisplayBio';
 import DisplayCert from './DisplayCert';
 import DisplaySpecialty from './DisplaySpecialty';
+import './DisplayProfile.css';
 
 
 
