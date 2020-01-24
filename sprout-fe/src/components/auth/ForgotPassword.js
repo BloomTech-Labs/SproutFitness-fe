@@ -37,12 +37,9 @@ const ForgotPassword = () => {
           setShowNullError(false)
         }
       } catch (error) {
-        console.error(error.response.data)
-        if (error.response.data === 'email not in db') {
           setShowError(true)
           setMessageFromServer('')
           setShowNullError(false)
-        }
       }
     }
   }
