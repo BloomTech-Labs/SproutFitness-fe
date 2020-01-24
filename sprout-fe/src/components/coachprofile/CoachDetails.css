@@ -1,60 +1,207 @@
-/* .specialty-button {
-    width: 500px;
-    height: 100px;
-    margin-bottom: 45px;
-    border: 2px solid black;
-    text-align: center;
-}
-
-.specialty-certifications {
+.loading {
+    position: fixed;
+    overflow: visible;
+    width: 100%; /* Full width (cover the whole page) */
+    height: 100%; /* Full height (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, .8);
+    color: seashell;
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.loading-spinner {
+    
+}
+
+.prof-edit-container {
+    width: 100%;
+    
+      
+}
+.prof-edit-main {
+    
+}
+.prof-edit-header {
+    width: 100%;
+}
+.prof-image-area {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: self-end;
+}
+
+.prof-image-area .row {
+    padding: 16px;
+}
+.field-row {
+    padding: 4px
+}
+.field {
+    width: 95%;
+}
+.bio-field-row {
+    justify-content: center;
+}
+.bio-field {
+    width: 65%;
+    min-width: 300px;
+    
+}
+.prof-edit-section-left {
+    width: 45%;
+}
+
+.prof-edit-section-right {
+    width: 55%;
+}
+.image--cirlce {
+    /* position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%; */
+}
+
+.upload-prof-img-input {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: white;
+    background-color: black;
+    display: inline-block;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    padding: 4px 8px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    border-radius: 4px;
+    color: white;
+    background-color: #1D888C;
+    minWidth: 130px;
+    height: auto;
+    /* display: inline-block; */
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    cursor: pointer;
+    
+}
+
+.hover:hover {
+    color: #1ac0c6;
+    cursor: pointer; 
 }
 
 
 
-.specialties-container {
-    text-align: left;
-
+.image--circle img {
+    position: relative;
+    width: 186px;
+    height: 186px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.modal-icon-container {
+    border: 2px solid black;
+    border-radius: 16px;
+    padding: 6px;
+    width: 150px;
+    height: 150px;
+}
+.modal-icon-lg {
+    margin-top: 15%;
+    font-size: 6rem;
+    color: inherit;
+    
+}
+.modal-icon-sm {
+    font-size: 3.5rem;
+    color: inherit;
+    
+}
+.modal-icon-container label:hover {
+    cursor: pointer;
+}
+.modal-icon-container:hover {
+    color: #1ac0c6;
+    border-color: #1ac0c6 ;
+    cursor: pointer;
 }
 
-.language {
-    width: 180px;
-    height: 30px;
+.flex-center {
+    display: flex;
+    justify-content: center;
 }
 
-.bio {
-   display: flex;
-   justify-content: space-evenly
+
+.specialty-card {
+    font-size: 2rem;
+    width: 160px;
+    height: 160px;
 }
 
-.bio-text {
-    padding-top: 50px;
-    width: 300px;
-    height: 300px;
-    text-align: left;
-}
-
-#exampleText {
-    margin: 0 auto;
-    width: 580px;
-    height: 300px;
-} */
-
-.container {
-   
+.selected {
+    color: pink;
+    border: 2.5px solid #1ac0c6;
 }
 
 .cd {
     padding: 0;
     margin: 0;
 }
+.saved-data-container {
+    width: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.saved-specs-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: flex-start;
+    width: 48% !important;
+    min-width: 265px;
+    
+}
+.saved-certs-container {
+    width: 48% !important;
+    min-width: 265px;
+}
 
 
-.card-body {
-    color: #062C2D;
-    height: 240px;
+.saved-specs-card {
+    width: 100px;
+    height: 100px;
+}
 
+.saved-cert-card {
+    width: 98%;
+    /* max-height: 150px; */
+}
+
+.saved-cert-card-body {
+    display: flex;
+    flex-flow: row wrap;
 }
 
 
@@ -66,11 +213,8 @@
 }
 
 .card-img {
-    width:400px;
-    height: 400px;
-    margin: 0;
-    padding: 0;
-    background-color: 062C2D;
+    width: 100%;
+    height: auto;
 }
 
 .modal-input {
