@@ -41,12 +41,11 @@ const LoginForm = () => {
     return (
         <div className="auth-container">
             <form onSubmit={handleSubmit}>
-                <h1 className="auth-h1">
-                    <span className="sf-title">Sprout</span>
-                    <span className="sf-title-end"> Fitness</span>
+            <h1 className="auth-h1">
+                   Login
                 </h1>
                 <div className="input-field">
-                    <input className="email-field" 
+                    <input className="email-field signup-input" 
                      type="email" 
                      placeholder="Email" 
                      id="email" 
@@ -54,17 +53,20 @@ const LoginForm = () => {
                      onChange={handleEmail} />
                 </div>
                 <div className="input-field">
-                    <input className="password-field" 
+                    <input className="password-field signup-input" 
                      type="password" 
                      placeholder="Password" 
                      id="password"
                      autoComplete="current-password"
                      onChange={handlePassword} />
                 </div>
-                <div className="input-field">
+                <div className="input-field input-bottom">
                     <button className="auth-btn">Login</button>
                 </div>
-                <h3 className="signup-link">Don't have an account? <a href="register">Sign Up!</a></h3>
+                <div className="signup-link">
+                <h3 className="forgot-pw"><a href="#" className="login-forgot">Forgot password?</a></h3>
+                <h3 className="login-link">Don't have an account? <a href="register" className="login-forgot">Sign up!</a></h3>
+                </div>
             </form>
         </div>
     );
