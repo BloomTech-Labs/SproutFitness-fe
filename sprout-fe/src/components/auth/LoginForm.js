@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGIN_TRY } from '../../actions';
 import axios from 'axios';
@@ -64,8 +64,8 @@ const LoginForm = () => {
                     <button className="auth-btn">Login</button>
                 </div>
                 <div className="signup-link">
-                <h3 className="forgot-pw"><a href="#" className="login-forgot">Forgot password?</a></h3>
-                <h3 className="login-link">Don't have an account? <a href="register" className="login-forgot">Sign up!</a></h3>
+                <h3 className="forgot-pw"><Link to="/login" className="login-forgot">Forgot password?</Link></h3>
+                <h3 className="login-link">Don't have an account? <Link to="register" className="login-forgot">Sign up!</Link></h3>
                 </div>
             </form>
         </div>
