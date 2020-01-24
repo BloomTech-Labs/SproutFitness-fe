@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import Visualization from './visualization.js'
-import List from './list.js'
+import List from './list.js';
+import './Dashb.css';
 import { Container, Row, Col } from 'reactstrap';
 
 const Dashboard = (props) => {
