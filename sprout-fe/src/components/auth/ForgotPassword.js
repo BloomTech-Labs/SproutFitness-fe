@@ -6,7 +6,6 @@ import './Auth.css'
 
 
 const ForgotPassword = () => {
-
   const [email, setEmail] = useState('')
   const [showError, setShowError] = useState(false)
   const [messageFromServer, setMessageFromServer] = useState('')
