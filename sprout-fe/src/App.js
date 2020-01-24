@@ -24,7 +24,6 @@ function App() {
         <Route exact path='/login' component={LoginForm} />
         <Route exact path='/register' component={SignupForm} />
         <Route exact path='/' component={Dashboard} />
-        <Route exact path='/profile' component={CoachDetails} />
         <Route exact path='/profile' component={DisplayProfile} />
         <Route exact path='/edit-profile' component={CoachDetails} />
         <Route exact path='/forgot-password' component={ForgotPassword} />
