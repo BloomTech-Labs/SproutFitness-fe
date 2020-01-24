@@ -1,0 +1,45 @@
+/*
+Dashboard
+*/
+
+.dashboard-wrapper,
+.dataVis {
+  border: 1px solid #128387;
+  border-radius: 4px;
+}
+
+.visual h3 {
+  font-size: 2.9rem;
+  font-weight: bold;
+  padding-bottom: 2%;
+}
+
+.dataVis {
+  width: 60%;
+  margin: 0 auto;
+  padding: 8% 10%;
+  font-size: 2rem;
+}
+
+.todoList h3 {
+  font-size: 2.9rem;
+  font-weight: bold;
+  padding-bottom: 2%;
+}
+
+.clearTask-btn {
+  background-color: var(--button-bg-color-login) !important;
+  padding: 10px 15px !important;
+  font-size: 1.8rem !important;
+}
+.todoList {
+  font-size: 1.8rem;
+  margin-bottom: 2%;
+}
+
+.demo-btn {
+  background-color: var(--logo-txt-color) !important;
+  border: none !important;
+  padding: 10px 15px !important;
+  font-size: 1.8rem !important;
+}
