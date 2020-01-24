@@ -30,8 +30,8 @@ const LoginForm = () => {
         }
         e.target.reset()
         dispatch({ type: LOGIN_TRY })
-        axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user) // staging
-        //  axios.post('http://localhost:5000/api/login/coaches', user) // local
+         axios.post('https://sprout-fitness-be-staging.herokuapp.com/api/login/coaches', user) // staging
+        // axios.post('http://localhost:5000/api/login/coaches', user) // local
         .then(response => {
             localStorage.setItem("token", response.data.token);
             localStorage.setItem("Uid", response.data.id);
