@@ -53,29 +53,10 @@ const SignupForm = () => {
         <div className="auth-container">
             <form onSubmit={handleSubmit}>
                 <h1 className="auth-h1">
-                    <span className="sf-title">Sprout</span>
-                    <span className="sf-title-end"> Fitness</span>
+                   Sign Up
                 </h1>
                 <div className="input-field">
-                    <input className="email-field" 
-                        type="email" 
-                        name="email"
-                        id="email"
-                        value={email} 
-                        placeholder="Email" 
-                        onChange={handleEmail} />
-                </div>
-                <div className="input-field">
-                    <input className="password-field" 
-                        type="password" 
-                        name="password"
-                        id="password"
-                        value={password} 
-                        placeholder="Password" 
-                        onChange={handlePassword} />
-                </div>
-                <div className="input-field">
-                    <input className="first-name" 
+                    <input className="first-name signup-input" 
                         type="firstname" 
                         name="firstname"
                         id="firstname"
@@ -84,8 +65,8 @@ const SignupForm = () => {
                         onChange={handleFirstname} />
                 </div>
                 <div className="input-field">
-                    <input className="last-name" 
-                        type="lastname" 
+                    <input className="last-name signup-input" 
+                        type="lastname"
                         name="lastname"
                         id="lastname"
                         value={lastname}  
@@ -93,9 +74,29 @@ const SignupForm = () => {
                         onChange={handleLastname} />
                 </div>
                 <div className="input-field">
+                    <input className="email-field signup-input" 
+                        type="email" 
+                        name="email"
+                        id="email"
+                        value={email} 
+                        placeholder="Email" 
+                        onChange={handleEmail} />
+                </div>
+                <div className="input-field">
+                    <input className="password-field signup-input" 
+                        type="password" 
+                        name="password"
+                        id="password"
+                        value={password} 
+                        placeholder="Password" 
+                        onChange={handlePassword} />
+                </div>
+                <div className="login-container">
+                <div className="input-field input-bottom">
                     <button className="auth-btn">Sign Up</button>
                 </div>
                 <h3 className="login-link">Already have an account? <a href="login">Login</a></h3>
+                </div>
             </form>
         </div>
     );
