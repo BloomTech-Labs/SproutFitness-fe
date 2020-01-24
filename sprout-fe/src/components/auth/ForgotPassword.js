@@ -30,7 +30,12 @@ const ForgotPassword = () => {
             email,
           },
         );
-        console.log(response.data)
+        
+         if(response.data === undefined || response.data == null) {
+          console.log(response)
+            return 
+         }
+
         if (response.data === 'recovery email sent') {
           setShowError(false)
           setMessageFromServer('recovery email sent')
