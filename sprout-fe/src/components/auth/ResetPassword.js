@@ -19,8 +19,8 @@ const ResetPassword = (props) => {
     const { match: { params: { token } } } = props
     try {
       const response = await axios.get(
-        'http://localhost:5000/api/reset-password/coaches', // local
-        //'https://sprout-fitness-be-staging.herokuapp.com/api/reset-password/coaches', // staging
+        //'http://localhost:5000/api/reset-password/coaches', // local
+        'https://sprout-fitness-be-staging.herokuapp.com/api/reset-password/coaches', // staging
         {params: { resetPasswordToken: token}}
         )
        console.log('RESPONSE:', response);
@@ -58,8 +58,8 @@ const ResetPassword = (props) => {
     const { match: { params: { token } } } = props
     try {
       const response = await axios.put(
-        'http://localhost:5000/api/update-password-via-email/coaches', // local
-        //'https://sprout-fitness-be-staging.herokuapp.com/api/update-password-via-email/coaches' // staging
+        //'http://localhost:5000/api/update-password-via-email/coaches', // local
+        'https://sprout-fitness-be-staging.herokuapp.com/api/update-password-via-email/coaches', // staging
         {
           username,
           password,

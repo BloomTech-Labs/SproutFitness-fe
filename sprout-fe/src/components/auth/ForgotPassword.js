@@ -25,8 +25,8 @@ const ForgotPassword = () => {
     } else {
       try {
         const response = await axios.post(
-          'http://localhost:5000/api/forgot-password/coaches', // local
-          //'https://sprout-fitness-be-staging.herokuapp.com/api/forgot-password/coaches', // staging
+          //'http://localhost:5000/api/forgot-password/coaches', // local
+          'https://sprout-fitness-be-staging.herokuapp.com/api/forgot-password/coaches', // staging
           {
             email,
           },
