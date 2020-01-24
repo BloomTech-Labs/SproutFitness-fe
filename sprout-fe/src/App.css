@@ -896,3 +896,99 @@ Footer
 /*
 End of Footer
 */
+
+
+/* // AUTH - RESET PASSWORD STYLES */
+.password-reset-form {
+  width: 30%;
+  margin: 0 auto;
+}
+
+.password-reset-form input {
+  margin: 30px 0 20px 0;
+  font-size: 1.5rem;
+}
+
+.password-reset-form h2 {
+  margin-top: 20px;
+}
+
+.reset-password-btn {
+  width: 100%;
+  font-size: 4rem;
+}
+
+.reset-password-btn span{
+  font-size: 1.5rem;
+}
+
+.btn-incorrect-link {
+  margin-top: 20px;
+}
+
+.alert {
+  width: 30%;
+  margin: 20px auto;
+  font-size: 1.5rem;
+}
+
+.alert-login {
+  width: 80%;
+  margin: 20px auto;
+  font-size: 1.5rem;
+}
+
+.incorrect-link-alert {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.register-alert-btn {
+  width: 30%;
+  margin-bottom: 30px;
+}
+
+.register-alert-btn a {
+   font-size: 1.5rem;
+}
+
+
+.jumbotron {
+  height: 50vh;
+  background-color: white !important;
+}
+
+.jumbotron-container {
+  background-color: white;
+  height: 100vh;
+}
+
+@media screen and (max-width: 922px) {
+  .password-reset-form {
+    width: 50%;
+  }
+
+  .alert {
+    width: 50%;
+  }
+
+  .register-alert-btn {
+    width: 50%;
+  }
+  
+}
+@media screen and (max-width: 767px) {
+  .password-reset-form {
+    width: 70%;
+  }
+
+  .alert {
+    width: 70%;
+  }
+
+  .register-alert-btn {
+    width: 70%;
+  }
+  
+}
+

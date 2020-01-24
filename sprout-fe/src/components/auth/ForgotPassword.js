@@ -2,11 +2,10 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Button, Form, Input, Alert } from 'reactstrap'
-import './Auth.css'
+
 
 
 const ForgotPassword = () => {
-
   const [email, setEmail] = useState('')
   const [showError, setShowError] = useState(false)
   const [messageFromServer, setMessageFromServer] = useState('')
