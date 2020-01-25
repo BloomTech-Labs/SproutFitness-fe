@@ -115,8 +115,9 @@ input.signup-input {
   color: #1ac0c6;
 }
 
-.signup-link h3 {
-  font-size: 2rem;
+.signup-link h3 a {
+  font-size: 1.8rem;
+  font-weight: 400;
 }
 
 @media (min-width: 1600px) {
