@@ -115,6 +115,10 @@ input.signup-input {
   color: #1ac0c6;
 }
 
+.signup-link h3 {
+  font-size: 2rem;
+}
+
 @media (min-width: 1600px) {
   .auth-container {
     width: 30%;
@@ -162,5 +166,8 @@ input.signup-input {
   .auth-btn {
     width: 50%;
     font-size: 2.4rem;
+  }
+  .signup-link h3 {
+    font-size: 1.8rem;
   }
 }
