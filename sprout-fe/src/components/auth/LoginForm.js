@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { LOGIN_SUCCESS, LOGIN_FAIL, LOGIN_TRY } from '../../actions';
 import axios from 'axios';
 import { Alert } from 'reactstrap'
+import './LoginForm.css';
 
 
 const LoginForm = () => {
