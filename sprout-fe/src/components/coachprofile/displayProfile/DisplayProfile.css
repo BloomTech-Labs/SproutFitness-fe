@@ -9,14 +9,14 @@
 .displayProfile-container p {
   font-size: 1.8rem;
   font-weight: 400;
-  font-family: poppins;
+  font-family: "Poppins", sans-serif;
   text-align: left;
 }
 
 .displayProfile-container h2 {
   font-weight: bold;
   font-size: 2.8rem;
-  font-family: poppins;
+  font-family: "Poppins", sans-serif;
   text-align: left;
 }
 
