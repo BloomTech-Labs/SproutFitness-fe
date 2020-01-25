@@ -120,6 +120,16 @@ input.signup-input {
   font-weight: 400;
 }
 
+.login-link {
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
+.login-link a {
+  font-size: 1.8rem;
+  font-weight: 400;
+}
+
 @media (min-width: 1600px) {
   .auth-container {
     width: 30%;
