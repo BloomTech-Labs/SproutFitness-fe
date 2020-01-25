@@ -1,0 +1,166 @@
+/*
+***************************
+***************************
+ Signup/login
+ ***************************
+ ***************************
+*/
+
+.auth-container {
+  border: 1px solid #128387;
+  width: 45%;
+  height: 100%;
+  margin: 5% auto;
+  border-radius: 4px;
+}
+
+.auth-container h1 {
+  font-size: 4rem;
+  padding-top: 40px;
+}
+
+.input-field {
+  width: 80%;
+  margin: 0 auto;
+}
+
+input[type="email"] {
+  font-size: 1.8rem;
+  padding-left: 10px;
+  color: #128387 !important;
+}
+
+input[type="password"] {
+  font-size: 1.8rem;
+  padding-left: 10px;
+  color: #128387 !important;
+}
+
+input[type="lastname"] {
+  font-size: 1.8rem;
+  padding-left: 10px;
+  color: #128387 !important;
+}
+
+input[type="firstname"] {
+  font-size: 1.8rem;
+  padding-left: 10px;
+  color: #128387 !important;
+}
+
+input.signup-input {
+  background-color: #ddf6f7 !important;
+  border-radius: 4px;
+  border: #128387 1px solid !important;
+  height: 40px;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.signup-input::placeholder {
+  color: #128387 !important;
+  font-size: 1.8rem;
+}
+
+.auth-btn {
+  background-color: var(--button-bg-color-login);
+  color: var(--main-bg-color);
+  font-size: 2.8rem;
+  width: 36%;
+  height: 55px;
+  margin-top: 20px;
+  border-radius: 4px;
+  outline: none;
+  line-height: 1.3;
+  float: left;
+}
+
+.auth-btn:hover {
+  background-color: var(--footer-bg-color) !important;
+  color: var(--main-bg-color) !important;
+}
+
+.auth-h1 {
+  font-size: 2.9rem;
+  font-weight: bold;
+  padding-bottom: 20px;
+  padding-top: 20px;
+  border-bottom: 5px solid white;
+}
+
+.signup-btn {
+  background-color: var(--footer-txt-hover) !important;
+}
+
+.signup-link {
+  margin-top: 50px;
+}
+
+.input-bottom {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-link {
+  margin-top: 25px;
+  color: var(--footer-bg-color);
+  padding-bottom: 40px;
+}
+
+.login-btn {
+  background-color: #1ac0c6 !important;
+}
+
+.login-forgot {
+  color: #1ac0c6;
+}
+
+@media (min-width: 1600px) {
+  .auth-container {
+    width: 30%;
+  }
+
+  input.signup-input {
+    width: 90%;
+  }
+
+  .auth-btn {
+    margin-left: 5%;
+  }
+
+  .signup-btn {
+    font-size: 2.4rem;
+    width: 35%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .auth-btn {
+    width: 25%;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 414px) {
+  .auth-btn {
+    width: 45%;
+    font-size: 2.5rem;
+  }
+
+  .input-field {
+    width: 85%;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 320px) {
+  .auth-btn {
+    width: 50%;
+    font-size: 2.4rem;
+  }
+}
