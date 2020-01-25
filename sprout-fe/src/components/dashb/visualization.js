@@ -5,7 +5,7 @@ const Visualization = () => {
 		<div className={"visual"}>
 			<h3>Visualizations</h3>
 			<div className="dataVis">
-				graphs and charts
+				Graphs and Charts
 			</div>
 		</div>
 	)
