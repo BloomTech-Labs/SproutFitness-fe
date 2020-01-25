@@ -9,6 +9,7 @@ import {
   Nav,
   NavItem
 } from 'reactstrap';
+import './Navbar.css';
 
 const NavBarBox = () => {
 

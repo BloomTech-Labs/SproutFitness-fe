@@ -203,6 +203,34 @@ MEDIA QUERIES
   }
 }
 
+@media (max-width: 950px) {
+  .displayProfile-container p {
+    font-size: 1.4rem;
+  }
+
+  .displayProfile-container h2 {
+    font-weight: bold;
+  }
+
+  .displayBio {
+    width: 53%;
+  }
+  .displayCert {
+    width: 23%;
+    margin-left: 3%;
+  }
+
+  .displaySpecialty {
+    width: 23%;
+  }
+
+  .editprofile-btn {
+    font-size: 1.4rem;
+    line-height: 3.8;
+    width: 14%;
+  }
+}
+
 @media (max-width: 768px) {
   .editprofile-btn {
     font-size: 1.6rem;
@@ -215,8 +243,13 @@ MEDIA QUERIES
     margin: 0;
   }
 
-  .displayBio {
-    width: 53%;
+  .displayCert {
+    width: 25%;
+    margin-left: 0%;
+  }
+
+  .displaySpecialty {
+    width: 20%;
   }
 
   .avatar-portrait {
