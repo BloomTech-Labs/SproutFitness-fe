@@ -68,6 +68,12 @@ button.logout-btn {
 .sign_in-btn {
   background-color: var(--footer-txt-hover);
 }
+
+@media (max-width: 320px) {
+  .navbar .logo-main {
+    font-size: 3.2rem;
+  }
+}
 /*
  End of Nav/Header
 */
