@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Button, Form, Input, Alert } from 'reactstrap'
-
+import './ResetPassword.css';
 
 
 const ForgotPassword = () => {
@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     } else {
       try {
         const response = await axios.post(
-           // 'http://localhost:5000/api/forgot-password/coaches', // local
+          //'http://localhost:5000/api/forgot-password/coaches', // local
           'https://sprout-fitness-be-staging.herokuapp.com/api/forgot-password/coaches', // staging
           {
             email,

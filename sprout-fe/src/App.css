@@ -286,6 +286,8 @@ button.completedTask {
   height: 100vh;
 }
 
+
+
 @media screen and (max-width: 922px) {
   .password-reset-form {
     width: 50%;
