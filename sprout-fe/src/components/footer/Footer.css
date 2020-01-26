@@ -1,0 +1,128 @@
+/* 
+Footer
+*/
+
+.footer-section {
+  flex-shrink: 0;
+  background-color: var(--footer-bg-color) !important;
+}
+
+.footer-container {
+  width: 100%;
+  height: 100%;
+  padding-top: 152px;
+  padding-left: 20px;
+}
+
+.footer-section p {
+  font-family: "Poppins", "Helvetica", sans-serif;
+  color: var(--footer-txt-color) !important;
+  padding-top: 5px;
+  padding-bottom: 15px;
+  width: 165px;
+  text-align: left;
+}
+
+.footer-flex {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: flex-start;
+}
+
+.footer-container li a {
+  text-decoration: none;
+  color: var(--footer-txt-color) !important;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.footer-nav a:hover {
+  color: var(--footer-txt-hover) !important;
+  -webkit-transition-delay: 0.2s;
+  transition-delay: 0.2s;
+  text-decoration: none;
+}
+
+.footer-item a {
+  padding: 10px 15px;
+  font-size: 2.2rem;
+  color: var(--main-txt-color);
+}
+
+.footer-item a:hover {
+  text-decoration: underline;
+  -webkit-text-decoration-color: var(--footer-bg-color);
+  text-decoration-color: var(--footer-bg-color);
+}
+
+#account-link-footer {
+  margin-left: 25px;
+}
+
+.App {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.Site-content {
+  flex: 1;
+}
+
+@media (max-width: 660px) {
+  .footer-container {
+    padding-left: 0;
+    border: 1px solid black;
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
+  .footer-section {
+    width: 100%;
+    display: flex;
+  }
+
+  .footer-flex {
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    height: 100%;
+    width: 100%;
+  }
+
+  .footer-section p {
+    padding-top: 0;
+    padding-bottom: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .footer-container {
+    padding-top: 20px;
+    height: 100%;
+    width: 100%;
+  }
+
+  #home-link-footer {
+    padding: 15px 25px;
+    line-height: 3;
+  }
+
+  #account-link-footer {
+    padding: 15px 25px;
+    line-height: 3;
+    margin: 0;
+  }
+
+  .footer-copyright {
+    margin: 5% 0;
+  }
+}
+/*
+End of Footer
+*/

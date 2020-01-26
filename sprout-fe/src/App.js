@@ -6,8 +6,8 @@ import SignupForm from './components/auth/SignupForm';
 import Dashboard from './components/dashb';
 import DisplayProfile from './components/coachprofile/displayProfile/DisplayProfile';
 import CoachDetails from './components/coachprofile/CoachDetails';
-import Navbar from './components/navbar/Navbar';
-import Footer from './components/footer/footer';
+import Navbar from './components/navbar/Navbar.js';
+import Footer from './components/footer/Footer.js';
 import NotFound from './components/layout/NotFound';
 import ForgotPassword from './components/auth/ForgotPassword'
 import ResetPassword from './components/auth/ResetPassword'

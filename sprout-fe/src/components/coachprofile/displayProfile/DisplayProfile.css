@@ -203,6 +203,51 @@ MEDIA QUERIES
   }
 }
 
+@media (max-width: 950px) {
+  .displayProfile-container p {
+    font-size: 1.4rem;
+  }
+
+  .displayProfile-container h2 {
+    font-weight: bold;
+  }
+
+  .displayBio {
+    width: 53%;
+  }
+  .displayCert {
+    width: 23%;
+    margin-left: 3%;
+  }
+
+  .displaySpecialty {
+    width: 23%;
+  }
+
+  .editprofile-btn {
+    font-size: 1.4rem;
+    line-height: 3.8;
+    width: 14%;
+  }
+}
+
+@media (max-width: 800px) {
+  .editprofile-btn {
+    font-size: 1.8rem;
+    line-height: 3.1;
+    width: 14%;
+  }
+
+  .displayCert {
+    width: 25%;
+    margin-left: 0%;
+  }
+
+  .displaySpecialty {
+    width: 20%;
+  }
+}
+
 @media (max-width: 768px) {
   .editprofile-btn {
     font-size: 1.6rem;
@@ -210,13 +255,17 @@ MEDIA QUERIES
     width: 14%;
   }
 
+  .displayCert {
+    width: 27%;
+  }
+
+  .displaySpecialty {
+    width: 20%;
+  }
+
   .displayCert-text h2 p {
     text-align: center;
     margin: 0;
-  }
-
-  .displayBio {
-    width: 53%;
   }
 
   .avatar-portrait {
@@ -232,7 +281,7 @@ MEDIA QUERIES
   }
 
   .displayProfile-container p {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     font-weight: 400;
     font-family: poppins;
     text-align: left;
@@ -240,13 +289,13 @@ MEDIA QUERIES
 
   .displayProfile-container h2 {
     font-weight: bold;
-    font-size: 2.4rem;
+    font-size: 2.2rem;
     font-family: poppins;
     text-align: left;
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 660px) {
   .displayProfile-container h2 {
     font-weight: bold;
     font-size: 2.8rem;
