@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import { Button, Form, Input, Alert } from 'reactstrap'
-
+import './ResetPassword.css';
 
 const ResetPassword = (props) => {
  
@@ -31,6 +31,9 @@ const ResetPassword = (props) => {
         setError(false)
       } else {
         console.log('error')
+        setUpdated(false)
+        setIsLoading(false)
+        setError(true)
       }
     } catch (error) {
       console.log(error.response.data);
@@ -76,6 +79,8 @@ const ResetPassword = (props) => {
       }
     } catch (error) {
       console.log(error.response.data)
+      setUpdated(false)
+      setError(true)
     }
   }
 
