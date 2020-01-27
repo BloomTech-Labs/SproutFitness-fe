@@ -1,23 +1,22 @@
 /*	EDIT COACH PROFILE	* 
-*												*
-*	Travis Litle					*
-*	tlittle@tradavo.com		*
-*												*
-*	Jamison Blackwell			*
-*												*
+*												
+*	Travis Litle
+*	tlittle@tradavo.com
+*
+*	Jamison Blackwell
+*			
 *************************
 */
 
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
-import { Container, Modal, Media, ModalHeader, ModalBody, ModalFooter, ListGroup, ListGroupItem, Spinner, Card, CardBody, CardTitle, Button, Col, Row, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Media, Spinner, Card, CardBody, CardTitle, Button, Col, Row, FormGroup, Input } from 'reactstrap';
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpa, faCertificate, faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
-import SpecialityCard from './SpecialtyCard'
 import SpecialtyListSelect from './SpecialtyListSelect'
 
 import countries from './countries'
@@ -30,9 +29,6 @@ const CoachDetails = () => {
 	const [coachImage, setCoachImage] = useState('')
 
 	const [newCert, setnewCert] = useState('');
-	const [modals, setModals] = useState(false);
-	const [modal, setModal] = useState(false);
-
 
 	// App States
 	const [loading, setLoading] = useState(false)
@@ -50,14 +46,10 @@ const CoachDetails = () => {
 	const [coachSpecialties, setCoachSpecialties] = useState([]) // array of objects of the coach special detail records
 	const [appSpecialtiesList, setAppSpecialtiesList] = useState([]) // array of objects of all the available specialties for the app
 	const [selectedSpecialties, setSelectedSpecialties] = useState([]) // array of specialty_ids, either selected in the model or currently saved
-	const toggleSpecialtyModal = () => setModals(!modals);
 
 	// Add / Edit / Remove Certification Modal	
 	const [coachCertifications, setCoachCertifications] = useState([])	// coaches saved certifications
 	const [newCoachCertifications, setNewCoachCertifications] = useState([])	// new certifications to be saved
-
-	const toggleCertificationModal = () => setModal(!modal);
-
 
 	// ## INITIALIZATION - getting and setting data for state  ********************** /
 
@@ -165,7 +157,6 @@ const CoachDetails = () => {
 
 		}
 		if (hasCertsChanged) {
-			console.log('updating certs')
 			axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, newCoachCertifications)
 				.then((result) => {
 					setNewCoachCertifications([])
@@ -203,11 +194,6 @@ const CoachDetails = () => {
 			setSelectedSpecialties(newList)
 		}
 
-	}
-
-	const handleSpecFinish = event => {
-		event.preventDefault()
-		toggleSpecialtyModal()
 	}
 
 	// ## CLOUDINARY FUNCTIONS ***********************
@@ -276,11 +262,11 @@ const CoachDetails = () => {
 		setnewCert('')
 
 	}
-	console.log('what is newcert', newCert)
+
 	return (
 		loading || saving ?
 
-			// Loading Overloay
+			// Loading Spinner Overloay
 			<Container className="loading">
 				<Spinner className="loading-spinner" color="info" style={{ width: '6rem', height: '6rem' }} />
 				<h1>Loading...</h1>
@@ -436,7 +422,6 @@ const CoachDetails = () => {
 
 			</Container>
 	)
-
 }
 
 export default CoachDetails;
