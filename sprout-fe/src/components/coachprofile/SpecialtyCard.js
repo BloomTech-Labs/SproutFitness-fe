@@ -1,8 +1,6 @@
-import React, { Fragment, useState, useEffect } from 'react';
-import { Container, Modal, CardFooter, Media, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import React, { useState, useEffect } from 'react';
+import {  ListGroupItem } from 'reactstrap';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpa, faCertificate } from '@fortawesome/free-solid-svg-icons'
 
 const SpecialtyCard = (props) => {
     const [isSelected, setIsSelected] = useState(false)
@@ -20,19 +18,10 @@ const SpecialtyCard = (props) => {
         props.handleSpecialtyClick(event)
     }
     return (
-        <Card className={isSelected ? 'specialty-card selected' : 'specialty-card'}  name={props.specialty.name} id={props.specialty.id}  >
-            <CardTitle>
-                {props.specialty.name}
-            </CardTitle>
-            
-            <CardBody>
-                <FontAwesomeIcon icon={faSpa} />
-            </CardBody>
-            <CardFooter>
-                <Button onClick={handleClick} name={props.specialty.name} id={props.specialty.id} selected={isSelected}>Select</Button>
-            </CardFooter>
-          
-        </Card>
+
+        <ListGroupItem className={isSelected ? 'specialty-card selected' : 'specialty-card'}  name={props.specialty.name} id={props.specialty.id} selected={isSelected} onClick={handleClick}>
+            {props.specialty.name}
+        </ListGroupItem>
     )
 }
 
