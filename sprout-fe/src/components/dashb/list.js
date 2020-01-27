@@ -119,7 +119,7 @@ const List = () => {
 					<h3>Clients</h3>
 					{clients.map(client => {
 						return (
-							<ListGroupItem key={client.userID} id={client.userID}>
+							<ListGroupItem key={client.userID} id={client.userID} className="clientListHome">
 								{client.firstname}
 							</ListGroupItem>
 						)

@@ -1,3 +1,7 @@
+.dashboard-wrapper {
+  margin-top: 3%;
+}
+
 .dashboard-wrapper,
 .dataVis {
   border: 1px solid #128387;
@@ -16,6 +20,10 @@
   margin: 5% auto;
   padding: 8% 10%;
   font-size: 2rem;
+}
+
+.clientListHome {
+  border: 1px solid #128387 !important;
 }
 
 .todoList h3 {
