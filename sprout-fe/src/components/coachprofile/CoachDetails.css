@@ -34,6 +34,8 @@
 }
 .prof-edit-header {
     width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 .prof-image-area {
     width: 100%;
@@ -46,7 +48,9 @@
     padding: 16px;
 }
 .field-row {
-    padding: 4px
+    padding: 4px;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 .field {
     width: 95%;
@@ -60,11 +64,11 @@
     
 }
 .prof-edit-section-left {
-    width: 45%;
+    /* width: 45%; */
 }
 
 .prof-edit-section-right {
-    width: 55%;
+    /* width: 55%; */
 }
 .image--cirlce {
 
@@ -263,7 +267,7 @@
 }
 
 .modal-input {
-    width: 250px !important;
+    /* width: 250px !important; */
 }
 
 .img-row {
