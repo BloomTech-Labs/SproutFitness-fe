@@ -37,7 +37,7 @@ Footer
   font-weight: bold;
 }
 
-.footer-nav a:hover {
+.footer-container li a:hover {
   color: var(--footer-txt-hover) !important;
   -webkit-transition-delay: 0.2s;
   transition-delay: 0.2s;
