@@ -1,7 +1,6 @@
 import React from 'react';
 
 const DisplayCert = (props) => {
-  console.log('cert', props.certifications)
   return (
     <div className="displayCert">
       <div className="displayCert-text">

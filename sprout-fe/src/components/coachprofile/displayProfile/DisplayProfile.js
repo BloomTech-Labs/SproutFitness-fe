@@ -25,7 +25,6 @@ const DisplayProfile = () => {
     axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${id}`, headers)
     .then((response) => {
       setProfile(response.data)
-      console.log(response);
     })
     .catch(error => console.log(error))
   }, []);

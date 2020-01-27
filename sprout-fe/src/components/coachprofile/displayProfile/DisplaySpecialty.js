@@ -1,7 +1,6 @@
 import React from 'react';
 
 const DisplaySpecialty = (props) => {
-  console.log('specialties', props.specialties)
   return (
     <div className="displaySpecialty">
       <div className="displayCert-text">
