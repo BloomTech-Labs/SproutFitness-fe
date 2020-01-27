@@ -24,7 +24,9 @@
 
 .prof-edit-container {
     width: 100%;
-    
+    font-family: "Poppins", sans-serif;
+    margin-top: 12px;
+    padding: 12px 2px;
       
 }
 .prof-edit-main {
@@ -65,11 +67,7 @@
     width: 55%;
 }
 .image--cirlce {
-    /* position: relative;
-    width: 200px;
-    height: 200px;
-    overflow: hidden;
-    border-radius: 50%; */
+
 }
 
 .upload-prof-img-input {
@@ -98,7 +96,6 @@
     background-color: #1D888C;
     minWidth: 130px;
     height: auto;
-    /* display: inline-block; */
 }
 
 .inputfile:focus + label,
@@ -112,7 +109,9 @@
     cursor: pointer; 
 }
 
-
+.image--circle {
+    margin: 8px auto;
+}
 
 .image--circle img {
     position: relative;
@@ -120,6 +119,8 @@
     height: 186px;
     overflow: hidden;
     border-radius: 50%;
+
+    
 }
 .modal-icon-container {
     border: 2px solid black;
@@ -153,16 +154,61 @@
     justify-content: center;
 }
 
-
-.specialty-card {
-    font-size: 2rem;
-    width: 160px;
-    height: 160px;
+.specialty-select-row {
+    width: 250px;
+    justify-content: space-around;
 }
 
+.edit-section {
+    margin-top: 24px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.section-header {
+    font-weight: bold;
+    font-size: 2.8rem;
+    
+}
+
+.edit-sub-section {
+
+    margin-top: 12px;
+}
+
+.specialty-select-group {
+    width: 100%;
+    margin-top: 9px;
+}
+
+.specialty-card {
+    width: 100%;
+    margin-top: 9px;
+}
+
+.specialty-card:not(:first-child) {
+    margin-top: 18px;
+}
+
+.specialty-card:hover {
+
+    border-color: #1ac0c6 ;
+    cursor: pointer;
+}
+
+
 .selected {
-    color: pink;
+    
+    border-color: #1ac0c6 ;
+    background-color:#1ac0c6 !important;
+    
+}
+
+.selected li {
     border: 2.5px solid #1ac0c6;
+    background-color: #1ac0c6;
 }
 
 .cd {
@@ -179,24 +225,21 @@
     display: flex;
     flex-flow: row wrap;
     align-content: flex-start;
-    width: 48% !important;
-    min-width: 265px;
-    
+
 }
 .saved-certs-container {
-    width: 48% !important;
-    min-width: 265px;
+
 }
 
 
 .saved-specs-card {
-    width: 100px;
-    height: 100px;
+
 }
 
 .saved-cert-card {
-    width: 98%;
-    /* max-height: 150px; */
+
+    margin: 18px 0 0 0;
+    padding: 6px 2px;
 }
 
 .saved-cert-card-body {
@@ -204,7 +247,9 @@
     flex-flow: row wrap;
 }
 
-
+.temp-avatar {
+    font-size: 16rem;
+}
 
 .label {
     margin: 0;
@@ -218,7 +263,7 @@
 }
 
 .modal-input {
-    width: 80%;
+    width: 250px !important;
 }
 
 .img-row {

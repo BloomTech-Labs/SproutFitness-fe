@@ -15,9 +15,10 @@ import { Container, Modal, Media, ModalHeader, ModalBody, ModalFooter, ListGroup
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpa, faCertificate } from '@fortawesome/free-solid-svg-icons'
+import { faSpa, faCertificate, faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
 import SpecialityCard from './SpecialtyCard'
+import SpecialtyListSelect from './SpecialtyListSelect'
 
 import countries from './countries'
 import timezones from './timezones'
@@ -28,7 +29,7 @@ const CoachDetails = () => {
 	const [image, setImage] = useState('')
 	const [coachImage, setCoachImage] = useState('')
 
-	const [newCert, setnewCert] = useState([]);
+	const [newCert, setnewCert] = useState('');
 	const [modals, setModals] = useState(false);
 	const [modal, setModal] = useState(false);
 
@@ -39,6 +40,8 @@ const CoachDetails = () => {
 	const [isImageLoading, setIsImageLoading] = useState(false)
 	const [hasCoachChanged, setHasCoachChanged] = useState(false)
 	const [hasCertsChanged, setHasCertsChanged] = useState(false)
+	const [hasSpecsChanged, setHasSpecsChanged] = useState(false)
+	const [hasPicChanged, setHasPicChanged] = useState(false)
 
 	// Coach fields for editing
 	const [coachData, setCoachData] = useState({})
@@ -80,6 +83,12 @@ const CoachDetails = () => {
 				})
 				setSelectedSpecialties(selected_spec_id_list)
 			}
+
+			// Reset App States
+			setHasCertsChanged(false)
+			setHasCoachChanged(false)
+			setHasSpecsChanged(false)
+			setHasPicChanged(false)
 
 		} catch (error) {
 			console.log("Error getting user data", error)
@@ -148,7 +157,6 @@ const CoachDetails = () => {
 				const new_csd_data = selectedSpecialties.map(spec => {
 					return { coach_id: userID, specialty_id: spec }
 				})
-				console.log('new csd data', new_csd_data)
 				axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, new_csd_data)
 					.catch(error => {
 						console.log("Error posting CSDs", error)
@@ -183,6 +191,7 @@ const CoachDetails = () => {
 
 	const handleSpecialtyClick = event => {
 		event.preventDefault()
+		setHasSpecsChanged(true)
 		const selected = selectedSpecialties.indexOf(event.target.id)
 		if (selected !== -1) {
 			const newList = selectedSpecialties
@@ -218,6 +227,7 @@ const CoachDetails = () => {
 		)
 		const file = await res.json()
 		setImage(file.secure_url)
+		setHasPicChanged(true)
 		setIsImageLoading(false)
 	}
 
@@ -263,23 +273,39 @@ const CoachDetails = () => {
 		newCertState.push(newCertObj)
 		setNewCoachCertifications(newCertState)
 		setHasCertsChanged(true)
-		toggleCertificationModal()
-	}
+		setnewCert('')
 
+	}
+	console.log('what is newcert', newCert)
 	return (
 		loading || saving ?
+
+			// Loading Overloay
 			<Container className="loading">
 				<Spinner className="loading-spinner" color="info" style={{ width: '6rem', height: '6rem' }} />
 				<h1>Loading...</h1>
 			</Container> :
+
+			// App
 			<Container className="prof-edit-container">
 				<Row>
+
+					{
+						hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+							hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+								hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+									hasPicChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+										<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
+					}
+
 					<Col sm="4" lg="4" className="prof-edit-section-left">
 						<Row className="prof-image-area">
 							<div className='image--circle'>
 								{
-									!isImageLoading ? <Media src={image || coachData.picture_url} alt='Profile Image' /> :
-										<p>Loading image...</p>
+									isImageLoading ? <p>Loading image...</p> :
+										coachData.picture_url ? <Media src={coachData.picture_url} alt='Profile Image' /> :
+											image ? <Media src={image} alt='Profile Image' /> :
+												<FontAwesomeIcon className="temp-avatar" icon={faUserCircle} />
 								}
 
 							</div>
@@ -329,125 +355,83 @@ const CoachDetails = () => {
 
 					</Col>
 					<Col sm="8" lg="8" className="prof-edit-section-right">
-						<Row >
-							<Col sm="6" lg="6" className="flex-center">
-
-								<div className="modal-icon-container hover" onClick={toggleSpecialtyModal}>
-									<Label for="specialty-icon">Edit Specialties</Label>
-									<FontAwesomeIcon id="specialty-icon" className="modal-icon-lg" icon={faSpa} />
-									<Modal isOpen={modals} toggleCertificationModal={toggleSpecialtyModal} >
-										<ModalHeader toggleCertificationModal={toggleSpecialtyModal}>Select Your Specializations</ModalHeader>
-										<ModalBody className="flex-center">
-											{!appSpecialtiesList.length > 0 ? <p>Loading..</p> :
-												appSpecialtiesList.map(specialty => {
-													const selected = selectedSpecialties.includes(specialty.id)
-													return <SpecialityCard
-														handleSpecialtyClick={handleSpecialtyClick}
-														specialty={specialty}
-														selected={selected}
-													/>
-												})
-											}
-
-										</ModalBody>
-										<ModalFooter>
-											<Button type='submit' color="primary" onClick={handleSpecFinish}>Done</Button>
-											<Button color="secondary" onClick={toggleSpecialtyModal}>Cancel</Button>
-										</ModalFooter>
-									</Modal>
-								</div>
-							</Col>
-							<Col sm="6" lg="6" className="flex-center">
-
-								<div className="modal-icon-container hover" onClick={toggleCertificationModal}>
-									<Label for="cert-icon">Add Certifications</Label>
-									<FontAwesomeIcon id="cert-icon" className="modal-icon-lg" icon={faCertificate} />
-									<Modal isOpen={modal} toggleCertificationModal={toggleCertificationModal} >
-										<ModalHeader toggleCertificationModal={toggleCertificationModal}>Post certification</ModalHeader>
-										<ModalBody>
-											<label>Name of Certification</label>
-											<Form onSubmit={newCertification}>
-												<input className='modal-input' onChange={certHandler} />
-											</Form>
-										</ModalBody>
-										<ModalFooter>
-											<Button type='submit' color="primary" onClick={newCertification} >Done</Button>
-											<Button color="secondary" onClick={toggleCertificationModal}>Cancel</Button>
-										</ModalFooter>
-									</Modal>
-								</div>
-							</Col>
-						</Row>
-						<Row >
-							<Container className="saved-data-container">
-								<Container className="saved-specs-container" >
-									<Row className="prof-edit-header">
-										<h3>Saved Specialties</h3>
-									</Row>
+						<div className="edit-section">
+							<div className="edit-sub-section">
+								<Row className="prof-edit-header">
+									<h3 className="section-header">Specialties</h3>
+								</Row>
+								<Row className="specialty-select-row">
 									{
-										!coachSpecialties.length > 0 ? <p>None</p> :
-											coachSpecialties.map(coach_spec => {
-												return (
-													<Card className='saved-specs-card'>
-														<CardTitle className="flex-row-nowrap">
-															<h5>{coach_spec.name}</h5>
-														</CardTitle>
-														<CardBody>
-															<FontAwesomeIcon id="specialty-icon" className="modal-icon-sm" icon={faSpa} />
-														</CardBody>
-													</Card>
-												)
-											})
-									}
-								</Container>
-								<Container className="saved-certs-container">
-									{
-										!newCoachCertifications.length > 0 ? "" : <Row className="prof-edit-header">
-											<h3>New Certifications</h3>
-										</Row>
-									}
-									<ListGroup horizontal>
-										{!newCoachCertifications.length > 0 ? "" :
-											newCoachCertifications.map(cert => {
-												return (
-													<ListGroupItem >
-														<h4>{cert.name}</h4>
-													</ListGroupItem>
-												)
+										!appSpecialtiesList.length > 0 ? <p>Loading</p> :
+											<SpecialtyListSelect appSpecialtiesList={appSpecialtiesList} selectedSpecialties={selectedSpecialties} handleSpecialtyClick={handleSpecialtyClick} />
 
-											})
-										}
-									</ListGroup>
-									<Row className="prof-edit-header">
-										<h3>Saved Certifications</h3>
-									</Row>
-									<Row>
-										{!coachCertifications.length > 0 ? <p>No Certs</p> :
-											coachCertifications.map(cert => {
-												const date = new Date(cert.created_at).toLocaleString()
-												return (
-													<Card className='saved-cert-card'>
-														<CardTitle className="flex-row-nowrap">
-															<h4>{cert.name}</h4>
-														</CardTitle>
-														<CardBody className="saved-cert-card-body">
-															<span><bold>Added:</bold> <span>{date}</span></span>
-														</CardBody>
-													</Card>
-												)
+									}
+								</Row>
+							</div>
+							<div className="edit-sub-section">
+								<Row className="prof-edit-header">
+									<h3 className="section-header">Certifications</h3>
+								</Row>
 
-											})
-										}
-									</Row>
-								</Container>
-							</Container>
-						</Row>
+								{
+									<Card className='saved-cert-card'>
+										<CardTitle className="flex-row-nowrap">
+											<h4>Add New Certification</h4>
+
+										</CardTitle>
+										<CardBody className="saved-cert-card-body">
+											<Input className='modal-input' type="text" onChange={certHandler} value={newCert} placeholder="Name of Certification" />
+											<Button type='submit' color="info" onClick={newCertification} >Add</Button>
+										</CardBody>
+									</Card>
+
+								}
+								{!newCoachCertifications.length > 0 ? "" :
+									newCoachCertifications.map(cert => {
+										return (
+											<Card className='saved-cert-card'>
+												<CardTitle className="flex-row-nowrap">
+													<h4>{cert.name}</h4>
+												</CardTitle>
+												<CardBody className="saved-cert-card-body">
+													<span>Not Saved</span>
+												</CardBody>
+											</Card>
+
+
+										)
+
+									})
+								}
+								{!coachCertifications.length > 0 ? '' :
+									coachCertifications.map(cert => {
+										const date = new Date(cert.created_at).toLocaleString()
+										return (
+											<Card className='saved-cert-card'>
+												<CardTitle className="flex-row-nowrap">
+													<h4>{cert.name}</h4>
+												</CardTitle>
+												<CardBody className="saved-cert-card-body">
+													<span><bold>Added:</bold> <span>{date}</span></span>
+												</CardBody>
+											</Card>
+										)
+
+									})
+								}
+							</div>
+						</div>
+
 					</Col>
 				</Row>
 
-				<form onSubmit={handleSubmit}>
-					<Button style={{ marginTop: '20px', marginBottom: '20px' }} type='submit' className='changes-button' color="primary" size="lg" block>SAVE CHANGES</Button>
-				</form>
+				{
+					hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+						hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+							hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+								<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
+
+				}
 
 
 			</Container>
