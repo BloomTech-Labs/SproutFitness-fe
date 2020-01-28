@@ -108,8 +108,8 @@ const List = () => {
 					})}
 				</ListGroup>
 				{tasks[0] ? 
-					<Button onClick={buttonClickHandler} color="primary">Clear Tasks</Button> :
-					<Button onClick={demoButtonClickHandler} color="primary">Get Demo Data</Button>}
+					<Button onClick={buttonClickHandler} color="primary clearTask-btn">Clear Tasks</Button> :
+					<Button onClick={demoButtonClickHandler} color="primary demo-btn">Get Demo Data</Button>}
 			</div>
 		)	
 	} else {
@@ -119,7 +119,7 @@ const List = () => {
 					<h3>Clients</h3>
 					{clients.map(client => {
 						return (
-							<ListGroupItem key={client.userID} id={client.userID}>
+							<ListGroupItem key={client.userID} id={client.userID} className="clientListHome">
 								{client.firstname}
 							</ListGroupItem>
 						)

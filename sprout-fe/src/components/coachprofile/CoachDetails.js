@@ -1,371 +1,427 @@
+/*	EDIT COACH PROFILE	* 
+*												
+*	Travis Litle
+*	tlittle@tradavo.com
+*
+*	Jamison Blackwell
+*			
+*************************
+*/
+
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './CoachDetails.css';
-import { Modal, ModalHeader, ModalBody, ModalFooter, Card, CardImg, CardBody, CardTitle, CardSubtitle, CardText, Button, Col, Row, Form, FormGroup, Label, Input, FormText } from 'reactstrap';
+import { Container, Media, Spinner, Card, CardBody, CardTitle, Button, Col, Row, FormGroup, Input } from 'reactstrap';
 import { useSelector } from 'react-redux';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
 
+import SpecialtyListSelect from './SpecialtyListSelect'
+
+import countries from './countries'
+import timezones from './timezones'
 
 
 const CoachDetails = () => {
-  
-    const [image, setImage] = useState('')
-    const [coachImage, setCoachImage] = useState('')
-    const [loading, setLoading] = useState(false)
-    const [specialty, setSpecialty] = useState([])
-    const [coachSpecialty, setCoachSpecialty] = useState([])
-    const [certifications, setCertifications] = useState([])
-    const [coachBio, setCoachBio] = useState("")
-    const [bio, setBio] = useState("")
-    const [language, setLanguage] = useState("") 
-    const [coachLanguage, setCoachLanguage] = useState("") 
-    const [specName] = useState('');
-    const [certName, setCertName] = useState('');
-    const [newCert, setnewCert] = useState([]);
-    const [id, setId] = useState('');
-    const [modals, setModals] = useState(false);
-    const [modal, setModal] = useState(false);
-    const [specId, setSpecId] = useState([]);
-    const [specialtyId, setSpecialtyId] = useState([]);
-    const [specialties] = useState('');
-    const [name, setName] = useState('');
 
-//reactstrap toggle for modal
-    
-    const toggles = () => setModals(!modals);
-    const toggle = () => setModal(!modal);
+	const [image, setImage] = useState('')
+	const [coachImage, setCoachImage] = useState('')
 
+	const [newCert, setnewCert] = useState('');
 
-    const userID = useSelector(state => state.userID)
-  
-//grabbing the users profile pic, bio, language, specialties, and certifications
-useEffect(() => {
-    axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
-    .then(res => {
+	// App States
+	const [loading, setLoading] = useState(false)
+	const [saving, setSaving] = useState(false)
+	const [isImageLoading, setIsImageLoading] = useState(false)
+	const [hasCoachChanged, setHasCoachChanged] = useState(false)
+	const [hasCertsChanged, setHasCertsChanged] = useState(false)
+	const [hasSpecsChanged, setHasSpecsChanged] = useState(false)
+	const [hasPicChanged, setHasPicChanged] = useState(false)
 
-        setCoachImage(res.data.coach.picture_url)
-        setBio(res.data.coach.bio)
-        setLanguage(res.data.coach.language)
-        setSpecialty(res.data.specialties)
-        setCertifications(res.data.certifications)
-    })
-    .catch(err => {
-        console.log(err)
-    })
-}, [certName, userID])
+	// Coach fields for editing
+	const [coachData, setCoachData] = useState({})
 
-useEffect(() => {
-  axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
-  .then(res => {
-    res.data.map((item, key) => { return setSpecId(item.id) 
-      
+	// Specialty Select Modal State
+	const [coachSpecialties, setCoachSpecialties] = useState([]) // array of objects of the coach special detail records
+	const [appSpecialtiesList, setAppSpecialtiesList] = useState([]) // array of objects of all the available specialties for the app
+	const [selectedSpecialties, setSelectedSpecialties] = useState([]) // array of specialty_ids, either selected in the model or currently saved
 
-    })
+	// Add / Edit / Remove Certification Modal	
+	const [coachCertifications, setCoachCertifications] = useState([])	// coaches saved certifications
+	const [newCoachCertifications, setNewCoachCertifications] = useState([])	// new certifications to be saved
 
-  })
-  .catch(err => {
-      console.log(err)
-  })
-}, [])
+	// ## INITIALIZATION - getting and setting data for state  ********************** /
 
-useEffect(() => {
-  axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties/${specId}`)
-  .then(res => {
-    setSpecialtyId({...specialtyId, sp: [...res.data]})
+	const userID = useSelector(state => state.userID)
 
-  })
-  .catch(err => {
-  })
-}, [specId, specialtyId])
+	const getData = async () => {
 
+		try {
+			setLoading(true)
+			const coachReq = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
+			const appSpecialtiesList = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
 
+			setCoachImage(coachReq.data.coach.picture_url) // profile image
+			setCoachData(coachReq.data.coach) // name, email, city, country, etc
+			setCoachSpecialties(coachReq.data.specialties) // these are the currently saved coach specialties
+			setCoachCertifications(coachReq.data.certifications) // currently saved certifcations
+			setAppSpecialtiesList(appSpecialtiesList.data)	// these are the available specialties the coach can pick from - the available specialties are to be defined by app developers and NOT USERS. This is for a future tagging system, as well as improved filtering/searching
 
-//mapping around all user specialties in order to render them 
-useEffect(() => {
-  if (specialty) { specialty.map(spcty => 
-     setCoachSpecialty([spcty.name])
-  ) } 
-  },[specialty, specialties])
+			// store an array of specialty_IDs of the Coach's saved specialties into state - for easier/faster searching in the app		
+			if (coachReq.data.specialties.length > 0) {
+				const selected_spec_id_list = coachReq.data.specialties.map(specialty => {
+					return specialty.specialty_id
+				})
+				setSelectedSpecialties(selected_spec_id_list)
+			}
 
-//mapping around all user certifications in order to render them 
-useEffect(() => {
-    certifications.map(cert => {
-        return cert
-    })
-}, [certifications])
+			// Reset App States
+			setHasCertsChanged(false)
+			setHasCoachChanged(false)
+			setHasSpecsChanged(false)
+			setHasPicChanged(false)
 
+		} catch (error) {
+			console.log("Error getting user data", error)
+		} finally {
+			setLoading(false)
+			setSaving(false)
+		}
+	}
 
-//cloudinary upload
-    const uploadImage = async e => {
-        const files = e.target.files
-        const data = new FormData()
-        data.append('file', files[0])
-        data.append('upload_preset', 'square1')
-        setLoading(true)
-        const res = await fetch(
-            'https://api.cloudinary.com/v1_1/drgfyozzd/image/upload',  
-            {
-                method: 'POST',
-                body: data
-            }
-        )
-        const file = await res.json()
-        
-        setImage(file.secure_url)
-        setLoading(false)
-    }
+	const refreshData = async () => {
+		try {
+			setTimeout(() => {
+				// This is not best practice - This allows for the new changes to save to db before refetching. Hello next person working on this!
+				getData()
+			}, 2000)
+		} catch (error) {
+			console.log('error refreshing data')
+		}
+	}
 
+	useEffect(() => {
+		getData()
 
-  
+	}, [])
 
-//This function is updating profile pic, language, and bio. It also sends an image to cloudinary if file is uploaded.
-  const saveChanges = (e) => { 
-    e.preventDefault();
-    e.target.reset();
+	// ## HANDLER FUNCTIONS *************************************************
 
-    //this function is submiting the image url to the cloudinary server
-    const submit = e => {
-      if(image !== ""){
-        axios.post('https://api.cloudinary.com/v1_1/drgfyozzd/image/upload', image)
-        .then(res => {
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
-    } 
-    //updating user's image string to serve but only if user uploads a new file
-const submitImage = () => {
-        if (image !== "") {
-        axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image } )
-        .then(res => {
-            if(res.status === 200) {
-              setCoachImage(image)
-            }
-        })
-        .catch(err =>
-            console.log(err))
-     
-} else {
-    return null
-}
-  }
+	const handleChange = event => {
+		event.preventDefault()
+		const { name, value } = event.target
+		setCoachData((prevState) => {
+			return { ...prevState, [name]: value }
+		})
+		setHasCoachChanged(true)
+	}
 
-  //updates user's bio but only if user writes inside form
-    const sendBio = (e) => {
-        if (coachBio.length > 0) {
-        axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "bio": coachBio } )
-        .then(res => {
-            if (res.status === 200) {
-            setBio(coachBio)
-            }
-        })
-        .catch(err =>
-            console.log(err))
-   } else {
-       return null
-   }
+	const handleSubmit = async event => {
+		event.preventDefault()
+		setSaving(true)
 
-}
+		//updating user's image string to serve but only if user uploads a new file
+		const saveImageToAppServer = () => {
+			if (image !== "") {
+				axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image })
+					.then(res => {
+						if (res.status === 200) {
+							setCoachImage(image)
+						}
+					})
+					.catch(err =>
+						console.log("Error saving image URL to app server", err))
 
-//updates users language but only if user changes it inside select form
-    const sendLang = () => {
-        if (coachLanguage.length > 0) {
-        axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "language": coachLanguage } )
-        .then(res => {
-            if (res.status === 200) {
-            setLanguage(coachLanguage)
-            } 
-        })
-        .catch(err =>
-            console.log(err))
-    }
-    else {
-        return null
-    }
-}
-    //this function is needed to execute the multiple server requests inside this saveChanges function
-        axios.all([sendLang(), sendBio(), submit(), submitImage()])
-          .then(axios.spread(function (){
-          })) 
-      }
- 
-  //changes state of coachBio when user types inside form
-      const chooseBio = (e) => {   
-          setCoachBio(e.target.value)
-      }
+			} else {
+				return null
+			}
+		}
+		if (!compareSelectedAndSaved(selectedSpecialties, coachSpecialties)) {
+			if (coachSpecialties.length > 0) {
+				coachSpecialties.forEach(specialty => {
+					axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details/${specialty.id}`)
+						.catch((error) => console.log('error deleting csd', error))
+				})
 
+			}
+			if (selectedSpecialties.length > 0) {
+				const new_csd_data = selectedSpecialties.map(spec => {
+					return { coach_id: userID, specialty_id: spec }
+				})
+				axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, new_csd_data)
+					.catch(error => {
+						console.log("Error posting CSDs", error)
+					})
+			}
 
+		}
+		if (hasCertsChanged) {
+			axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, newCoachCertifications)
+				.then((result) => {
+					setNewCoachCertifications([])
+				})
+				.catch((error => {
+					console.log('Error posting new Certifications', error)
+				}))
+		}
 
-// changes the state of coachLanguage when a user clicks on option in select form  
-    const langChange = e => {
-      setCoachLanguage(e.target.value)
-    }
+		if (hasCoachChanged) {
+			axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, coachData)
+				.then((result) => {
+					setCoachData(result.data)
+				})
+				.catch(() => console.log('error updating coach'))
+		}
 
-    const certHandler = e => {
-      setnewCert(e.target.value)
-    }
+		if (image !== "") {
+			saveImageToAppServer()
+		}
+		refreshData()
+	}
 
-    const newCertification = (e) => {
-            e.preventDefault();
-          axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, {"name": newCert, "coach_id": `${userID}`})
-            .then(res => {
-              if (res.status === 201) {
-                setCertName(newCert)
-              }
-          })
-          .catch(err =>
-              console.log(err))
-      }
+	const handleSpecialtyClick = event => {
+		event.preventDefault()
+		setHasSpecsChanged(true)
+		const selected = selectedSpecialties.indexOf(event.target.id)
+		if (selected !== -1) {
+			const newList = selectedSpecialties
+			newList.splice(selected)
+			setSelectedSpecialties(newList)
+		} else {
+			const newList = selectedSpecialties
+			newList.push(event.target.id)
+			setSelectedSpecialties(newList)
+		}
 
-      const newSpecialty = (e) => {
-        e.preventDefault();
-      axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_specialty_details`, {"coach_id": `${userID}`, "specialty_id": id})
-        .then(res => {
-          if (res.status === 201) {
-            setSpecialty(specName)
-          }
-      })
-      .catch(err =>
-          console.log(err))
-  }
-    
-  
-     
-  const cert = !certifications ?  <div>...Loading</div>  : certifications.map((cert,key) => {
-    return <li key={cert.id}>{cert.name}</li> 
-      })
+	}
 
-      const special = specialty.length === 0 ?  name  : coachSpecialty
+	// ## CLOUDINARY FUNCTIONS ***********************
 
-      const spcl = e => {
-        const event = e.target.value
-        const events = event.split(",")
-        setId(events[0])
-        setName(events[1])
-    }
+	const uploadImage = async e => {
+		const files = e.target.files
+		const data = new FormData()
+		data.append('file', files[0])
+		data.append('upload_preset', 'square1')
+		setIsImageLoading(true)
+		const res = await fetch(
+			'https://api.cloudinary.com/v1_1/drgfyozzd/image/upload',
+			{
+				method: 'POST',
+				body: data
+			}
+		)
+		const file = await res.json()
+		setImage(file.secure_url)
+		setHasPicChanged(true)
+		setIsImageLoading(false)
+	}
+
+	// ## HELPERS ***********************************
+
+	// Compare selected specialties vs the ones saved, returns true if equal, false if not
+	const compareSelectedAndSaved = (selected, saved) => {
+		// saved is an array of objects with an id property, selected is an array with ids
+		// strip the ids from the objects in saved into an array
+		// sort saved and selected
+		// compare - return true if equal return false if not
+		const saved_id_list = []
+		saved.forEach(item => {
+			saved_id_list.push(item.specialty_id)
+		})
+		saved_id_list.sort()
+		selected.sort()
+
+		function isEqual(selected_list, saved_list) {
+			if (selected_list === saved_list) return true
+			if (selected_list === null || saved_list === null) return false
+			if (selected_list.length !== saved_list.length) return false
+
+			for (var i = 0; i < selected_list.length; ++i) {
+				if (selected_list[i] !== saved_list[i]) return false;
+			}
+			return true;
+
+		}
+		const result = isEqual(selected, saved_id_list)
+		return result
+	}
 
 
-    return (
-        <div className='container'>
- 
-            <Row >     
-        <Col style={{padding: '0', margin: '0'}} id='cd' xs="6">
-            <Card className='cardImg'>
-            <CardImg  className='card-img' top width="100%" src="https://images.pexels.com/photos/2261477/pexels-photo-2261477.jpeg?cs=srgb&dl=man-about-to-lift-barbell-2261477.jpg&fm=jpg" alt="Card image cap" />
-            <CardBody className='card-body'>
-            <CardTitle>Certifications</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText>{cert}</CardText>
+	const certHandler = e => {
+		setnewCert(e.target.value)
+	}
+
+	const newCertification = (e) => {
+		e.preventDefault();
+		const newCertState = newCoachCertifications
+		const newCertObj = { name: newCert, coach_id: userID }
+		newCertState.push(newCertObj)
+		setNewCoachCertifications(newCertState)
+		setHasCertsChanged(true)
+		setnewCert('')
+
+	}
+
+	return (
+		loading || saving ?
+
+			// Loading Spinner Overloay
+			<Container className="loading">
+				<Spinner className="loading-spinner" color="info" style={{ width: '6rem', height: '6rem' }} />
+				<h1>Loading...</h1>
+			</Container> :
+
+			// App
+			<Container className="prof-edit-container">
+				<Row>
+
+					{
+						hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+							hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+								hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+									hasPicChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+										<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
+					}
+
+					<Col sm="4" lg="4" className="prof-edit-section-left">
+						<Row className="prof-image-area">
+							<div className='image--circle'>
+								{
+									isImageLoading ? <p>Loading image...</p> :
+										coachData.picture_url ? <Media src={coachData.picture_url} alt='Profile Image' /> :
+											image ? <Media src={image} alt='Profile Image' /> :
+												<FontAwesomeIcon className="temp-avatar" icon={faUserCircle} />
+								}
+
+							</div>
+							<input type="file" name="file" id="file" color='white' className="inputfile" onChange={uploadImage} />
+							<label for="file">Change Picture</label>
+						</Row>
+						<Row className="field-row">
+							<FormGroup className="field" >
+								<Input type="text" name="firstname" id="firstname" onChange={handleChange} value={coachData.firstname} />
+							</FormGroup>
+						</Row>
+						<Row className="field-row">
+							<FormGroup className="field" >
+								<Input type="text" name="lastname" id="lastname" onChange={handleChange} value={coachData.lastname} />
+							</FormGroup>
+						</Row>
+						<Row className="field-row">
+							<FormGroup className="field" >
+								<Input type="text" name="city" id="city" placeholder="City" onChange={handleChange} value={coachData.city} />
+							</FormGroup>
+						</Row>
+						<Row className="field-row">
+							<FormGroup className="field" >
+								<Input type="select" name="country" id="country" onChange={handleChange} value={coachData.country} >
+									<option>Country</option>
+									{countries.map(country => {
+										return <option>{country}</option>
+									})}
+								</Input>
+							</FormGroup>
+						</Row>
+						<Row className="field-row">
+							<FormGroup className="field">
+								<Input type="select" name="timezone" id="timezone" onChange={handleChange} value={coachData.timezone} >
+									<option>Timezone</option>
+									{timezones.map(timezone => {
+										return <option>{timezone.name}</option>
+									})}
+								</Input>
+							</FormGroup>
+						</Row>
+						<Row className="field-row">
+							<FormGroup className="field">
+								<Input type="textarea" name="bio" id="bio" placeholder="Enter a short bio" onChange={handleChange} value={coachData.bio} />
+							</FormGroup>
+						</Row>
+
+					</Col>
+					<Col sm="8" lg="8" className="prof-edit-section-right">
+						<div className="edit-section">
+							<div className="edit-sub-section">
+								<Row className="prof-edit-header">
+									<h3 className="section-header">Specialties</h3>
+								</Row>
+								<Row className="specialty-select-row">
+									{
+										!appSpecialtiesList.length > 0 ? <p>Loading</p> :
+											<SpecialtyListSelect appSpecialtiesList={appSpecialtiesList} selectedSpecialties={selectedSpecialties} handleSpecialtyClick={handleSpecialtyClick} />
+
+									}
+								</Row>
+							</div>
+							<div className="edit-sub-section">
+								<Row className="prof-edit-header">
+									<h3 className="section-header">Certifications</h3>
+								</Row>
+
+								{
+									<Card className='saved-cert-card'>
+										<CardTitle className="flex-row-nowrap">
+											<h4>Add New Certification</h4>
+
+										</CardTitle>
+										<CardBody className="saved-cert-card-body">
+											<Input className='modal-input' type="text" onChange={certHandler} value={newCert} placeholder="Name of Certification" />
+											<Button type='submit' color="info" onClick={newCertification} >Add</Button>
+										</CardBody>
+									</Card>
+
+								}
+								{!newCoachCertifications.length > 0 ? "" :
+									newCoachCertifications.map(cert => {
+										return (
+											<Card className='saved-cert-card'>
+												<CardTitle className="flex-row-nowrap">
+													<h4>{cert.name}</h4>
+												</CardTitle>
+												<CardBody className="saved-cert-card-body">
+													<span>Not Saved</span>
+												</CardBody>
+											</Card>
 
 
-<div>
-      <Button color="primary" onClick={toggle}>Add Certification</Button>
-      <Modal isOpen={modal} toggle={toggle} >
-        <ModalHeader toggle={toggle}>Post certification</ModalHeader>
-        <ModalBody>
-         <label>Name of Certification</label>
-         <Form onSubmit={newCertification}>
-            <input className='modal-input' onChange={certHandler} />
-            <Button type='submit' color="primary" >POST</Button>
-      </Form> 
-      </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={toggle}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-    </div>
-       </CardBody>
-        </Card>
-        </Col>
-         <Col style={{padding: '0', margin: '0'}} xs="6">
-            <Card>
-            <CardImg className='card-img' top width="100%" src="https://images.pexels.com/photos/9267/earth-summer-garden-table.jpg?auto=compress&cs=tinysrgb&dpr=1&w=500" alt="Card image cap" />
-            <CardBody className='card-body'>
-            <CardTitle>Specialty</CardTitle>
-            <CardSubtitle>Card subtitle</CardSubtitle>
-            <CardText>{specName ? name : special}</CardText>
+										)
+
+									})
+								}
+								{!coachCertifications.length > 0 ? '' :
+									coachCertifications.map(cert => {
+										const date = new Date(cert.created_at).toLocaleString()
+										return (
+											<Card className='saved-cert-card'>
+												<CardTitle className="flex-row-nowrap">
+													<h4>{cert.name}</h4>
+												</CardTitle>
+												<CardBody className="saved-cert-card-body">
+													<span><bold>Added:</bold> <span>{date}</span></span>
+												</CardBody>
+											</Card>
+										)
+
+									})
+								}
+							</div>
+						</div>
+
+					</Col>
+				</Row>
+
+				{
+					hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+						hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+							hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+								<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
+
+				}
 
 
-            <div>
-      <Button color="primary" onClick={toggles}>Add Specialty</Button>
-      <Modal isOpen={modals} toggle={toggles} >
-        <ModalHeader toggle={toggles}>Post a specialization</ModalHeader>
-        <ModalBody>
-        <label>Specialty Name</label>
-        <Form onSubmit={newSpecialty}>
-             {specialtyId.sp ? specialtyId.sp.map(item => {
-               return <button type='button' key={item.id} value={[item.id, item.name]} onClick={spcl}>{item.name}</button>
-             }): null}
-            <Button type='submit' color="primary" >POST</Button>
-      </Form> 
-        </ModalBody>
-        <ModalFooter>
-          <Button color="secondary" onClick={toggles}>Cancel</Button>
-        </ModalFooter>
-      </Modal>
-  </div>
-         
-      
-                   </CardBody>
-        </Card>
-        </Col>
-      </Row>
-
-    <form onSubmit={saveChanges}>
-      <Row className='img-row'>
-        <Col style={{paddingTop: '30px'}} xs="6">
-        <h4>Your profile picture</h4>
-            <img src={coachImage} style={{width: '95px'}} alt=''/>
-        </Col>
-        <Col style={{paddingTop: '30px'}} xs="6">
-        
-        <h1 className='upload-image-text'>Upload New Image</h1>
-                {loading ? (
-                    <h3>Loading...</h3>
-                ): (
-                <img src={image} style={{width: '50px'}} alt=''/>
-                )}
-                <FormGroup row>        
-          <Input type="file" name="file" id="exampleFile" color='white' onChange={uploadImage} />
-          <FormText color="white">
-            This is some placeholder block-level help text for the above input.
-            It's a bit lighter and easily wraps to a new line.
-          </FormText>
-        
-      </FormGroup>
-        </Col>
-      </Row>
-      <Row className='bio-lang'>
-        <Col xs="6">
-          <div className='bio'>
-              <label>Current Bio</label>
-              <p className='bio-text-current'>{bio}</p>
-              <FormGroup>
-                <Label for="exampleText">Change Bio</Label>
-                <Input type="textarea" onChange={chooseBio} name="text" id="exampleText" className='bio-text-new' />
-              </FormGroup>   
-            </div>
-        </Col>
-        <Col xs="6"><h6>Current Language</h6>
-               <p className='lang-current'>{language}</p> 
-                <select className="language" onChange={langChange}>
-                    <option>Change language</option>
-                    <option value="English">English</option>
-                    <option value="Spanish">Spanish</option>
-                    <option value="French">French</option>
-                    <option value="Arabic">Arabic</option>
-                </select>
-        </Col>
-      </Row>
-            <div> 
-            </div> 
-            <Button style={{marginTop: '20px', marginBottom: '20px'}} type='submit' className='changes-button' color="primary" size="lg" block>SAVE CHANGES</Button>
-            </form>
-           
-        </div>
-    )
-
+			</Container>
+	)
 }
 
 export default CoachDetails;
