@@ -66,14 +66,15 @@ p.team-card-text {
 @media (max-width: 940px) {
   .team-card-wrapper-top {
     flex-direction: column;
+    margin-bottom: 0;
   }
 
   .team-card-wrapper-middle {
     flex-direction: column;
-    margin-top: 20px;
+    margin: 0;
   }
 
   .team-card {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
   }
 }
