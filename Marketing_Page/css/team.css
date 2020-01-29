@@ -68,6 +68,10 @@ p.team-card-text {
     flex-direction: column;
   }
 
+  .team-card-wrapper-middle {
+    flex-direction: column;
+  }
+
   .team-card {
     margin-bottom: 30px;
   }
