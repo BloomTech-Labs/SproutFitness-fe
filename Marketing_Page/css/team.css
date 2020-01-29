@@ -7,7 +7,7 @@
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   background-color: var(--team-card-bg-color);
   max-width: 300px;
-  height: 800px;
+  height: 650px;
   margin: auto;
   text-align: center;
   border-radius: 4px;
@@ -27,17 +27,35 @@
 }
 
 h3.team-card-header {
-  width: 100%;
+  width: 90%;
   margin: 0 auto;
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   text-align: center;
   font-family: "Poppins", "Helvetica", sans-serif;
   padding: 20px 0;
 }
 
 p.team-card-text {
-  width: 95%;
+  width: 93%;
   margin: 0 auto;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-family: "Poppins", "Helvetica", sans-serif;
+}
+
+@media (min-width: 1680px) {
+  .team-card-wrapper-top {
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 940px) {
+  .team-card-wrapper-top {
+    flex-direction: column;
+  }
+
+  .team-card {
+    margin-bottom: 30px;
+  }
 }
