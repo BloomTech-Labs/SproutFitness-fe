@@ -70,6 +70,7 @@ p.team-card-text {
 
   .team-card-wrapper-middle {
     flex-direction: column;
+    margin-top: 20px;
   }
 
   .team-card {
