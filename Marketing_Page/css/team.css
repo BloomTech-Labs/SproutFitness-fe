@@ -35,9 +35,9 @@ h3.team-card-name {
 }
 
 h4.team-card-header {
-  width: 90%;
+  width: 80%;
   margin: 0 auto;
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   text-align: center;
   font-family: "Poppins", "Helvetica", sans-serif;
   padding: 20px 0;
@@ -48,6 +48,11 @@ p.team-card-text {
   margin: 0 auto;
   font-size: 1.6rem;
   font-family: "Poppins", "Helvetica", sans-serif;
+}
+
+.team-card-wrapper-middle {
+  display: flex;
+  margin: 60px 0;
 }
 
 @media (min-width: 1680px) {
