@@ -15,7 +15,7 @@ import { Container, Media, Spinner, Card, CardBody, CardTitle, Button, Col, Row,
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUserCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import SpecialtyListSelect from './SpecialtyListSelect'
 
@@ -367,7 +367,11 @@ const CoachDetails = () => {
 										</CardTitle>
 										<CardBody className="saved-cert-card-body">
 											<Input className='modal-input' type="text" onChange={certHandler} value={newCert} placeholder="Name of Certification" />
-											<Button type='submit' color="info" onClick={newCertification} >Add</Button>
+											{
+												newCert ? <Button type='submit' color="info" onClick={newCertification} >Add</Button> :
+												 <Button disabled type='submit' color="info" onClick={newCertification} >Add</Button>
+											}
+											
 										</CardBody>
 									</Card>
 
@@ -377,7 +381,10 @@ const CoachDetails = () => {
 										return (
 											<Card className='saved-cert-card'>
 												<CardTitle className="flex-row-nowrap">
-													<h4>{cert.name}</h4>
+													<div className="cert-header">
+														<h4>{cert.name}</h4>
+														<FontAwesomeIcon icon={faTrash} />
+													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">
 													<span>Not Saved</span>
