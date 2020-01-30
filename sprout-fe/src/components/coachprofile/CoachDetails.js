@@ -267,9 +267,6 @@ const CoachDetails = () => {
 
 		// Delete the Certification from the server
 		axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications/${deleleteTarget}`)
-				.then((result) => {
-					console.log('Certification Deleted', deleleteTarget, result)
-				})
 				.then(() => {
 					const currentCertState = coachCertifications
 					const newCoachCertificationsState = currentCertState.filter(cert => cert.id !== deleleteTarget)
