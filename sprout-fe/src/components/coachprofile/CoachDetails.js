@@ -25,10 +25,7 @@ import timezones from './timezones'
 
 const CoachDetails = () => {
 
-	const [image, setImage] = useState('')
-	const [coachImage, setCoachImage] = useState('')
-
-	const [newCert, setnewCert] = useState('');
+	const [image, setImage] = useState('') // Cloudinary and image display	
 
 	// App States
 	const [loading, setLoading] = useState(false)
@@ -47,7 +44,8 @@ const CoachDetails = () => {
 	const [appSpecialtiesList, setAppSpecialtiesList] = useState([]) // array of objects of all the available specialties for the app
 	const [selectedSpecialties, setSelectedSpecialties] = useState([]) // array of specialty_ids, either selected in the model or currently saved
 
-	// Add / Edit / Remove Certification Modal	
+	// Add / Edit / Remove Certification Modal
+	const [newCert, setnewCert] = useState(''); // Text box for adding new cert	
 	const [coachCertifications, setCoachCertifications] = useState([])	// coaches saved certifications
 	const [newCoachCertifications, setNewCoachCertifications] = useState([])	// new certifications to be saved
 
@@ -127,7 +125,7 @@ const CoachDetails = () => {
 				axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image })
 					.then(res => {
 						if (res.status === 200) {
-							setCoachImage(image)
+							setImage(image)
 						}
 					})
 					.catch(err =>
