@@ -156,7 +156,7 @@ const CoachDetails = () => {
 			}
 
 		}
-		if (hasCertsChanged) {
+		if (hasCertsChanged && newCoachCertifications.length > 0) {
 			axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, newCoachCertifications)
 				.then((result) => {
 					setNewCoachCertifications([])
@@ -261,6 +261,38 @@ const CoachDetails = () => {
 		setHasCertsChanged(true)
 		setnewCert('')
 
+	}
+
+	const handleDeleteCertFromServer = event => {
+		event.preventDefault()
+		const deleleteTarget = event.currentTarget.id
+
+		// Delete the Certification from the server
+		axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications/${deleleteTarget}`)
+				.then((result) => {
+					console.log('Certification Deleted', deleleteTarget, result)
+				})
+				.then(() => {
+					const currentCertState = coachCertifications
+					const newCoachCertificationsState = currentCertState.filter(cert => cert.id !== deleleteTarget)
+					setCoachCertifications(newCoachCertificationsState)
+					setHasCertsChanged(true)
+				})
+				.catch((error => {
+					console.log('Error deleting Certification', error)
+				}))
+
+		// Remove the Certification from state
+		
+
+	}
+
+	const handleDeleteCertFromState = event =>  {
+		event.preventDefault()
+		const deleteTarget = event.currentTarget.id
+		const currentCertState = newCoachCertifications
+		const newCertState = currentCertState.filter(cert => cert.name !== deleteTarget)
+		setNewCoachCertifications(newCertState)		
 	}
 
 	return (
@@ -383,7 +415,7 @@ const CoachDetails = () => {
 												<CardTitle className="flex-row-nowrap">
 													<div className="cert-header">
 														<h4>{cert.name}</h4>
-														<FontAwesomeIcon icon={faTrash} />
+														<FontAwesomeIcon icon={faTrash} name={cert.name} id={cert.name} onClick={handleDeleteCertFromState}/>
 													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">
@@ -402,7 +434,10 @@ const CoachDetails = () => {
 										return (
 											<Card className='saved-cert-card'>
 												<CardTitle className="flex-row-nowrap">
-													<h4>{cert.name}</h4>
+													<div className="cert-header">
+														<h4>{cert.name}</h4>
+														<FontAwesomeIcon icon={faTrash} name={cert.name} id={cert.id} onClick={handleDeleteCertFromServer}/>
+													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">
 													<span><bold>Added:</bold> <span>{date}</span></span>
