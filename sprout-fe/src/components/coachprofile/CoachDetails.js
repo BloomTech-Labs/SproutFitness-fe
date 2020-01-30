@@ -419,12 +419,12 @@ const CoachDetails = () => {
 				</Row>
 
 				{
-					hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
-						hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
-							hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
-								<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
-
-				}
+						hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+							hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+								hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+									hasPicChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+										<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
+					}
 
 
 			</Container>
