@@ -60,7 +60,7 @@ const CoachDetails = () => {
 			const coachReq = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
 			const appSpecialtiesList = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
 
-			setCoachImage(coachReq.data.coach.picture_url) // profile image
+			setImage(coachReq.data.coach.picture_url) // profile image
 			setCoachData(coachReq.data.coach) // name, email, city, country, etc
 			setCoachSpecialties(coachReq.data.specialties) // these are the currently saved coach specialties
 			setCoachCertifications(coachReq.data.certifications) // currently saved certifcations
@@ -413,7 +413,7 @@ const CoachDetails = () => {
 												<CardTitle className="flex-row-nowrap">
 													<div className="cert-header">
 														<h4>{cert.name}</h4>
-														<FontAwesomeIcon icon={faTrash} name={cert.name} id={cert.name} onClick={handleDeleteCertFromState}/>
+														<FontAwesomeIcon className="del-cert-icon" icon={faTrash} name={cert.name} id={cert.name} onClick={handleDeleteCertFromState}/>
 													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">
@@ -434,7 +434,7 @@ const CoachDetails = () => {
 												<CardTitle className="flex-row-nowrap">
 													<div className="cert-header">
 														<h4>{cert.name}</h4>
-														<FontAwesomeIcon icon={faTrash} name={cert.name} id={cert.id} onClick={handleDeleteCertFromServer}/>
+														<FontAwesomeIcon className="del-cert-icon" icon={faTrash} name={cert.name} id={cert.id} onClick={handleDeleteCertFromServer}/>
 													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">

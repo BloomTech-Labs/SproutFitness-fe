@@ -122,9 +122,8 @@
     
 }
 
-.hover:hover {
-    color: #1ac0c6;
-    cursor: pointer; 
+.del-cert-icon:hover {
+    cursor: pointer;
 }
 
 .image--circle {
