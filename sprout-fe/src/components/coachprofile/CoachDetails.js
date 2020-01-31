@@ -15,7 +15,7 @@ import { Container, Media, Spinner, Card, CardBody, CardTitle, Button, Col, Row,
 import { useSelector } from 'react-redux';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUserCircle } from '@fortawesome/free-solid-svg-icons'
+import { faUserCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
 
 import SpecialtyListSelect from './SpecialtyListSelect'
 
@@ -25,10 +25,7 @@ import timezones from './timezones'
 
 const CoachDetails = () => {
 
-	const [image, setImage] = useState('')
-	const [coachImage, setCoachImage] = useState('')
-
-	const [newCert, setnewCert] = useState('');
+	const [image, setImage] = useState('') // Cloudinary and image display	
 
 	// App States
 	const [loading, setLoading] = useState(false)
@@ -47,7 +44,8 @@ const CoachDetails = () => {
 	const [appSpecialtiesList, setAppSpecialtiesList] = useState([]) // array of objects of all the available specialties for the app
 	const [selectedSpecialties, setSelectedSpecialties] = useState([]) // array of specialty_ids, either selected in the model or currently saved
 
-	// Add / Edit / Remove Certification Modal	
+	// Add / Edit / Remove Certification Modal
+	const [newCert, setnewCert] = useState(''); // Text box for adding new cert	
 	const [coachCertifications, setCoachCertifications] = useState([])	// coaches saved certifications
 	const [newCoachCertifications, setNewCoachCertifications] = useState([])	// new certifications to be saved
 
@@ -62,7 +60,7 @@ const CoachDetails = () => {
 			const coachReq = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_helpers/coach/data/${userID}`)
 			const appSpecialtiesList = await axios.get(`https://sprout-fitness-be-staging.herokuapp.com/api/specialties`)
 
-			setCoachImage(coachReq.data.coach.picture_url) // profile image
+			setImage(coachReq.data.coach.picture_url) // profile image
 			setCoachData(coachReq.data.coach) // name, email, city, country, etc
 			setCoachSpecialties(coachReq.data.specialties) // these are the currently saved coach specialties
 			setCoachCertifications(coachReq.data.certifications) // currently saved certifcations
@@ -127,7 +125,7 @@ const CoachDetails = () => {
 				axios.put(`https://sprout-fitness-be-staging.herokuapp.com/api/coaches/${userID}`, { "picture_url": image })
 					.then(res => {
 						if (res.status === 200) {
-							setCoachImage(image)
+							setImage(image)
 						}
 					})
 					.catch(err =>
@@ -156,7 +154,7 @@ const CoachDetails = () => {
 			}
 
 		}
-		if (hasCertsChanged) {
+		if (hasCertsChanged && newCoachCertifications.length > 0) {
 			axios.post(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications`, newCoachCertifications)
 				.then((result) => {
 					setNewCoachCertifications([])
@@ -263,6 +261,35 @@ const CoachDetails = () => {
 
 	}
 
+	const handleDeleteCertFromServer = event => {
+		event.preventDefault()
+		const deleleteTarget = event.currentTarget.id
+
+		// Delete the Certification from the server
+		axios.delete(`https://sprout-fitness-be-staging.herokuapp.com/api/coach_certifications/${deleleteTarget}`)
+				.then(() => {
+					const currentCertState = coachCertifications
+					const newCoachCertificationsState = currentCertState.filter(cert => cert.id !== deleleteTarget)
+					setCoachCertifications(newCoachCertificationsState)
+					setHasCertsChanged(true)
+				})
+				.catch((error => {
+					console.log('Error deleting Certification', error)
+				}))
+
+		// Remove the Certification from state
+		
+
+	}
+
+	const handleDeleteCertFromState = event =>  {
+		event.preventDefault()
+		const deleteTarget = event.currentTarget.id
+		const currentCertState = newCoachCertifications
+		const newCertState = currentCertState.filter(cert => cert.name !== deleteTarget)
+		setNewCoachCertifications(newCertState)		
+	}
+
 	return (
 		loading || saving ?
 
@@ -367,7 +394,11 @@ const CoachDetails = () => {
 										</CardTitle>
 										<CardBody className="saved-cert-card-body">
 											<Input className='modal-input' type="text" onChange={certHandler} value={newCert} placeholder="Name of Certification" />
-											<Button type='submit' color="info" onClick={newCertification} >Add</Button>
+											{
+												newCert ? <Button type='submit' color="info" onClick={newCertification} >Add</Button> :
+												 <Button disabled type='submit' color="info" onClick={newCertification} >Add</Button>
+											}
+											
 										</CardBody>
 									</Card>
 
@@ -377,7 +408,10 @@ const CoachDetails = () => {
 										return (
 											<Card className='saved-cert-card'>
 												<CardTitle className="flex-row-nowrap">
-													<h4>{cert.name}</h4>
+													<div className="cert-header">
+														<h4>{cert.name}</h4>
+														<FontAwesomeIcon className="del-cert-icon" icon={faTrash} name={cert.name} id={cert.name} onClick={handleDeleteCertFromState}/>
+													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">
 													<span>Not Saved</span>
@@ -395,7 +429,10 @@ const CoachDetails = () => {
 										return (
 											<Card className='saved-cert-card'>
 												<CardTitle className="flex-row-nowrap">
-													<h4>{cert.name}</h4>
+													<div className="cert-header">
+														<h4>{cert.name}</h4>
+														<FontAwesomeIcon className="del-cert-icon" icon={faTrash} name={cert.name} id={cert.id} onClick={handleDeleteCertFromServer}/>
+													</div>
 												</CardTitle>
 												<CardBody className="saved-cert-card-body">
 													<span><bold>Added:</bold> <span>{date}</span></span>
@@ -412,12 +449,12 @@ const CoachDetails = () => {
 				</Row>
 
 				{
-					hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
-						hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
-							hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
-								<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
-
-				}
+						hasSpecsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+							hasCoachChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+								hasCertsChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+									hasPicChanged ? <Button type='submit' onClick={handleSubmit} className='changes-button' color="info" size="lg" block>SAVE CHANGES</Button> :
+										<Button disabled type='submit' className='changes-button' color="secondary" size="lg" block>No Changes</Button>
+					}
 
 
 			</Container>
